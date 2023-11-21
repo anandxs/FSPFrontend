@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useCreateProjectMutation } from "../features/project/projectApiSlice";
+import { useCreateProjectMutation } from "../../features/project/projectApiSlice";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../features/auth/authSlice";
+import { selectCurrentUser } from "../../features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

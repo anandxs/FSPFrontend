@@ -6,10 +6,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./components/NotFound";
 import Project from "./pages/Project";
-import Groups from "./components/Groups";
+import Groups from "./components/Group/Groups";
 import Dashboard from "./components/Dashboard";
-import CreateCard from "./components/CreateCard";
-import Card from "./components/Card";
+import CreateCard from "./components/Card/CreateCard";
+import Card from "./components/Card/Card";
 
 function App() {
 	return (

@@ -4,7 +4,7 @@ import {
 	useToggleProjectArchiveStatusMutation,
 	useUpdateProjectNameMutation,
 	useDeleteProjectMutation,
-} from "../features/project/projectApiSlice";
+} from "../../features/project/projectApiSlice";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +12,8 @@ import {
 	selectProjectArchiveStatus,
 	setProject,
 	unsetProject,
-} from "../features/project/projectSlice";
-import CreateGroupModal from "./CreateGroupModal";
+} from "../../features/project/projectSlice";
+import CreateGroupModal from "../Group/CreateGroupModal";
 import { Link } from "react-router-dom";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
@@ -54,7 +54,6 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 	};
 
 	const handleArchive = async () => {
-		console.log(isActive);
 		try {
 			const response = await toggleProjectArchiveStatus({
 				ownerId,
@@ -119,8 +118,6 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 						{data?.name}
 					</p>
 				)}
-				<p>&gt;&gt;</p>
-				<p className="text-md font-bold">Dashboard</p>
 			</div>
 			<div className="flex flex-row gap-2">
 				<div className="flex flex-col gap-3">

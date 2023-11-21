@@ -3,10 +3,10 @@ import {
 	useDeleteCardMutation,
 	useGetCardByIdQuery,
 	useUpdateCardMutation,
-} from "../features/card/cardApiSlice";
+} from "../../features/card/cardApiSlice";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useGetProjectGroupsQuery } from "../features/group/groupApiSlice";
+import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
 
 const Card = () => {
 	const { ownerId, projectId, groupId, cardId } = useParams();

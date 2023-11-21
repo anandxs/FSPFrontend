@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { logOut, selectCurrentUser } from "../features/auth/authSlice";
+import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { unsetProject } from "../features/project/projectSlice";
+import { unsetProject } from "../../features/project/projectSlice";
 
 const Navbar = () => {
 	const { name } = useSelector(selectCurrentUser);

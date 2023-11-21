@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetProjectGroupsQuery } from "../features/group/groupApiSlice";
+import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
 import { useForm } from "react-hook-form";
-import { useCreateCardMutation } from "../features/card/cardApiSlice";
+import { useCreateCardMutation } from "../../features/card/cardApiSlice";
 
 const CreateCard = () => {
 	const { ownerId, projectId } = useParams();

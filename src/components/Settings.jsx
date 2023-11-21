@@ -1,10 +1,7 @@
-import { useSelector } from "react-redux";
-import { selectProjectArchiveStatus } from "../features/project/projectSlice";
 import { useToggleProjectArchiveStatusMutation } from "../features/project/projectApiSlice";
 import { useParams } from "react-router-dom";
 
 const Settings = () => {
-	// const { isActive } = useSelector(selectProjectArchiveStatus);
 	const [toggleArchive] = useToggleProjectArchiveStatusMutation();
 
 	const { ownerId, projectId } = useParams();

@@ -4,11 +4,11 @@ import {
 	useDeleteProjectGroupMutation,
 	useGetProjectGroupsQuery,
 	useUpdateProjectGroupMutation,
-} from "../features/group/groupApiSlice";
+} from "../../features/group/groupApiSlice";
 import {
 	selectOwnerId,
 	selectProjectId,
-} from "../features/project/projectSlice";
+} from "../../features/project/projectSlice";
 import { useForm } from "react-hook-form";
 
 const Groups = () => {

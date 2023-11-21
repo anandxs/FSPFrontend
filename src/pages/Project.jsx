@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import ProjectHeader from "../components/ProjectHeader";
+import Navbar from "../components/Navbar/Navbar";
+import ProjectHeader from "../components/Project/ProjectHeader";
 import Sidebar from "../components/Sidebar";
 import { useParams } from "react-router-dom";
 

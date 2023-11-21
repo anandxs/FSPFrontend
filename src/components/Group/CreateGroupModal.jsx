@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useCreateGroupMutation } from "../features/group/groupApiSlice";
+import { useCreateGroupMutation } from "../../features/group/groupApiSlice";
 import { createAction } from "@reduxjs/toolkit";
 import { useParams } from "react-router-dom";
 
