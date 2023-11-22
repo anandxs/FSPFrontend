@@ -22,7 +22,8 @@ const Projects = () => {
 			));
 		}
 	} else if (isError) {
-		content = <p>{error && error}</p>;
+		console.log(error);
+		content = <p>Something went wrong!</p>;
 	}
 
 	return (

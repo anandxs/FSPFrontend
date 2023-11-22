@@ -127,7 +127,10 @@ const Groups = () => {
 				</tbody>
 			</table>
 		);
-	} else if (isError) content = <p>{error && error.message}</p>;
+	} else if (isError) {
+		console.log(error);
+		content = <p>Something went wrong!</p>;
+	}
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">

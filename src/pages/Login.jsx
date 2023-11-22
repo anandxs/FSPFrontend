@@ -22,8 +22,9 @@ const Login = () => {
 		const { email, password } = data;
 		try {
 			const userData = await login({ email, password }).unwrap();
-			const token = userData.accessToken;
-			const decodedToken = jwtDecode(token);
+			const accessToken = userData.accessToken;
+			const refreshToken = userData.refreshToken;
+			const decodedToken = jwtDecode(accessToken);
 			const name =
 				decodedToken[
 					"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
@@ -36,7 +37,8 @@ const Login = () => {
 				setCredentials({
 					id,
 					name,
-					token,
+					accessToken,
+					refreshToken,
 				})
 			);
 			navigate("/");

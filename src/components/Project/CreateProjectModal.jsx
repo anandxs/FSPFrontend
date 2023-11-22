@@ -20,14 +20,14 @@ const CreateProjectModal = ({ setShowModal }) => {
 
 	const { id } = useSelector(selectCurrentUser);
 
-	const [create, { isLoading }] = useCreateProjectMutation();
+	const [create, { isLoading, isError }] = useCreateProjectMutation();
 
 	const onSubmit = async ({ projectName }) => {
+		const body = {
+			userId: id,
+			name: projectName,
+		};
 		try {
-			const body = {
-				userId: id,
-				name: projectName,
-			};
 			const response = await create(body).unwrap();
 			console.log(response);
 			setShowModal(false);
@@ -35,6 +35,8 @@ const CreateProjectModal = ({ setShowModal }) => {
 		} catch (err) {
 			if (err.status === 404) {
 				setError(err.data.Message);
+			} else if (err.status == 401) {
+				await create(body);
 			} else if (err.state === 422) {
 				setError("Enter valid data.");
 			} else if (err.status === 500) {

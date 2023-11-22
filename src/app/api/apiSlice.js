@@ -4,28 +4,38 @@ import { setCredentials, logOut } from "../../features/auth/authSlice";
 const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_BASE_URL,
 	credentials: "include",
-	prepareHeaders: (headers, { getState }) => {
-		const token = getState().auth.token;
-		if (token) {
-			headers.set("Authorization", `Bearer ${token}`);
-		}
-		return headers;
-	},
 });
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {
 	let result = await baseQuery(args, api, extraOptions);
 
-	if (result?.error?.originalStatus === 403) {
-		console.log("sending refresh token");
-		const refreshResult = await baseQuery("/api/refresh", api, extraOptions);
-		console.log(refreshResult);
-		if (refreshResult?.data) {
-			const user = api.getState().auth.user;
-			api.dispatch(setCredentials({ ...refreshResult.data, user }));
-			result = await baseQuery(args, api, extraOptions);
-		} else {
-			api.dispatch(logOut());
+	if (result?.error?.status === 401) {
+		const state = api.getState();
+
+		if (state.auth.accessToken !== null) {
+			const refreshResult = await baseQuery(
+				{
+					url: "/api/token/refresh",
+					method: "GET",
+				},
+				api,
+				extraOptions
+			);
+
+			if (refreshResult?.data) {
+				api.dispatch(
+					setCredentials({
+						...state.auth,
+						accessToken: refreshResult.data.accessToken,
+						refreshToken: refreshResult.data.refreshToken,
+					})
+				);
+
+				result = await baseQuery(args, api, extraOptions);
+			} else {
+				api.dispatch(logOut());
+				console.log("refresh token expired");
+			}
 		}
 	}
 

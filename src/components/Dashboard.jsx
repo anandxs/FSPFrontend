@@ -1,7 +1,5 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetCardsForProjectQuery } from "../features/card/cardApiSlice";
-import { useDispatch } from "react-redux";
-import { setCard } from "../features/card/cardSlice";
 
 const Dashboard = () => {
 	const { ownerId, projectId } = useParams();
@@ -9,7 +7,6 @@ const Dashboard = () => {
 		useGetCardsForProjectQuery({ ownerId, projectId });
 
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 
 	const goToCard = (card) => {
 		const cardState = {
@@ -21,7 +18,6 @@ const Dashboard = () => {
 				groupName: card.group.name,
 			},
 		};
-		dispatch(setCard(cardState));
 		navigate(
 			`/${ownerId}/projects/${projectId}/groups/${card.group.groupId}/cards/${card.cardId}`,
 			{
@@ -67,17 +63,13 @@ const Dashboard = () => {
 							<td className="px-2 py-1 text-sm border border-black">
 								{c.description ? c.description : "- -"}
 							</td>
-							{/* <td className="px-2 py-1 text-sm border border-black">
-								{c.dueDate ? c.dueDate : "- -"}
-							</td> */}
 						</tr>
 					))}
 				</tbody>
 			</table>
 		);
 	} else if (isError) {
-		console.log("hit");
-		content = JSON.stringify(errors);
+		console.log(errors);
 	}
 
 	return (
