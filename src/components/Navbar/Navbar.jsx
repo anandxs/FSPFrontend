@@ -3,10 +3,13 @@ import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { unsetProject } from "../../features/project/projectSlice";
+import { useLogOutMutation } from "../../features/auth/authApiSlice";
 
 const Navbar = () => {
 	const { name } = useSelector(selectCurrentUser);
 	const [displayName, setDisplayName] = useState();
+
+	const [logOutUser] = useLogOutMutation();
 
 	useEffect(() => {
 		let temp = "";
@@ -18,9 +21,14 @@ const Navbar = () => {
 
 	const dispatch = useDispatch();
 
-	const handleLogout = () => {
-		dispatch(logOut());
-		dispatch(unsetProject());
+	const handleLogout = async () => {
+		try {
+			await logOutUser();
+			dispatch(logOut());
+			dispatch(unsetProject());
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
