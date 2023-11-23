@@ -1,11 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-	id: null,
-	name: null,
-	accessToken: null,
-	refreshToken: null,
-};
+const initialState =
+	sessionStorage.getItem("auth") !== null
+		? JSON.parse(sessionStorage.getItem("auth"))
+		: {
+				id: null,
+				name: null,
+				accessToken: null,
+				refreshToken: null,
+		  };
 
 const authSlice = createSlice({
 	name: "auth",
@@ -17,12 +20,14 @@ const authSlice = createSlice({
 			state.name = name;
 			state.accessToken = accessToken;
 			state.refreshToken = refreshToken;
+			sessionStorage.setItem("auth", JSON.stringify(action.payload));
 		},
 		logOut: (state, action) => {
 			state.id = null;
 			state.name = null;
 			state.accessToken = null;
 			state.refreshToken = null;
+			sessionStorage.clear();
 		},
 	},
 });
