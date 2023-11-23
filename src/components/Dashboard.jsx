@@ -43,9 +43,6 @@ const Dashboard = () => {
 						<th className="text-left text-sm px-2 py-1 border border-black">
 							Description
 						</th>
-						{/* <th className="text-left text-sm px-2 py-1 border border-black">
-							Due Date
-						</th> */}
 					</tr>
 				</thead>
 				<tbody>

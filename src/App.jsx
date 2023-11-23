@@ -1,34 +1,98 @@
+import { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import NotFound from "./components/NotFound";
-import Project from "./pages/Project";
-import Groups from "./components/Group/Groups";
-import Dashboard from "./components/Dashboard";
-import CreateCard from "./components/Card/CreateCard";
-import Card from "./components/Card/Card";
+const Home = lazy(() => import("./pages/Home"));
+const Dashboard = lazy(() => import("./components/Dashboard"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
+const Groups = lazy(() => import("./components/Group/Groups"));
+const Card = lazy(() => import("./components/Card/Card"));
+const NotFound = lazy(() => import("./components/NotFound"));
+const CreateCard = lazy(() => import("./components/Card/CreateCard"));
+const Project = lazy(() => import("./pages/Project"));
 
 function App() {
 	return (
 		<Routes>
 			<Route element={<AuthorizedOnly />}>
-				<Route path="/" element={<Home />} />
-				<Route path="/:ownerId/projects/:projectId" element={<Project />}>
-					<Route path="dashboard" element={<Dashboard />} />
-					<Route path="groups" element={<Groups />} />
-					<Route path="createCard" element={<CreateCard />} />
-					<Route path="groups/:groupId/cards/:cardId" element={<Card />} />
+				<Route
+					path="/"
+					element={
+						<Suspense fallback="Loading...">
+							<Home />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/:ownerId/projects/:projectId"
+					element={
+						<Suspense fallback="Loading...">
+							<Project />
+						</Suspense>
+					}
+				>
+					<Route
+						path="dashboard"
+						element={
+							<Suspense fallback="Loading...">
+								<Dashboard />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="groups"
+						element={
+							<Suspense fallback="Loading...">
+								<Groups />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="createCard"
+						element={
+							<Suspense fallback="Loading...">
+								<CreateCard />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="groups/:groupId/cards/:cardId"
+						element={
+							<Suspense fallback="Loading...">
+								<Card />
+							</Suspense>
+						}
+					/>
 					<Route path="*" element={<Navigate element={<Dashboard />} />} />
 				</Route>
 			</Route>
 			<Route element={<UnAuthorizedOnly />}>
-				<Route path="/login" element={<Login />} />
-				<Route path="/register" element={<Register />} />
+				<Route
+					path="/login"
+					element={
+						<Suspense fallback="Loading...">
+							<Login />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/register"
+					element={
+						<Suspense fallback="Loading...">
+							<Register />
+						</Suspense>
+					}
+				/>
 			</Route>
-			<Route path="/*" element={<NotFound />} />
+			<Route
+				path="/*"
+				element={
+					<Suspense fallback="Loading...">
+						<NotFound />
+					</Suspense>
+				}
+			/>
 		</Routes>
 	);
 }
