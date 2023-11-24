@@ -6,7 +6,6 @@ import { logIn } from "../features/auth/authSlice";
 import { useState } from "react";
 
 const Login = () => {
-	const navigate = useNavigate();
 	const [error, setError] = useState();
 
 	const form = useForm();
@@ -22,6 +21,7 @@ const Login = () => {
 			const userData = await login({ email, password }).unwrap();
 			const accessToken = userData.accessToken;
 			const refreshToken = userData.refreshToken;
+			console.log(email);
 			dispatch(
 				logIn({
 					email,

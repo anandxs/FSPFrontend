@@ -5,9 +5,7 @@ const Profile = () => {
 	return (
 		<>
 			<Navbar />
-			{/* <section className="h-full flex justify-center"> */}
 			<ProfileCard />
-			{/* </section> */}
 		</>
 	);
 };

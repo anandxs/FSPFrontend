@@ -16,7 +16,7 @@ const authSlice = createSlice({
 	initialState,
 	reducers: {
 		setCredentials: (state, action) => {
-			const { id, name, email } = action.payload;
+			const { id, name } = action.payload;
 			state.id = id;
 			state.name = name;
 			sessionStorage.setItem(
@@ -24,7 +24,7 @@ const authSlice = createSlice({
 				JSON.stringify({
 					id,
 					name,
-					email,
+					email: state.email,
 					accessToken: state.accessToken,
 					refreshToken: state.refreshToken,
 				})
@@ -40,6 +40,7 @@ const authSlice = createSlice({
 		logOut: (state, action) => {
 			state.id = null;
 			state.name = null;
+			state.email = null;
 			state.accessToken = null;
 			state.refreshToken = null;
 			sessionStorage.clear();

@@ -1,19 +1,21 @@
-import React from "react";
+import { useSelector } from "react-redux";
 import ProfilePicAlternative from "./ProfilePicAlternative";
+import { selectCurrentUser } from "../../features/auth/authSlice";
 
 const ProfileCard = () => {
+	const user = useSelector(selectCurrentUser);
 	return (
-		<div className="flex items-center gap-5 md:w-3/4 m-1 sm:mx-auto sm:mt-8">
+		<div className="flex items-center gap-5 md:w-3/4 mt-8 mx-auto">
 			<div
-				className={`bg-green-600 p-2 rounded-full h-16 w-16 flex justify-center items-center`}
+				className={`bg-green-600 p-2 rounded-full h-12 w-12 sm:h-16 sm:w-16 flex justify-center items-center`}
 			>
 				<div className="text-white font-bold text-xl">
 					<ProfilePicAlternative />
 				</div>
 			</div>
 			<div className="">
-				<h1 className="text-lg font-bold">Full Name</h1>
-				<h2 className="">email@mail.com</h2>
+				<h1 className="text-lg font-bold">{user?.name}</h1>
+				<h2 className="">{user?.email}</h2>
 			</div>
 		</div>
 	);
