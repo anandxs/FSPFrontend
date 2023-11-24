@@ -3,9 +3,9 @@ import { selectCurrentUser } from "../features/auth/authSlice";
 import { Navigate, Outlet } from "react-router-dom";
 
 const AuthorizedOnly = () => {
-	const { id } = useSelector(selectCurrentUser);
+	const { accessToken } = useSelector(selectCurrentUser);
 
-	return id !== null ? <Outlet /> : <Navigate to="/login" />;
+	return accessToken !== null ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default AuthorizedOnly;

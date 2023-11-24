@@ -22,8 +22,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
 				method: "DELETE",
 			}),
 		}),
+		getUserInfo: builder.query({
+			query: () => "api/profile",
+		}),
 	}),
 });
 
-export const { useLoginMutation, useRegisterMutation, useLogOutMutation } =
-	authApiSlice;
+export const {
+	useLoginMutation,
+	useRegisterMutation,
+	useLogOutMutation,
+	useGetUserInfoQuery,
+} = authApiSlice;

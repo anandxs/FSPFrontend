@@ -2,18 +2,17 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../features/auth/authApiSlice";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../features/auth/authSlice";
+import { logIn } from "../features/auth/authSlice";
 import { useState } from "react";
-import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
 	const [error, setError] = useState();
 
-	const form = useForm({});
+	const form = useForm();
 	const { register, handleSubmit, formState } = form;
 	const { errors, isSubmitting } = formState;
 
-	const [login, { isLoading }] = useLoginMutation();
+	const [login] = useLoginMutation();
 	const dispatch = useDispatch();
 
 	const navigate = useNavigate();
@@ -24,25 +23,15 @@ const Login = () => {
 			const userData = await login({ email, password }).unwrap();
 			const accessToken = userData.accessToken;
 			const refreshToken = userData.refreshToken;
-			const decodedToken = jwtDecode(accessToken);
-			const name =
-				decodedToken[
-					"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-				];
-			const id =
-				decodedToken[
-					"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
-				];
 			dispatch(
-				setCredentials({
-					id,
-					name,
+				logIn({
 					accessToken,
 					refreshToken,
 				})
 			);
 			navigate("/");
 		} catch (err) {
+			console.log(err);
 			if (err.status === 401) setError("Invalid credentials");
 			else if (err.status === 500) setError("Internal server error");
 			else setError("Network error");
