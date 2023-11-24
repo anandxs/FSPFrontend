@@ -19,8 +19,6 @@ const authSlice = createSlice({
 			const { id, name, email } = action.payload;
 			state.id = id;
 			state.name = name;
-			state.email = email;
-			sessionStorage.removeItem("auth");
 			sessionStorage.setItem(
 				"auth",
 				JSON.stringify({
@@ -33,7 +31,8 @@ const authSlice = createSlice({
 			);
 		},
 		logIn: (state, action) => {
-			const { accessToken, refreshToken } = action.payload;
+			const { email, accessToken, refreshToken } = action.payload;
+			state.email = email;
 			state.accessToken = accessToken;
 			state.refreshToken = refreshToken;
 			sessionStorage.setItem("auth", JSON.stringify(action.payload));

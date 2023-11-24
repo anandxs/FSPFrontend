@@ -1,34 +1,13 @@
 import { useDispatch } from "react-redux";
-import { logOut, setCredentials } from "../../features/auth/authSlice";
+import { logOut } from "../../features/auth/authSlice";
 import { Link } from "react-router-dom";
 import { unsetProject } from "../../features/project/projectSlice";
-import {
-	useGetUserInfoQuery,
-	useLogOutMutation,
-} from "../../features/auth/authApiSlice";
-import { useEffect } from "react";
+import { useLogOutMutation } from "../../features/auth/authApiSlice";
+import ProfilePicAlternative from "../Profile/ProfilePicAlternative";
 
 const Navbar = () => {
 	const [logOutUser, { isLoading }] = useLogOutMutation();
-	const { data, isSuccess, isError } = useGetUserInfoQuery();
-
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (isSuccess) {
-			const { id, email, firstName, lastName } = data;
-			const name = `${firstName} ${lastName}`;
-			dispatch(
-				setCredentials({
-					id,
-					email,
-					name,
-				})
-			);
-		} else if (isError) {
-			dispatch(logOut());
-		}
-	}, []);
 
 	const handleLogout = async () => {
 		try {
@@ -59,9 +38,13 @@ const Navbar = () => {
 					</span>
 				</Link>
 				<div className="flex items-center space-x-6 rtl:space-x-reverse">
-					<div className={`bg-green-600 py-2 px-2 rounded-full`}>
-						<div className="text-white font-bold text-xs">{"placeholder"}</div>
-					</div>
+					<Link to="/profile">
+						<div className={`bg-green-600 py-2 px-2 rounded-full`}>
+							<div className="text-white font-bold text-xs">
+								<ProfilePicAlternative />
+							</div>
+						</div>
+					</Link>
 					<button
 						type="button"
 						className="bg-primary text-white font-semibold text-xs px-2 py-2 rounded-md"

@@ -2,6 +2,8 @@ import { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
+import Profile from "./pages/Profile";
+import LoadUser from "./components/Profile/LoadUser";
 const Home = lazy(() => import("./pages/Home"));
 const Dashboard = lazy(() => import("./components/Dashboard"));
 const Login = lazy(() => import("./pages/Login"));
@@ -24,6 +26,8 @@ function App() {
 						</Suspense>
 					}
 				/>
+				<Route path="/load" element={<LoadUser />} />
+				<Route path="/profile" element={<Profile />} />
 				<Route
 					path="/:ownerId/projects/:projectId"
 					element={
