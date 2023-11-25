@@ -1,6 +1,9 @@
 import { useGetUserInfoQuery } from "../../features/auth/authApiSlice";
-import { useDispatch } from "react-redux";
-import { setCredentials } from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	selectCurrentUser,
+	setCredentials,
+} from "../../features/auth/authSlice";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +11,7 @@ const LoadUser = () => {
 	const { data, isSuccess } = useGetUserInfoQuery();
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const user = useSelector(selectCurrentUser);
 
 	useEffect(() => {
 		if (isSuccess) {
@@ -17,7 +21,14 @@ const LoadUser = () => {
 					name: `${data?.firstName} ${data?.lastName}`,
 				})
 			);
-			navigate("/");
+
+			if (user.id === data?.id) {
+				console.log("going back to profile");
+				navigate("/profile");
+			} else {
+				console.log("logging in");
+				navigate("/");
+			}
 		}
 	}, [isSuccess]);
 

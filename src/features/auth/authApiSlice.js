@@ -24,6 +24,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
 		}),
 		getUserInfo: builder.query({
 			query: () => "api/profile",
+			providesTags: ["User"],
+		}),
+		updateUserInfo: builder.mutation({
+			query: (body) => ({
+				url: `api/profile`,
+				method: "POST",
+				body,
+			}),
+			invalidatesTags: ["User"],
 		}),
 	}),
 });
@@ -33,4 +42,5 @@ export const {
 	useRegisterMutation,
 	useLogOutMutation,
 	useGetUserInfoQuery,
+	useUpdateUserInfoMutation,
 } = authApiSlice;

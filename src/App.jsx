@@ -4,6 +4,7 @@ import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
 import Profile from "./pages/Profile";
 import LoadUser from "./components/Profile/LoadUser";
+import UpdateProfile from "./components/Profile/UpdateProfile";
 const Home = lazy(() => import("./pages/Home"));
 const Dashboard = lazy(() => import("./components/Dashboard"));
 const Login = lazy(() => import("./pages/Login"));
@@ -27,7 +28,10 @@ function App() {
 					}
 				/>
 				<Route path="/load" element={<LoadUser />} />
-				<Route path="/profile" element={<Profile />} />
+				<Route path="/profile" element={<Profile />}>
+					<Route index to="update" element={<UpdateProfile />} />
+					<Route to="passwordchange" element={<UpdateProfile />} />
+				</Route>
 				<Route
 					path="/:ownerId/projects/:projectId"
 					element={

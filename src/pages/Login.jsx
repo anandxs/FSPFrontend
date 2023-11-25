@@ -21,7 +21,6 @@ const Login = () => {
 			const userData = await login({ email, password }).unwrap();
 			const accessToken = userData.accessToken;
 			const refreshToken = userData.refreshToken;
-			console.log(email);
 			dispatch(
 				logIn({
 					email,
@@ -30,7 +29,6 @@ const Login = () => {
 				})
 			);
 		} catch (err) {
-			console.log(err);
 			if (err.status === 401) setError("Invalid credentials");
 			else if (err.status === 500) setError("Internal server error");
 			else setError("Network error");

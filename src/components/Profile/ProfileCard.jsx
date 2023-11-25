@@ -5,7 +5,7 @@ import { selectCurrentUser } from "../../features/auth/authSlice";
 const ProfileCard = () => {
 	const user = useSelector(selectCurrentUser);
 	return (
-		<div className="flex items-center gap-5 md:w-3/4 mt-8 mx-auto">
+		<div className="flex items-center gap-5 w-10/12 md:w-3/4 mt-8 mx-auto">
 			<div
 				className={`bg-green-600 p-2 rounded-full h-12 w-12 sm:h-16 sm:w-16 flex justify-center items-center`}
 			>
