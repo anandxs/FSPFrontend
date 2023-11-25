@@ -28,10 +28,7 @@ function App() {
 					}
 				/>
 				<Route path="/load" element={<LoadUser />} />
-				<Route path="/profile" element={<Profile />}>
-					<Route index to="update" element={<UpdateProfile />} />
-					<Route to="passwordchange" element={<UpdateProfile />} />
-				</Route>
+				<Route path="/profile/*" element={<Profile />} />
 				<Route
 					path="/:ownerId/projects/:projectId"
 					element={
@@ -72,7 +69,6 @@ function App() {
 							</Suspense>
 						}
 					/>
-					<Route path="*" element={<Navigate element={<Dashboard />} />} />
 				</Route>
 			</Route>
 			<Route element={<UnAuthorizedOnly />}>

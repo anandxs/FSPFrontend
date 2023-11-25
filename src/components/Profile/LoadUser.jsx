@@ -23,10 +23,8 @@ const LoadUser = () => {
 			);
 
 			if (user.id === data?.id) {
-				console.log("going back to profile");
 				navigate("/profile");
 			} else {
-				console.log("logging in");
 				navigate("/");
 			}
 		}
