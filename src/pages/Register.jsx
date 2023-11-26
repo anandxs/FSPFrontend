@@ -1,18 +1,17 @@
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRegisterMutation } from "../features/auth/authApiSlice";
 import { useState } from "react";
 
 const Register = () => {
 	const [error, setError] = useState();
+	const [success, setSuccess] = useState(false);
 
 	const form = useForm();
 	const { register, formState, handleSubmit, watch } = form;
 	const { errors, isSubmitting } = formState;
 
-	const [signup, { isLoading }] = useRegisterMutation();
-
-	const navigate = useNavigate();
+	const [signup] = useRegisterMutation();
 
 	const onSubmit = async (data) => {
 		try {
@@ -24,7 +23,7 @@ const Register = () => {
 				password,
 			};
 			const response = await signup({ ...body }).unwrap();
-			navigate("/login");
+			setSuccess(true);
 		} catch (err) {
 			if (err.status === 400) {
 				const message = err.data["DuplicateEmail"][0];
@@ -34,7 +33,7 @@ const Register = () => {
 		}
 	};
 
-	return (
+	return !success ? (
 		<section className="flex justify-center items-center h-full">
 			<div className="bg-secondary w-60 p-3 rounded">
 				<form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -166,6 +165,12 @@ const Register = () => {
 					</div>
 				</form>
 			</div>
+		</section>
+	) : (
+		<section className="h-full flex flex-col justify-center items-center">
+			<p>Thank you for registering!</p>
+			<p>Verification mail has been sent to your email address.</p>
+			<p>Login after verifying your account.</p>
 		</section>
 	);
 };

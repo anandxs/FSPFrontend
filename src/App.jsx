@@ -5,6 +5,7 @@ import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
 import Profile from "./pages/Profile";
 import LoadUser from "./components/Profile/LoadUser";
 import UpdateProfile from "./components/Profile/UpdateProfile";
+import EmailVerified from "./pages/EmailVerified";
 const Home = lazy(() => import("./pages/Home"));
 const Dashboard = lazy(() => import("./components/Dashboard"));
 const Login = lazy(() => import("./pages/Login"));
@@ -85,6 +86,14 @@ function App() {
 					element={
 						<Suspense fallback="Loading...">
 							<Register />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/verifyemail"
+					element={
+						<Suspense fallback="Loading...">
+							<EmailVerified />
 						</Suspense>
 					}
 				/>
