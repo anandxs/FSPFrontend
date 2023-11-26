@@ -4,8 +4,9 @@ import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
 import Profile from "./pages/Profile";
 import LoadUser from "./components/Profile/LoadUser";
-import UpdateProfile from "./components/Profile/UpdateProfile";
 import EmailVerified from "./pages/EmailVerified";
+const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Home = lazy(() => import("./pages/Home"));
 const Dashboard = lazy(() => import("./components/Dashboard"));
 const Login = lazy(() => import("./pages/Login"));
@@ -94,6 +95,22 @@ function App() {
 					element={
 						<Suspense fallback="Loading...">
 							<EmailVerified />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/forgotpassword"
+					element={
+						<Suspense fallback="Loading...">
+							<ForgotPassword />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="/resetpassword"
+					element={
+						<Suspense fallback="Loading...">
+							<ResetPassword />
 						</Suspense>
 					}
 				/>

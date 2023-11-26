@@ -87,8 +87,14 @@ const Login = () => {
 						>
 							Login
 						</button>
-						<Link to="/register" className="text-xs hover:underline">
-							Regiser a new account
+						<Link
+							to="/forgotpassword"
+							className="block py-1 text-xs hover:underline"
+						>
+							Forgot Password?
+						</Link>
+						<Link to="/register" className="block py-1 text-xs hover:underline">
+							Register New Account
 						</Link>
 					</div>
 				</form>
