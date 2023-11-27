@@ -19,7 +19,7 @@ const UpdateProfile = lazy(() => import("./components/Profile/UpdateProfile"));
 const UpdatePassword = lazy(() =>
 	import("./components/Profile/UpdatePassword")
 );
-const Members = lazy(() => import("./components/Members"));
+const Members = lazy(() => import("./components/Member/Members"));
 
 function App() {
 	return (

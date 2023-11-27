@@ -1,13 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useGetProjectMembersQuery } from "../features/member/memberApiSlice";
+import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice";
+import AddMember from "./AddMember";
 
 const Members = () => {
 	const { ownerId, projectId } = useParams();
 
-	const { data, isLoading, isSuccess, isError } = useGetProjectMembersQuery({
-		ownerId,
-		projectId,
-	});
+	const { data, isLoading, isSuccess, isError, error } =
+		useGetProjectMembersQuery({
+			ownerId,
+			projectId,
+		});
 
 	let content = "";
 	if (isLoading) {
@@ -44,12 +46,13 @@ const Members = () => {
 			</table>
 		);
 	} else if (isError) {
-		console.log(errors);
+		console.log(error);
 	}
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<h1 className="text-xl font-bold hover:underline">Members</h1>
+			<AddMember />
 			{content}
 		</div>
 	);
