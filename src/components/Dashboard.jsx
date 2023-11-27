@@ -30,41 +30,45 @@ const Dashboard = () => {
 	if (isLoading) {
 		content = <p>Loading...</p>;
 	} else if (isSuccess) {
-		content = (
-			<table className="table-fixed w-10/12 mt-3 border border-black">
-				<thead className="table-header-group bg-primary text-white">
-					<tr>
-						<th className="text-left text-sm px-2 py-1 border border-black">
-							Title
-						</th>
-						<th className="text-left text-sm px-2 py-1 border border-black">
-							Group
-						</th>
-						<th className="text-left text-sm px-2 py-1 border border-black">
-							Description
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{data?.map((c) => (
-						<tr key={c.cardId}>
-							<td
-								className="px-2 py-1 text-sm border border-black hover:underline"
-								onClick={() => goToCard(c)}
-							>
-								{c.title}
-							</td>
-							<td className="px-2 py-1 text-sm border border-black">
-								{c.group?.name}
-							</td>
-							<td className="px-2 py-1 text-sm border border-black">
-								{c.description ? c.description : "- -"}
-							</td>
+		if (data.length === 0) {
+			content = <p className="py-1 text-sm">Nothing to display</p>;
+		} else {
+			content = (
+				<table className="table-fixed w-10/12 mt-3 border border-black">
+					<thead className="table-header-group bg-primary text-white">
+						<tr>
+							<th className="text-left text-sm px-2 py-1 border border-black">
+								Title
+							</th>
+							<th className="text-left text-sm px-2 py-1 border border-black">
+								Group
+							</th>
+							<th className="text-left text-sm px-2 py-1 border border-black">
+								Description
+							</th>
 						</tr>
-					))}
-				</tbody>
-			</table>
-		);
+					</thead>
+					<tbody>
+						{data?.map((c) => (
+							<tr key={c.cardId}>
+								<td
+									className="px-2 py-1 text-sm border border-black hover:underline"
+									onClick={() => goToCard(c)}
+								>
+									{c.title}
+								</td>
+								<td className="px-2 py-1 text-sm border border-black">
+									{c.group?.name}
+								</td>
+								<td className="px-2 py-1 text-sm border border-black">
+									{c.description ? c.description : "- -"}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			);
+		}
 	} else if (isError) {
 		console.log(errors);
 	}
