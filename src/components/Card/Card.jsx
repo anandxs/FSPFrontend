@@ -24,7 +24,10 @@ const Card = () => {
 		cardId,
 	});
 
-	const { data: groups } = useGetProjectGroupsQuery({ ownerId, projectId });
+	const { data: groups, isLoading } = useGetProjectGroupsQuery({
+		ownerId,
+		projectId,
+	});
 	const [updateCard] = useUpdateCardMutation();
 
 	const handleUpdate = () => {
@@ -77,7 +80,7 @@ const Card = () => {
 				</div>
 				<div className="w-1/3 m-1 h-full bg-accent flex flex-col gap-1">
 					<button
-						className="bg-primary text-white font-semibold rounded px-1 w-full"
+						className="bg-primary text-white text-sm rounded px-1 w-full"
 						onClick={handleUpdate}
 					>
 						Update
