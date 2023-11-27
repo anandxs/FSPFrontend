@@ -3,12 +3,9 @@ import { useCreateProjectMutation } from "../../features/project/projectApiSlice
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const CreateProjectModal = ({ setShowModal }) => {
+const CreateProjectModal = ({ handleProjectToggle }) => {
 	const [error, setError] = useState();
-
-	const navigate = useNavigate();
 
 	const form = useForm();
 	const { register, handleSubmit, formState, watch } = form;
@@ -20,7 +17,7 @@ const CreateProjectModal = ({ setShowModal }) => {
 
 	const { id } = useSelector(selectCurrentUser);
 
-	const [create, { isLoading, isError }] = useCreateProjectMutation();
+	const [create, { isLoading }] = useCreateProjectMutation();
 
 	const onSubmit = async ({ projectName }) => {
 		const body = {
@@ -29,9 +26,8 @@ const CreateProjectModal = ({ setShowModal }) => {
 		};
 		try {
 			const response = await create(body).unwrap();
-			console.log(response);
-			setShowModal(false);
-			navigate(`/${response?.ownerId}/projects/${response?.projectId}`);
+
+			handleProjectToggle();
 		} catch (err) {
 			if (err.status === 404) {
 				setError(err.data.Message);
@@ -48,7 +44,11 @@ const CreateProjectModal = ({ setShowModal }) => {
 	};
 
 	return (
-		<div className="bg-secondary p-2.5 rounded w-56">
+		<div
+			className="bg-secondary p-3 w-1/3 min-w-max"
+			onClick={(e) => e.stopPropagation()}
+		>
+			<h1 className="text-2xl font-bold mb-2 py-1">Create Project</h1>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
 				<p className="text-xs mb-1 text-red-600">
 					{errors?.projectName?.message}

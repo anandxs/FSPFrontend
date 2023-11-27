@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
 import { useCreateCardMutation } from "../../features/card/cardApiSlice";
 
-const CreateCard = ({ handleCardToggle }) => {
+const CreateCardModal = ({ handleCardToggle }) => {
 	const { ownerId, projectId } = useParams();
 	const { data, isLoading } = useGetProjectGroupsQuery({ ownerId, projectId });
 	const [createCard] = useCreateCardMutation();
@@ -36,7 +36,7 @@ const CreateCard = ({ handleCardToggle }) => {
 			className="bg-accent p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-2">Create Card</h1>
+			<h1 className="text-2xl font-bold mb-2 py-1">Create Card</h1>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
 				<div className="my-2">
 					<label htmlFor="title" className="font-semibold text-xl block">
@@ -95,4 +95,4 @@ const CreateCard = ({ handleCardToggle }) => {
 	);
 };
 
-export default CreateCard;
+export default CreateCardModal;

@@ -8,7 +8,7 @@ import { useDispatch } from "react-redux";
 import { setProject } from "../../features/project/projectSlice";
 import CreateGroupModal from "../Group/CreateGroupModal";
 import Modal from "../Modal/Modal";
-import CreateCard from "../Card/CreateCard";
+import CreateCardModal from "../Card/CreateCardModal";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
@@ -115,15 +115,9 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 				</button>
 				{cardToggle && (
 					<Modal action={handleCardToggle}>
-						<CreateCard handleCardToggle={handleCardToggle} />
+						<CreateCardModal handleCardToggle={handleCardToggle} />
 					</Modal>
 				)}
-				{/* <Link
-					to={`/${ownerId}/projects/${projectId}/createcard`}
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-				>
-					Create Card
-				</Link> */}
 			</div>
 		</div>
 	);
