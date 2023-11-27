@@ -8,10 +8,11 @@ import { useDispatch } from "react-redux";
 import { setProject } from "../../features/project/projectSlice";
 import CreateGroupModal from "../Group/CreateGroupModal";
 import { Link } from "react-router-dom";
+import Modal from "../Modal/Modal";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
-	const [createGroupToggle, setCreateGroupToggle] = useState(false);
+	const [groupToggle, setGroupToggle] = useState(false);
 
 	const { data } = useGetProjectByIdQuery({ ownerId, projectId });
 	const [updateProject] = useUpdateProjectNameMutation();
@@ -38,6 +39,10 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 		} catch (err) {
 			console.log(err);
 		}
+	};
+
+	const handleGroupToggle = () => {
+		setGroupToggle(!groupToggle);
 	};
 
 	return (
@@ -89,12 +94,14 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 				<div className="flex flex-col gap-3">
 					<button
 						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-						onClick={() => setCreateGroupToggle((prev) => !prev)}
+						onClick={handleGroupToggle}
 					>
 						Create Group
 					</button>
-					{createGroupToggle && (
-						<CreateGroupModal setCreateGroupToggle={setCreateGroupToggle} />
+					{groupToggle && (
+						<Modal action={handleGroupToggle}>
+							<CreateGroupModal handleGroupToggle={handleGroupToggle} />
+						</Modal>
 					)}
 				</div>
 				<Link
