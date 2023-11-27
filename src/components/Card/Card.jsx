@@ -31,7 +31,7 @@ const Card = () => {
 	const handleDelete = async () => {
 		try {
 			await deleteCard({ ownerId, projectId, groupId, cardId }).unwrap();
-			navigate(`/${ownerId}/projects/${projectId}/dashboard`, {
+			navigate(`/${ownerId}/projects/${projectId}`, {
 				state: {
 					ownerId,
 					projectId,

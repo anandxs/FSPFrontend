@@ -16,6 +16,10 @@ const Card = lazy(() => import("./components/Card/Card"));
 const NotFound = lazy(() => import("./components/NotFound"));
 const CreateCard = lazy(() => import("./components/Card/CreateCard"));
 const Project = lazy(() => import("./pages/Project"));
+const UpdateProfile = lazy(() => import("./components/Profile/UpdateProfile"));
+const UpdatePassword = lazy(() =>
+	import("./components/Profile/UpdatePassword")
+);
 
 function App() {
 	return (
@@ -30,7 +34,24 @@ function App() {
 					}
 				/>
 				<Route path="/load" element={<LoadUser />} />
-				<Route path="/profile/*" element={<Profile />} />
+				<Route path="/profile" element={<Profile />}>
+					<Route
+						path="details"
+						element={
+							<Suspense fallback="Loading..">
+								<UpdateProfile />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="passwordchange"
+						element={
+							<Suspense fallback="Loading...">
+								<UpdatePassword />
+							</Suspense>
+						}
+					/>
+				</Route>
 				<Route
 					path="/:ownerId/projects/:projectId"
 					element={
@@ -40,7 +61,8 @@ function App() {
 					}
 				>
 					<Route
-						path="dashboard"
+						index={true}
+						path=""
 						element={
 							<Suspense fallback="Loading...">
 								<Dashboard />

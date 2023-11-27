@@ -23,7 +23,7 @@ const LoadUser = () => {
 			);
 
 			if (user.id === data?.id) {
-				navigate("/profile");
+				navigate("/profile/details");
 			} else {
 				navigate("/");
 			}

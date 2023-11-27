@@ -25,9 +25,8 @@ const CreateCard = () => {
 				projectId,
 				groupId: data.groupId,
 				body,
-			}).unwrap();
-			console.log(response);
-			navigate(`/${ownerId}/projects/${projectId}/dashboard`);
+			});
+			navigate(`/${ownerId}/projects/${projectId}`);
 		} catch (err) {
 			console.log(err);
 		}

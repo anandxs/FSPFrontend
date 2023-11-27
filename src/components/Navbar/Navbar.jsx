@@ -38,7 +38,7 @@ const Navbar = () => {
 					</span>
 				</Link>
 				<div className="flex items-center space-x-6 rtl:space-x-reverse">
-					<Link to="/profile">
+					<Link to="/profile/details">
 						<div className={`bg-green-600 py-2 px-2 rounded-full`}>
 							<div className="text-white font-bold text-xs">
 								<ProfilePicAlternative />
