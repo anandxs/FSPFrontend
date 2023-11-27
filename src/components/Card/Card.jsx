@@ -1,16 +1,15 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
-	useDeleteCardMutation,
 	useGetCardByIdQuery,
 	useUpdateCardMutation,
 } from "../../features/card/cardApiSlice";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
+import DeleteCard from "./DeleteCard";
 
 const Card = () => {
 	const { ownerId, projectId, groupId, cardId } = useParams();
-	const navigate = useNavigate();
 
 	const form = useForm();
 	const { register, handleSubmit, formState, setValue } = form;
@@ -24,23 +23,9 @@ const Card = () => {
 		groupId,
 		cardId,
 	});
-	const [deleteCard, { isLoading }] = useDeleteCardMutation();
+
 	const { data: groups } = useGetProjectGroupsQuery({ ownerId, projectId });
 	const [updateCard] = useUpdateCardMutation();
-
-	const handleDelete = async () => {
-		try {
-			await deleteCard({ ownerId, projectId, groupId, cardId }).unwrap();
-			navigate(`/${ownerId}/projects/${projectId}`, {
-				state: {
-					ownerId,
-					projectId,
-				},
-			});
-		} catch (err) {
-			console.log(err);
-		}
-	};
 
 	const handleUpdate = () => {
 		setToggleUpdate(true);
@@ -97,12 +82,7 @@ const Card = () => {
 					>
 						Update
 					</button>
-					<button
-						className="bg-orange-500 text-white font-semibold rounded px-1 w-full"
-						onClick={handleDelete}
-					>
-						{isLoading ? "Loading.." : "Delete"}
-					</button>
+					<DeleteCard params={{ ownerId, projectId, groupId, cardId }} />
 				</div>
 			</section>
 		</div>
