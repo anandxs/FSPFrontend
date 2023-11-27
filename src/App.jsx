@@ -19,6 +19,7 @@ const UpdateProfile = lazy(() => import("./components/Profile/UpdateProfile"));
 const UpdatePassword = lazy(() =>
 	import("./components/Profile/UpdatePassword")
 );
+const Members = lazy(() => import("./components/Members"));
 
 function App() {
 	return (
@@ -81,6 +82,14 @@ function App() {
 						element={
 							<Suspense fallback="Loading...">
 								<Card />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="members"
+						element={
+							<Suspense fallback="Loading...">
+								<Members />
 							</Suspense>
 						}
 					/>

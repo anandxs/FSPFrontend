@@ -23,6 +23,13 @@ const Sidebar = () => {
 						<Link to={`/${ownerId}/projects/${projectId}/groups`}>Groups</Link>
 					</span>
 				</li>
+				<li className="text-center font-semibold text-md p-2">
+					<span className="m-1">
+						<Link to={`/${ownerId}/projects/${projectId}/members`}>
+							Members
+						</Link>
+					</span>
+				</li>
 			</ul>
 		</div>
 	);

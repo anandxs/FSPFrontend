@@ -3,7 +3,7 @@ import { useGetCardsForProjectQuery } from "../features/card/cardApiSlice";
 
 const Dashboard = () => {
 	const { ownerId, projectId } = useParams();
-	const { data, isLoading, isSuccess, isError, errors } =
+	const { data, isLoading, isSuccess, isError, error } =
 		useGetCardsForProjectQuery({ ownerId, projectId });
 
 	const navigate = useNavigate();
@@ -61,7 +61,7 @@ const Dashboard = () => {
 			);
 		}
 	} else if (isError) {
-		console.log(errors);
+		console.log(error);
 	}
 
 	return (
