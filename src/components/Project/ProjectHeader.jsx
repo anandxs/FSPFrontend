@@ -9,6 +9,7 @@ import {
 import Modal from "../Modal/Modal";
 import CreateGroupModal from "../Group/CreateGroupModal";
 import CreateCardModal from "../Card/CreateCardModal";
+import ArchiveProject from "./ArchiveProject";
 import DeleteProject from "./DeleteProject";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
@@ -119,6 +120,7 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 						<CreateCardModal handleCardToggle={handleCardToggle} />
 					</Modal>
 				)}
+				<ArchiveProject params={{ ownerId, projectId }} data={data} />
 				<DeleteProject params={{ ownerId, projectId }} />
 			</div>
 		</div>
