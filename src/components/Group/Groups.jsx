@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import {
-	useDeleteProjectGroupMutation,
 	useGetProjectGroupsQuery,
 	useUpdateProjectGroupMutation,
 } from "../../features/group/groupApiSlice";
@@ -10,6 +9,7 @@ import {
 	selectProjectId,
 } from "../../features/project/projectSlice";
 import { useForm } from "react-hook-form";
+import DeleteGroup from "./DeleteGroup";
 
 const Groups = () => {
 	const projectId = useSelector(selectProjectId);
@@ -22,24 +22,11 @@ const Groups = () => {
 			ownerId,
 			projectId,
 		});
-	const [deleteGroup] = useDeleteProjectGroupMutation();
 	const [updateGroup] = useUpdateProjectGroupMutation();
 
 	const form = useForm();
 	const { register, handleSubmit, formState, setValue } = form;
 	const { errors } = formState;
-
-	const handleDelete = async ({ groupId }) => {
-		try {
-			const response = await deleteGroup({
-				ownerId,
-				projectId,
-				groupId,
-			}).unwrap();
-		} catch (err) {
-			console.log(err);
-		}
-	};
 
 	const handleToggle = (g) => {
 		setEditToggle((prev) => ({
@@ -115,12 +102,9 @@ const Groups = () => {
 										? "Cancel"
 										: "Edit"}
 								</button>
-								<button
-									className="bg-orange-500 text-white px-3 py-0.5 text-sm rounded-sm"
-									onClick={() => handleDelete(g)}
-								>
-									Delete
-								</button>
+								<DeleteGroup
+									params={{ ownerId, projectId, groupId: g.groupId }}
+								/>
 							</td>
 						</tr>
 					))}
