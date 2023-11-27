@@ -1,18 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import {
 	useGetProjectByIdQuery,
-	useToggleProjectArchiveStatusMutation,
 	useUpdateProjectNameMutation,
-	useDeleteProjectMutation,
 } from "../../features/project/projectApiSlice";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-	selectProjectArchiveStatus,
-	setProject,
-	unsetProject,
-} from "../../features/project/projectSlice";
+import { useDispatch } from "react-redux";
+import { setProject } from "../../features/project/projectSlice";
 import CreateGroupModal from "../Group/CreateGroupModal";
 import { Link } from "react-router-dom";
 
@@ -22,14 +15,8 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 
 	const { data } = useGetProjectByIdQuery({ ownerId, projectId });
 	const [updateProject] = useUpdateProjectNameMutation();
-	const [deleteProject] = useDeleteProjectMutation();
-	const [toggleProjectArchiveStatus] = useToggleProjectArchiveStatusMutation();
-
-	const isActive = useSelector(selectProjectArchiveStatus);
 
 	const dispatch = useDispatch();
-
-	const navigate = useNavigate();
 
 	const form = useForm();
 
@@ -48,27 +35,6 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 				name: projectName,
 			}).unwrap();
 			setUpdateNameToggle(false);
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const handleArchive = async () => {
-		try {
-			const response = await toggleProjectArchiveStatus({
-				ownerId,
-				projectId,
-			}).unwrap();
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const handleDelete = async () => {
-		try {
-			const response = await deleteProject({ ownerId, projectId }).unwrap();
-			dispatch(unsetProject());
-			navigate("/");
 		} catch (err) {
 			console.log(err);
 		}
@@ -137,18 +103,6 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 				>
 					Create Card
 				</Link>
-				<button
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-					onClick={handleArchive}
-				>
-					{data?.isActive ? "Archive Project" : "Unarchive project"}
-				</button>
-				<button
-					className="bg-orange-500 text-white text-sm text-bold px-3 py-1 rounded"
-					onClick={handleDelete}
-				>
-					Delete Project
-				</button>
 			</div>
 		</div>
 	);

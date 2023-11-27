@@ -5,20 +5,15 @@ import { useVerifyEmailMutation } from "../features/auth/authApiSlice";
 const EmailVerified = () => {
 	const [searchParams] = useSearchParams();
 	const code = searchParams.get("code");
-	const userid = searchParams.get("userid");
+	const userId = searchParams.get("userid");
 
 	const [verifyEmail, { isLoading, isSuccess, isError }] =
 		useVerifyEmailMutation();
 
 	useEffect(() => {
-		console.log(code);
-		console.log(userid);
-
-		verifyEmail({ code, userId: userid })
+		verifyEmail({ code, userId })
 			.unwrap()
-			.then(() => {
-				console.log("success");
-			})
+			.then(() => {})
 			.catch((err) => {
 				console.log(err);
 			});
