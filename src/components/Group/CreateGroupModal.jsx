@@ -30,7 +30,7 @@ const CreateGroupModal = ({ handleGroupToggle }) => {
 			className="bg-accent p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-xl font-bold mb-2">Create Group</h1>
+			<h1 className="text-2xl font-bold mb-2 py-2">Create Group</h1>
 			<form noValidate onSubmit={handleSubmit(handleCreateGroup)}>
 				<p className="text-red-600 text-xs">{errors?.groupName?.message}</p>
 				<input

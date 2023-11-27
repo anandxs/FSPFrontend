@@ -7,12 +7,13 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setProject } from "../../features/project/projectSlice";
 import CreateGroupModal from "../Group/CreateGroupModal";
-import { Link } from "react-router-dom";
 import Modal from "../Modal/Modal";
+import CreateCard from "../Card/CreateCard";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
 	const [groupToggle, setGroupToggle] = useState(false);
+	const [cardToggle, setCardToggle] = useState(false);
 
 	const { data } = useGetProjectByIdQuery({ ownerId, projectId });
 	const [updateProject] = useUpdateProjectNameMutation();
@@ -43,6 +44,10 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 
 	const handleGroupToggle = () => {
 		setGroupToggle(!groupToggle);
+	};
+
+	const handleCardToggle = () => {
+		setCardToggle(!cardToggle);
 	};
 
 	return (
@@ -91,25 +96,34 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 				)}
 			</div>
 			<div className="flex flex-row gap-2">
-				<div className="flex flex-col gap-3">
-					<button
-						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-						onClick={handleGroupToggle}
-					>
-						Create Group
-					</button>
-					{groupToggle && (
-						<Modal action={handleGroupToggle}>
-							<CreateGroupModal handleGroupToggle={handleGroupToggle} />
-						</Modal>
-					)}
-				</div>
-				<Link
+				<button
+					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+					onClick={handleGroupToggle}
+				>
+					Create Group
+				</button>
+				{groupToggle && (
+					<Modal action={handleGroupToggle}>
+						<CreateGroupModal handleGroupToggle={handleGroupToggle} />
+					</Modal>
+				)}
+				<button
+					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+					onClick={handleCardToggle}
+				>
+					Create Card
+				</button>
+				{cardToggle && (
+					<Modal action={handleCardToggle}>
+						<CreateCard handleCardToggle={handleCardToggle} />
+					</Modal>
+				)}
+				{/* <Link
 					to={`/${ownerId}/projects/${projectId}/createcard`}
 					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
 				>
 					Create Card
-				</Link>
+				</Link> */}
 			</div>
 		</div>
 	);
