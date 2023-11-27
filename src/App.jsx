@@ -14,7 +14,6 @@ const Register = lazy(() => import("./pages/Register"));
 const Groups = lazy(() => import("./components/Group/Groups"));
 const Card = lazy(() => import("./components/Card/Card"));
 const NotFound = lazy(() => import("./components/NotFound"));
-const CreateCard = lazy(() => import("./components/Card/CreateCard"));
 const Project = lazy(() => import("./pages/Project"));
 const UpdateProfile = lazy(() => import("./components/Profile/UpdateProfile"));
 const UpdatePassword = lazy(() =>
@@ -74,14 +73,6 @@ function App() {
 						element={
 							<Suspense fallback="Loading...">
 								<Groups />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="createCard"
-						element={
-							<Suspense fallback="Loading...">
-								<CreateCard />
 							</Suspense>
 						}
 					/>

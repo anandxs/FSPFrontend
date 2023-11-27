@@ -1,23 +1,25 @@
-import { useForm } from "react-hook-form";
-import { useCreateProjectMutation } from "../../features/project/projectApiSlice";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../features/auth/authSlice";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import { useCreateProjectMutation } from "../../features/project/projectApiSlice";
+import { useNavigate } from "react-router-dom";
 
 const CreateProjectModal = ({ handleProjectToggle }) => {
 	const [error, setError] = useState();
+	const { id } = useSelector(selectCurrentUser);
 
 	const form = useForm();
 	const { register, handleSubmit, formState, watch } = form;
 	const { errors } = formState;
 
+	const [createProject, { isLoading }] = useCreateProjectMutation();
+
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		setError(null);
 	}, [watch("projectName")]);
-
-	const { id } = useSelector(selectCurrentUser);
-
-	const [create, { isLoading }] = useCreateProjectMutation();
 
 	const onSubmit = async ({ projectName }) => {
 		const body = {
@@ -25,14 +27,15 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 			name: projectName,
 		};
 		try {
-			const response = await create(body).unwrap();
-
+			const response = await createProject(body);
+			const { ownerId, projectId } = response?.data;
 			handleProjectToggle();
+			navigate(`/${ownerId}/projects/${projectId}`);
 		} catch (err) {
 			if (err.status === 404) {
 				setError(err.data.Message);
 			} else if (err.status == 401) {
-				await create(body);
+				await createProject(body);
 			} else if (err.state === 422) {
 				setError("Enter valid data.");
 			} else if (err.status === 500) {

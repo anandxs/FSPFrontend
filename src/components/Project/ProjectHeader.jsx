@@ -1,14 +1,15 @@
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { setProject } from "../../features/project/projectSlice";
 import {
 	useGetProjectByIdQuery,
 	useUpdateProjectNameMutation,
 } from "../../features/project/projectApiSlice";
-import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setProject } from "../../features/project/projectSlice";
-import CreateGroupModal from "../Group/CreateGroupModal";
 import Modal from "../Modal/Modal";
+import CreateGroupModal from "../Group/CreateGroupModal";
 import CreateCardModal from "../Card/CreateCardModal";
+import DeleteProject from "./DeleteProject";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
@@ -118,6 +119,7 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 						<CreateCardModal handleCardToggle={handleCardToggle} />
 					</Modal>
 				)}
+				<DeleteProject params={{ ownerId, projectId }} />
 			</div>
 		</div>
 	);

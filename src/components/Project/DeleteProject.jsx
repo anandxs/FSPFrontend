@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useDeleteProjectMutation } from "../../features/project/projectApiSlice";
 import { unsetProject } from "../../features/project/projectSlice";
 import { useNavigate } from "react-router-dom";
+import Confirmation from "../Confirmation";
+import Modal from "../Modal/Modal";
 
 const DeleteProject = ({ params }) => {
+	const [deleteToggle, setDeleteToggle] = useState(false);
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
@@ -20,13 +25,24 @@ const DeleteProject = ({ params }) => {
 		}
 	};
 
+	const handleDeleteToggle = () => {
+		setDeleteToggle(!deleteToggle);
+	};
+
 	return (
-		<button
-			className="bg-orange-500 text-white text-sm text-bold px-3 py-1 rounded"
-			onClick={handleDelete}
-		>
-			Delete Project
-		</button>
+		<>
+			<button
+				className="bg-orange-500 text-white text-sm text-bold px-3 py-1 rounded"
+				onClick={handleDeleteToggle}
+			>
+				Delete Project
+			</button>
+			{deleteToggle && (
+				<Modal action={handleDeleteToggle}>
+					<Confirmation success={handleDelete} cancel={handleDeleteToggle} />
+				</Modal>
+			)}
+		</>
 	);
 };
 
