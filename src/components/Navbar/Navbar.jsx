@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { unsetProject } from "../../features/project/projectSlice";
 import { useLogOutMutation } from "../../features/auth/authApiSlice";
 import ProfilePicAlternative from "../Profile/ProfilePicAlternative";
+import { apiSlice } from "../../app/api/apiSlice";
 
 const Navbar = () => {
 	const [logOutUser, { isLoading }] = useLogOutMutation();
@@ -14,6 +15,7 @@ const Navbar = () => {
 			await logOutUser();
 			dispatch(logOut());
 			dispatch(unsetProject());
+			dispatch(apiSlice.util.resetApiState());
 		} catch (err) {
 			console.log(err);
 		}
