@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useRegisterMutation } from "../features/auth/authApiSlice";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Register = () => {
-	const [error, setError] = useState();
 	const [success, setSuccess] = useState(false);
 
 	const form = useForm();
@@ -13,24 +13,30 @@ const Register = () => {
 
 	const [signup] = useRegisterMutation();
 
-	const onSubmit = async (data) => {
-		try {
-			const { firstName, lastName, email, password } = data;
-			const body = {
-				firstName,
-				lastName,
-				email,
-				password,
-			};
-			const response = await signup({ ...body }).unwrap();
-			setSuccess(true);
-		} catch (err) {
-			if (err.status === 400) {
-				const message = err.data["DuplicateEmail"][0];
-				setError(message);
-			} else if (err.status === 500) setError("Internal server error");
-			else setError("Network error");
-		}
+	const onSubmit = (data) => {
+		const { firstName, lastName, email, password } = data;
+		const body = {
+			firstName,
+			lastName,
+			email,
+			password,
+		};
+		signup({ ...body })
+			.unwrap()
+			.then(() => {
+				toast.success("Account created successfully");
+				setSuccess(true);
+			})
+			.catch((err) => {
+				if (err?.status === 400) {
+					const message = err?.data["DuplicateEmail"][0];
+					toast.error(message);
+				} else if (err?.status === 500) {
+					toast.error("Internal server error");
+				} else {
+					toast.error("Network error");
+				}
+			});
 	};
 
 	return !success ? (
@@ -40,7 +46,6 @@ const Register = () => {
 					<h2 className="text-black font-bold text-2xl text-center mb-2">
 						Register
 					</h2>
-					{error && <p className="text-red-600 text-xs">{error}</p>}
 					<div className="mb-3 mt-2">
 						<label htmlFor="first-name" className="block font-medium text-sm">
 							First Name

@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
@@ -20,132 +20,137 @@ const UpdatePassword = lazy(() =>
 	import("./components/Profile/UpdatePassword")
 );
 const Members = lazy(() => import("./components/Member/Members"));
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 	return (
-		<Routes>
-			<Route element={<AuthorizedOnly />}>
-				<Route
-					path="/"
-					element={
-						<Suspense fallback="Loading...">
-							<Home />
-						</Suspense>
-					}
-				/>
-				<Route path="/load" element={<LoadUser />} />
-				<Route path="/profile" element={<Profile />}>
+		<>
+			<ToastContainer theme="colored" />
+			<Routes>
+				<Route element={<AuthorizedOnly />}>
 					<Route
-						path="details"
+						path="/"
 						element={
-							<Suspense fallback="Loading..">
-								<UpdateProfile />
+							<Suspense fallback="Loading...">
+								<Home />
+							</Suspense>
+						}
+					/>
+					<Route path="/load" element={<LoadUser />} />
+					<Route path="/profile" element={<Profile />}>
+						<Route
+							path="details"
+							element={
+								<Suspense fallback="Loading..">
+									<UpdateProfile />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="passwordchange"
+							element={
+								<Suspense fallback="Loading...">
+									<UpdatePassword />
+								</Suspense>
+							}
+						/>
+					</Route>
+					<Route
+						path="/:ownerId/projects/:projectId"
+						element={
+							<Suspense fallback="Loading...">
+								<Project />
+							</Suspense>
+						}
+					>
+						<Route
+							index={true}
+							path=""
+							element={
+								<Suspense fallback="Loading...">
+									<Dashboard />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="groups"
+							element={
+								<Suspense fallback="Loading...">
+									<Groups />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="groups/:groupId/cards/:cardId"
+							element={
+								<Suspense fallback="Loading...">
+									<Card />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="members"
+							element={
+								<Suspense fallback="Loading...">
+									<Members />
+								</Suspense>
+							}
+						/>
+					</Route>
+				</Route>
+				<Route element={<UnAuthorizedOnly />}>
+					<Route
+						path="/login"
+						element={
+							<Suspense fallback="Loading...">
+								<Login />
 							</Suspense>
 						}
 					/>
 					<Route
-						path="passwordchange"
+						path="/register"
 						element={
 							<Suspense fallback="Loading...">
-								<UpdatePassword />
+								<Register />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="/verifyemail"
+						element={
+							<Suspense fallback="Loading...">
+								<EmailVerified />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="/forgotpassword"
+						element={
+							<Suspense fallback="Loading...">
+								<ForgotPassword />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="/resetpassword"
+						element={
+							<Suspense fallback="Loading...">
+								<ResetPassword />
 							</Suspense>
 						}
 					/>
 				</Route>
 				<Route
-					path="/:ownerId/projects/:projectId"
+					path="/*"
 					element={
 						<Suspense fallback="Loading...">
-							<Project />
-						</Suspense>
-					}
-				>
-					<Route
-						index={true}
-						path=""
-						element={
-							<Suspense fallback="Loading...">
-								<Dashboard />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="groups"
-						element={
-							<Suspense fallback="Loading...">
-								<Groups />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="groups/:groupId/cards/:cardId"
-						element={
-							<Suspense fallback="Loading...">
-								<Card />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="members"
-						element={
-							<Suspense fallback="Loading...">
-								<Members />
-							</Suspense>
-						}
-					/>
-				</Route>
-			</Route>
-			<Route element={<UnAuthorizedOnly />}>
-				<Route
-					path="/login"
-					element={
-						<Suspense fallback="Loading...">
-							<Login />
+							<NotFound />
 						</Suspense>
 					}
 				/>
-				<Route
-					path="/register"
-					element={
-						<Suspense fallback="Loading...">
-							<Register />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="/verifyemail"
-					element={
-						<Suspense fallback="Loading...">
-							<EmailVerified />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="/forgotpassword"
-					element={
-						<Suspense fallback="Loading...">
-							<ForgotPassword />
-						</Suspense>
-					}
-				/>
-				<Route
-					path="/resetpassword"
-					element={
-						<Suspense fallback="Loading...">
-							<ResetPassword />
-						</Suspense>
-					}
-				/>
-			</Route>
-			<Route
-				path="/*"
-				element={
-					<Suspense fallback="Loading...">
-						<NotFound />
-					</Suspense>
-				}
-			/>
-		</Routes>
+			</Routes>
+		</>
 	);
 }
 

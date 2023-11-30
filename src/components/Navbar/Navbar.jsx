@@ -10,15 +10,17 @@ const Navbar = () => {
 	const [logOutUser, { isLoading }] = useLogOutMutation();
 	const dispatch = useDispatch();
 
-	const handleLogout = async () => {
-		try {
-			await logOutUser();
-			dispatch(logOut());
-			dispatch(unsetProject());
-			dispatch(apiSlice.util.resetApiState());
-		} catch (err) {
-			console.log(err);
-		}
+	const handleLogout = () => {
+		logOutUser()
+			.unwrap()
+			.then(() => {
+				dispatch(logOut());
+				dispatch(unsetProject());
+				dispatch(apiSlice.util.resetApiState());
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return isLoading ? (

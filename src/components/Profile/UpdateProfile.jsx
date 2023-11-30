@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useUpdateUserInfoMutation } from "../../features/auth/authApiSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateProfile = () => {
 	const form = useForm();
@@ -11,14 +12,20 @@ const UpdateProfile = () => {
 
 	const navigate = useNavigate();
 
-	const onSubmit = async (data) => {
-		try {
-			await updateInfo({ firstName: data.firstName, lastName: data.lastName });
-			console.log("Update successful.");
-			navigate("/load");
-		} catch (err) {
-			console.log(err);
-		}
+	const onSubmit = (data) => {
+		updateInfo({
+			firstName: data.firstName,
+			lastName: data.lastName,
+		})
+			.unwrap()
+			.then(() => {
+				toast.success("Profile name updated successfully");
+				navigate("/load");
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(err?.data?.Message);
+			});
 	};
 
 	return (

@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useResetPasswordMutation } from "../features/auth/authApiSlice";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 const ResetPassword = () => {
 	const [searchParams] = useSearchParams();
-	const [error, setError] = useState();
 
 	const navigate = useNavigate();
 
@@ -21,12 +20,14 @@ const ResetPassword = () => {
 		resetPassword({ code, userId, newPassword: password })
 			.unwrap()
 			.then(() => {
-				setError();
+				toast.success("Password reset successfully");
 				navigate("/login");
 			})
 			.catch((err) => {
-				if (err.status == 400) {
-					setError("Try again after some time.");
+				if (err?.status == 400) {
+					toast.error(err?.data?.Message);
+				} else {
+					toast.error("Internal server error");
 				}
 			});
 	};
@@ -38,7 +39,6 @@ const ResetPassword = () => {
 					<h2 className="text-text font-bold text-2xl text-center mb-2">
 						Reset Password
 					</h2>
-					<p className="text-xs text-red-600 font-bond">{error && error}</p>
 					<div className="mb-3 mt-2">
 						<label htmlFor="password" className="block font-medium text-sm">
 							Password

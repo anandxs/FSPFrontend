@@ -1,23 +1,19 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useUpdatePasswordMutation } from "../../features/auth/authApiSlice";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 const UpdatePassword = () => {
-	const [error, setError] = useState("");
 	const form = useForm();
 	const { register, watch, handleSubmit, formState, setValue } = form;
 	const { errors } = formState;
 
 	const [updatePassword] = useUpdatePasswordMutation();
 
-	const navigate = useNavigate();
-
 	const onSubmit = ({ currentPassword, newPassword }) => {
 		updatePassword({ currentPassword, newPassword })
 			.unwrap()
 			.then(() => {
-				console.log("password update success");
+				toast.success("Password updated successfully!");
 				setValue("currentPassword", "");
 				setValue("confirmPassword", "");
 				setValue("newPassword", "");
@@ -25,7 +21,7 @@ const UpdatePassword = () => {
 			})
 			.catch((err) => {
 				if (err?.status === 400) {
-					setError("Incorrect password.");
+					toast.error("Incorrect password.");
 				}
 			});
 	};
@@ -33,7 +29,6 @@ const UpdatePassword = () => {
 	return (
 		<div className="w-10/12 md:w-3/4 mt-8 mx-auto text-xs sm:text-base">
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<p className="text-red-600 text-xs">{error}</p>
 				<div className="mb-3">
 					<label htmlFor="current-password" className="block font-medium">
 						Current Password
