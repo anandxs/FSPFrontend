@@ -37,21 +37,22 @@ const Card = () => {
 		setValue("description", data?.description);
 	};
 
-	const onSubmit = async (data) => {
-		try {
-			console.log(data);
-			const body = { ...data };
-			const response = await updateCard({
-				ownerId,
-				projectId,
-				groupId,
-				cardId,
-				body,
-			}).unwrap();
-			setToggleUpdate(false);
-		} catch (err) {
-			console.log(err);
-		}
+	const onSubmit = (data) => {
+		const body = { ...data };
+		updateCard({
+			ownerId,
+			projectId,
+			groupId,
+			cardId,
+			body,
+		})
+			.unwrap()
+			.then(() => {
+				setToggleUpdate(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return !toggleUpdate ? (

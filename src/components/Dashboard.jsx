@@ -52,7 +52,11 @@ const Dashboard = () => {
 									{c.group?.name}
 								</td>
 								<td className="px-2 py-1 text-sm border border-black">
-									{c.description ? c.description : "- -"}
+									{c.description
+										? `${c.description.substring(0, 70)}${
+												c.description.length > 70 ? "..." : ""
+										  }`
+										: "- -"}
 								</td>
 							</tr>
 						))}
