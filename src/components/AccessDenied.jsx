@@ -1,10 +1,24 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { selectCurrentUser } from "../features/auth/authSlice";
 
 const AccessDenied = () => {
+	const auth = useSelector(selectCurrentUser);
+
 	const navigate = useNavigate();
 
 	const goBack = () => {
-		navigate(-2);
+		switch (auth?.role) {
+			case "USER":
+				navigate("/");
+				break;
+			case "SUPERADMIN":
+				navigate("/admin");
+				break;
+			default:
+				navigate("/login");
+				break;
+		}
 	};
 
 	return (
