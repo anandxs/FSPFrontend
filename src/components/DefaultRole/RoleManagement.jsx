@@ -4,6 +4,7 @@ import Modal from "../Modal/Modal";
 import { useGetRolesQuery } from "../../features/defaultRole/defaultRoleApiSlice";
 import Table from "../Table";
 import DeleteRole from "./DeleteRole";
+import EditRole from "./EditRole";
 
 const RoleManagement = () => {
 	const [toggleCreate, setToggleCreate] = useState(false);
@@ -21,6 +22,10 @@ const RoleManagement = () => {
 
 	const deleteRole = (roleId) => {
 		return <DeleteRole params={{ roleId }} />;
+	};
+
+	const editRole = (roleId) => {
+		return <EditRole params={{ roleId }} />;
 	};
 
 	return (
@@ -41,7 +46,12 @@ const RoleManagement = () => {
 			</div>
 			<div>
 				{isLoading && <p>Loading...</p>}
-				<Table data={data} columns={columns} deleteAction={deleteRole} />
+				<Table
+					data={data}
+					columns={columns}
+					editAction={editRole}
+					deleteAction={deleteRole}
+				/>
 			</div>
 		</section>
 	);

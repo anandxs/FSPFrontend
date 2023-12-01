@@ -1,4 +1,6 @@
-const Table = ({ data, columns, deleteAction }) => {
+import EditRole from "./DefaultRole/EditRole";
+
+const Table = ({ data, columns, deleteAction, editAction }) => {
 	return (
 		<table className="table-fixed w-10/12 mt-3 border border-black">
 			<thead className="table-header-group bg-primary text-white">
@@ -27,13 +29,8 @@ const Table = ({ data, columns, deleteAction }) => {
 									row[column.key]
 								) : (
 									<>
-										<button className="bg-primary text-white px-3 py-0.5 text-sm rounded-sm">
-											Edit
-										</button>
+										{editAction(row[column.key])}
 										{deleteAction(row[column.key])}
-										{/* <button className="bg-orange-600 text-white px-3 py-0.5 text-sm rounded-sm">
-											Delete
-										</button> */}
 									</>
 								)}
 							</td>
