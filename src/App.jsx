@@ -30,10 +30,12 @@ function App() {
 		<>
 			<ToastContainer theme="colored" />
 			<Routes>
+				<Route element={<AuthorizedOnly allowedRoles={["None"]} />}>
+					<Route path="/load" element={<LoadUser />} />
+				</Route>
 				<Route
 					element={<AuthorizedOnly allowedRoles={["USER", "SUPERADMIN"]} />}
 				>
-					<Route path="/load" element={<LoadUser />} />
 					<Route
 						path="/denied"
 						element={

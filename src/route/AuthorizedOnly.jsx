@@ -4,11 +4,10 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const AuthorizedOnly = ({ allowedRoles }) => {
 	const { accessToken, role } = useSelector(selectCurrentUser);
-	console.log(allowedRoles);
 
 	return accessToken === null ? (
 		<Navigate to="/login" />
-	) : allowedRoles.includes(role) ? (
+	) : allowedRoles.includes("None") || allowedRoles.includes(role) ? (
 		<Outlet />
 	) : (
 		<Navigate to="/denied" />
