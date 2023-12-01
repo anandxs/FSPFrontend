@@ -9,6 +9,7 @@ const initialState =
 				email: null,
 				accessToken: null,
 				refreshToken: null,
+				role: null,
 		  };
 
 const authSlice = createSlice({
@@ -16,14 +17,16 @@ const authSlice = createSlice({
 	initialState,
 	reducers: {
 		setCredentials: (state, action) => {
-			const { id, name } = action.payload;
+			const { id, name, role } = action.payload;
 			state.id = id;
 			state.name = name;
+			state.role = role;
 			localStorage.setItem(
 				"auth",
 				JSON.stringify({
 					id,
 					name,
+					role,
 					email: state.email,
 					accessToken: state.accessToken,
 					refreshToken: state.refreshToken,

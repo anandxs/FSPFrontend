@@ -19,13 +19,18 @@ const LoadUser = () => {
 				setCredentials({
 					id: data?.id,
 					name: `${data?.firstName} ${data?.lastName}`,
+					role: data?.role,
 				})
 			);
 
 			if (user.id === data?.id) {
 				navigate("/profile/details");
 			} else {
-				navigate("/");
+				if (data?.role === "USER") {
+					navigate("/");
+				} else if (data?.role === "SUPERADMIN") {
+					navigate("/admin");
+				}
 			}
 		}
 	}, [isSuccess]);

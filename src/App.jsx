@@ -1,5 +1,7 @@
-import { Suspense, lazy, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
 import Profile from "./pages/Profile";
@@ -20,24 +22,26 @@ const UpdatePassword = lazy(() =>
 	import("./components/Profile/UpdatePassword")
 );
 const Members = lazy(() => import("./components/Member/Members"));
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+const Admin = lazy(() => import("./pages/Admin"));
+const AccessDenied = lazy(() => import("./components/AccessDenied"));
 
 function App() {
 	return (
 		<>
 			<ToastContainer theme="colored" />
 			<Routes>
-				<Route element={<AuthorizedOnly />}>
+				<Route
+					element={<AuthorizedOnly allowedRoles={["USER", "SUPERADMIN"]} />}
+				>
+					<Route path="/load" element={<LoadUser />} />
 					<Route
-						path="/"
+						path="/denied"
 						element={
-							<Suspense fallback="Loading...">
-								<Home />
+							<Suspense>
+								<AccessDenied />
 							</Suspense>
 						}
 					/>
-					<Route path="/load" element={<LoadUser />} />
 					<Route path="/profile" element={<Profile />}>
 						<Route
 							path="details"
@@ -56,6 +60,42 @@ function App() {
 							}
 						/>
 					</Route>
+					<Route
+						path="/forgotpassword"
+						element={
+							<Suspense fallback="Loading...">
+								<ForgotPassword />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="/resetpassword"
+						element={
+							<Suspense fallback="Loading...">
+								<ResetPassword />
+							</Suspense>
+						}
+					/>
+				</Route>
+				<Route element={<AuthorizedOnly allowedRoles={["SUPERADMIN"]} />}>
+					<Route
+						path="/admin"
+						element={
+							<Suspense fallback="Loading...">
+								<Admin />
+							</Suspense>
+						}
+					/>
+				</Route>
+				<Route element={<AuthorizedOnly allowedRoles={["USER"]} />}>
+					<Route
+						path="/"
+						element={
+							<Suspense fallback="Loading...">
+								<Home />
+							</Suspense>
+						}
+					/>
 					<Route
 						path="/:ownerId/projects/:projectId"
 						element={
@@ -121,22 +161,6 @@ function App() {
 						element={
 							<Suspense fallback="Loading...">
 								<EmailVerified />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="/forgotpassword"
-						element={
-							<Suspense fallback="Loading...">
-								<ForgotPassword />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="/resetpassword"
-						element={
-							<Suspense fallback="Loading...">
-								<ResetPassword />
 							</Suspense>
 						}
 					/>

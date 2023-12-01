@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { logOut } from "../../features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
 import { Link } from "react-router-dom";
 import { unsetProject } from "../../features/project/projectSlice";
 import { useLogOutMutation } from "../../features/auth/authApiSlice";
@@ -9,6 +9,8 @@ import { apiSlice } from "../../app/api/apiSlice";
 const Navbar = () => {
 	const [logOutUser, { isLoading }] = useLogOutMutation();
 	const dispatch = useDispatch();
+
+	const auth = useSelector(selectCurrentUser);
 
 	const handleLogout = () => {
 		logOutUser()
@@ -29,7 +31,7 @@ const Navbar = () => {
 		<nav className="bg-accent border-b-2 border-b-shadow">
 			<div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-2">
 				<Link
-					to={"/"}
+					to={auth?.role === "USER" ? "/" : "/admin"}
 					className="flex items-center space-x-3 rtl:space-x-reverse"
 				>
 					<img
