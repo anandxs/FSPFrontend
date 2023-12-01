@@ -2,6 +2,8 @@ import { useState } from "react";
 import CreateRoleModal from "./CreateRoleModal";
 import Modal from "../Modal/Modal";
 import { useGetRolesQuery } from "../../features/defaultRole/defaultRoleApiSlice";
+import Table from "../Table";
+import DeleteRole from "./DeleteRole";
 
 const RoleManagement = () => {
 	const [toggleCreate, setToggleCreate] = useState(false);
@@ -12,13 +14,22 @@ const RoleManagement = () => {
 		setToggleCreate(!toggleCreate);
 	};
 
+	const columns = [
+		{ key: "name", header: "Role" },
+		{ key: "roleId", header: "Options" },
+	];
+
+	const deleteRole = (roleId) => {
+		return <DeleteRole params={{ roleId }} />;
+	};
+
 	return (
-		<section className="p-2 flex">
+		<section className="p-2">
 			<div className="flex gap-5">
-				<h1 className="text-2xl font-bold">Set Default Project Roles</h1>
+				<h2 className="text-xl font-bold">Set Default Project Roles</h2>
 				<button
 					onClick={handletoggleCreate}
-					className="bg-primary text-white font-semibold px-2 py-1 rounded"
+					className="bg-primary text-white text-sm font-semibold px-2 py-1 rounded"
 				>
 					Add Role
 				</button>
@@ -28,7 +39,10 @@ const RoleManagement = () => {
 					</Modal>
 				)}
 			</div>
-			<div></div>
+			<div>
+				{isLoading && <p>Loading...</p>}
+				<Table data={data} columns={columns} deleteAction={deleteRole} />
+			</div>
 		</section>
 	);
 };
