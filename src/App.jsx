@@ -67,14 +67,6 @@ function App() {
 						/>
 					</Route>
 					<Route
-						path="/forgotpassword"
-						element={
-							<Suspense fallback="Loading...">
-								<ForgotPassword />
-							</Suspense>
-						}
-					/>
-					<Route
 						path="/resetpassword"
 						element={
 							<Suspense fallback="Loading...">
@@ -167,6 +159,14 @@ function App() {
 						element={
 							<Suspense fallback="Loading...">
 								<Register />
+							</Suspense>
+						}
+					/>
+					<Route
+						path="/forgotpassword"
+						element={
+							<Suspense fallback="Loading...">
+								<ForgotPassword />
 							</Suspense>
 						}
 					/>

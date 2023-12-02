@@ -15,8 +15,18 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ["Members"],
 		}),
+		removeMember: builder.mutation({
+			query: ({ ownerId, projectId, memberId }) => ({
+				url: `/api/users/${ownerId}/projects/${projectId}/members/${memberId}`,
+				method: "DELETE",
+			}),
+			invalidatesTags: ["Members"],
+		}),
 	}),
 });
 
-export const { useGetProjectMembersQuery, useAddMemberMutation } =
-	memberApiSlice;
+export const {
+	useGetProjectMembersQuery,
+	useAddMemberMutation,
+	useRemoveMemberMutation,
+} = memberApiSlice;

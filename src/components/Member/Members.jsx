@@ -1,9 +1,20 @@
 import { useParams } from "react-router-dom";
 import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice";
 import AddMember from "./AddMember";
+import { useState } from "react";
+import Modal from "../Modal/Modal";
+import Member from "./Member";
 
 const Members = () => {
 	const { ownerId, projectId } = useParams();
+
+	const [toggle, setToggle] = useState(false);
+	const [mId, setMId] = useState();
+
+	const handleToggle = (m) => {
+		setMId(m?.id);
+		setToggle(!toggle);
+	};
 
 	const { data, isLoading, isSuccess, isError, error } =
 		useGetProjectMembersQuery({
@@ -33,7 +44,21 @@ const Members = () => {
 				<tbody>
 					{data?.map((m) => (
 						<tr key={m?.id}>
-							<td className="px-2 py-1 text-sm border border-black">{`${m?.user?.firstName} ${m?.user?.lastName}`}</td>
+							<td
+								className="px-2 py-1 text-sm border border-black hover:underline"
+								onClick={() => handleToggle(m)}
+							>
+								{`${m?.user?.firstName} ${m?.user?.lastName}`}
+								{toggle && mId === m?.id && (
+									<Modal action={handleToggle}>
+										<Member
+											params={{ ownerId, projectId, memberId: m?.user?.id }}
+											member={{ ...m }}
+											handleToggle={handleToggle}
+										/>
+									</Modal>
+								)}
+							</td>
 							<td className="px-2 py-1 text-sm border border-black">
 								{m?.user?.email}
 							</td>

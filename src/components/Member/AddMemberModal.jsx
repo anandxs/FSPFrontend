@@ -32,14 +32,15 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 		options = <option>Something went wrong</option>;
 	}
 
-	const onSubmit = async ({ email, roleId }) => {
-		try {
-			await addMember({ ownerId, projectId, email, roleId }).unwrap();
-			handleCreateToggle();
-		} catch (err) {
-			if (err.status === 400) {
-			}
-		}
+	const onSubmit = ({ email, roleId }) => {
+		addMember({ ownerId, projectId, email, roleId })
+			.unwrap()
+			.then(() => {
+				handleCreateToggle();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (
@@ -75,6 +76,7 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 							required: "Role is a required field.",
 						})}
 					>
+						<option value="">Select a role</option>
 						{options}
 					</select>
 					<p className="text-red-600">{errors?.roleId?.message}</p>
