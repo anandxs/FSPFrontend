@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthorizedOnly from "./route/AuthorizedOnly";
@@ -29,6 +29,7 @@ function App() {
 	return (
 		<>
 			<ToastContainer theme="colored" />
+
 			<Routes>
 				<Route element={<AuthorizedOnly allowedRoles={["None"]} />}>
 					<Route path="/load" element={<LoadUser />} />
@@ -107,8 +108,7 @@ function App() {
 						}
 					>
 						<Route
-							index={true}
-							path=""
+							path="dashboard"
 							element={
 								<Suspense fallback="Loading...">
 									<Dashboard />
