@@ -24,6 +24,9 @@ const UpdatePassword = lazy(() =>
 const Members = lazy(() => import("./components/Member/Members"));
 const Admin = lazy(() => import("./pages/Admin"));
 const AccessDenied = lazy(() => import("./components/AccessDenied"));
+const RoleManagement = lazy(() =>
+	import("./components/DefaultRole/RoleManagement")
+);
 
 function App() {
 	return (
@@ -88,7 +91,16 @@ function App() {
 								<Admin />
 							</Suspense>
 						}
-					/>
+					>
+						<Route
+							path="roles"
+							element={
+								<Suspense fallback="Loading...">
+									<RoleManagement />
+								</Suspense>
+							}
+						/>
+					</Route>
 				</Route>
 				<Route element={<AuthorizedOnly allowedRoles={["USER"]} />}>
 					<Route

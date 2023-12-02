@@ -29,7 +29,7 @@ const RoleManagement = () => {
 	};
 
 	return (
-		<section className="p-2">
+		<section className="col-span-10 p-2 mt-3 ml-3">
 			<div className="flex gap-5">
 				<h2 className="text-xl font-bold">Set Default Project Roles</h2>
 				<button
