@@ -2,33 +2,38 @@ import { apiSlice } from "../../app/api/apiSlice";
 
 export const groupApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
+		getProjectGroups: builder.query({
+			query: ({ projectId }) => `/api/projects/${projectId}/groups`,
+			providesTags: ["Groups"],
+		}),
 		createGroup: builder.mutation({
-			query: ({ ownerId, projectId, groupName }) => ({
-				url: `/api/users/${ownerId}/projects/${projectId}/groups`,
+			query: ({ projectId, body }) => ({
+				url: `/api/projects/${projectId}/groups`,
 				method: "POST",
-				body: { name: groupName },
+				body,
 			}),
 			invalidatesTags: ["Groups"],
 		}),
-		getProjectGroups: builder.query({
-			query: ({ ownerId, projectId }) =>
-				`/api/users/${ownerId}/projects/${projectId}/groups`,
-			providesTags: ["Groups"],
+		updateProjectGroup: builder.mutation({
+			query: ({ projectId, groupId, body }) => ({
+				url: `/api/projects/${projectId}/groups/${groupId}`,
+				method: "PUT",
+				body,
+			}),
+			invalidatesTags: ["Groups", "Cards"],
 		}),
 		deleteProjectGroup: builder.mutation({
-			query: ({ ownerId, projectId, groupId }) => ({
-				url: `/api/users/${ownerId}/projects/${projectId}/groups/${groupId}`,
+			query: ({ groupId }) => ({
+				url: `/api/groups/${groupId}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: ["Groups", "Cards"],
 		}),
-		updateProjectGroup: builder.mutation({
-			query: ({ ownerId, projectId, groupId, groupName }) => ({
-				url: `/api/users/${ownerId}/projects/${projectId}/groups/${groupId}`,
+		toggleGroupArchiveStatus: builder.mutation({
+			query: ({ groupId }) => ({
+				url: `api/groups/${groupId}/archive`,
 				method: "PUT",
-				body: { name: groupName },
 			}),
-			invalidatesTags: ["Groups", "Cards"],
 		}),
 	}),
 });
@@ -38,4 +43,5 @@ export const {
 	useGetProjectGroupsQuery,
 	useDeleteProjectGroupMutation,
 	useUpdateProjectGroupMutation,
+	useToggleGroupArchiveStatusMutation,
 } = groupApiSlice;
