@@ -2,42 +2,42 @@ import { apiSlice } from "../../app/api/apiSlice";
 
 export const cardApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		getCardById: builder.query({
-			query: ({ ownerId, projectId, groupId, cardId }) =>
-				`/api/users/${ownerId}/projects/${projectId}/groups/${groupId}/cards/${cardId}`,
-			providesTags: ["Card"],
-		}),
-		getCardsForGroup: builder.query({
-			query: ({ ownerId, projectId, groupId }) =>
-				`/api/users/${ownerId}/projects/${projectId}/groups/${groupId}/cards`,
-		}),
 		getCardsForProject: builder.query({
-			query: ({ ownerId, projectId }) =>
-				`/api/users/${ownerId}/projects/${projectId}/cards`,
+			query: ({ projectId }) => `/api/projects/${projectId}/cards`,
 			providesTags: ["Cards"],
 		}),
-		createCard: builder.mutation({
-			query: ({ ownerId, projectId, groupId, body }) => ({
-				url: `/api/users/${ownerId}/projects/${projectId}/groups/${groupId}/cards`,
-				method: "POST",
-				body: { ...body },
-			}),
-			invalidatesTags: ["Cards"],
+		getCardById: builder.query({
+			query: ({ projectId, cardId }) =>
+				`/api/projects/${projectId}/cards/${cardId}`,
+			providesTags: ["Card"],
 		}),
 		deleteCard: builder.mutation({
-			query: ({ ownerId, projectId, groupId, cardId }) => ({
-				url: `/api/users/${ownerId}/projects/${projectId}/groups/${groupId}/cards/${cardId}`,
+			query: ({ projectId, cardId }) => ({
+				url: `/api/projects/${projectId}/cards/${cardId}`,
 				method: "DELETE",
 			}),
 			invalidatesTags: ["Cards"],
 		}),
+		createCard: builder.mutation({
+			query: ({ groupId, body }) => ({
+				url: `/api/groups/${groupId}/cards`,
+				method: "POST",
+				body,
+			}),
+			invalidatesTags: ["Cards"],
+		}),
 		updateCard: builder.mutation({
-			query: ({ ownerId, projectId, groupId, cardId, body }) => ({
-				url: `/api/users/${ownerId}/projects/${projectId}/groups/${groupId}/cards/${cardId}`,
+			query: ({ cardId, body }) => ({
+				url: `/api/cards/${cardId}`,
 				method: "PUT",
 				body,
 			}),
 			invalidatesTags: ["Card", "Cards"],
+		}),
+		toggleCardArchiveStatus: builder.mutation({
+			query: ({ projectId, cardId }) => ({
+				url: `api/projects/${projectId}/cards/${cardId}/archive`,
+			}),
 		}),
 	}),
 });
@@ -45,8 +45,8 @@ export const cardApiSlice = apiSlice.injectEndpoints({
 export const {
 	useGetCardByIdQuery,
 	useGetCardsForProjectQuery,
-	useGetCardsForGroupQuery,
 	useCreateCardMutation,
 	useDeleteCardMutation,
 	useUpdateCardMutation,
+	useToggleCardArchiveStatusMutation,
 } = cardApiSlice;

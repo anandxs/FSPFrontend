@@ -1,14 +1,10 @@
 import CreateProjectCard from "./CreateProjectCard";
 import ProjectCard from "./ProjectCard";
-import { useGetUserOwnedProjectsQuery } from "../../features/project/projectApiSlice";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../features/auth/authSlice";
+import { useGetUserProjectsQuery } from "../../features/project/projectApiSlice";
 
 const Projects = () => {
-	const { id } = useSelector(selectCurrentUser);
-
-	const { data, isLoading, isError, isSuccess, error } =
-		useGetUserOwnedProjectsQuery(id);
+	const { data, isLoading, isSuccess, isError, error } =
+		useGetUserProjectsQuery();
 
 	let content = "";
 	if (isLoading) {

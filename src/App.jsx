@@ -5,13 +5,12 @@ import "react-toastify/dist/ReactToastify.css";
 import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
 import Profile from "./pages/Profile";
-import LoadUser from "./components/Profile/LoadUser";
 import EmailVerified from "./pages/EmailVerified";
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Home = lazy(() => import("./pages/Home"));
 const Dashboard = lazy(() => import("./components/Dashboard"));
-const Login = lazy(() => import("./pages/Login"));
+const Login = lazy(() => import("./components/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Groups = lazy(() => import("./components/Group/Groups"));
 const Card = lazy(() => import("./components/Card/Card"));
@@ -34,9 +33,6 @@ function App() {
 			<ToastContainer theme="colored" />
 
 			<Routes>
-				<Route element={<AuthorizedOnly allowedRoles={["None"]} />}>
-					<Route path="/load" element={<LoadUser />} />
-				</Route>
 				<Route
 					element={<AuthorizedOnly allowedRoles={["USER", "SUPERADMIN"]} />}
 				>

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setCredentials, logOut } from "../../features/auth/authSlice";
+import { logOut } from "../../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_BASE_URL,
@@ -24,7 +24,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 			if (refreshResult?.data) {
 				api.dispatch(
-					setCredentials({
+					logIn({
 						...state.auth,
 						accessToken: refreshResult.data.accessToken,
 						refreshToken: refreshResult.data.refreshToken,

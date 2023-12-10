@@ -9,7 +9,7 @@ const UnAuthorizedOnly = () => {
 	return accessToken === null ? (
 		<Outlet />
 	) : (
-		<Navigate to="/load" state={{ from: location }} replace={true} />
+		<Navigate to="/" state={{ from: location }} replace={true} />
 	);
 };
 

@@ -1,9 +1,10 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { useLoginMutation } from "../features/auth/authApiSlice";
-import { useDispatch } from "react-redux";
 import { logIn } from "../features/auth/authSlice";
-import { useState } from "react";
+import { useLoginMutation } from "../features/auth/authApiSlice";
+import { useLazyGetUserInfoQuery } from "../features/user/userApiSlice";
 
 const Login = () => {
 	const [error, setError] = useState();
@@ -12,27 +13,37 @@ const Login = () => {
 	const { register, handleSubmit, formState } = form;
 	const { errors, isSubmitting } = formState;
 
-	const [login] = useLoginMutation();
+	const [loginUser] = useLoginMutation();
+	const [getUser] = useLazyGetUserInfoQuery();
 	const dispatch = useDispatch();
 
 	const onSubmit = (data) => {
 		const { email, password } = data;
-
-		const userData = login({ email, password })
+		loginUser({ email, password })
 			.unwrap()
-			.then(() => {
-				const accessToken = userData.accessToken;
-				const refreshToken = userData.refreshToken;
-				dispatch(
-					logIn({
-						email,
-						accessToken,
-						refreshToken,
+			.then((authTokens) => {
+				const accessToken = authTokens.accessToken;
+				const refreshToken = authTokens.refreshToken;
+				getUser()
+					.unwrap()
+					.then(({ id, role, firstName, lastName, email }) => {
+						dispatch(
+							logIn({
+								id,
+								firstName,
+								lastName,
+								role,
+								email,
+								accessToken,
+								refreshToken,
+							})
+						);
 					})
-				);
+					.catch((err) => {
+						console.log(err);
+					});
 			})
-			.catch(() => {
-				console.log(err);
+			.catch((err) => {
 				if (err.status === 401) setError("Invalid credentials");
 				else if (err.status === 500) setError("Internal server error");
 				else setError("Network error");

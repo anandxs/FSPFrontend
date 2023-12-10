@@ -1,26 +1,34 @@
 import { useForm } from "react-hook-form";
-import { useUpdateUserInfoMutation } from "../../features/auth/authApiSlice";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useUpdateUserInfoMutation } from "../../features/user/userApiSlice";
+import { useDispatch } from "react-redux";
+import { updateName } from "../../features/auth/authSlice";
 
 const UpdateProfile = () => {
 	const form = useForm();
-	const { register, handleSubmit, formState } = form;
+	const { register, handleSubmit, formState, setValue } = form;
 	const { errors } = formState;
 
 	const [updateInfo] = useUpdateUserInfoMutation();
-
-	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const onSubmit = (data) => {
+		const { firstName, lastName } = data;
 		updateInfo({
-			firstName: data.firstName,
-			lastName: data.lastName,
+			firstName,
+			lastName,
 		})
 			.unwrap()
 			.then(() => {
+				dispatch(
+					updateName({
+						firstName,
+						lastName,
+					})
+				);
 				toast.success("Profile name updated successfully");
-				navigate("/load");
+				setValue("firstName", "");
+				setValue("lastName", "");
 			})
 			.catch((err) => {
 				console.log(err);

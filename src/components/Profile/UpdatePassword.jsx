@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useUpdatePasswordMutation } from "../../features/auth/authApiSlice";
+import { useUpdatePasswordMutation } from "../../features/user/userApiSlice";
 import { toast } from "react-toastify";
 
 const UpdatePassword = () => {

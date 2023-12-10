@@ -1,58 +1,56 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState =
-	localStorage.getItem("auth") !== null
-		? JSON.parse(localStorage.getItem("auth"))
-		: {
-				id: null,
-				name: null,
-				email: null,
-				accessToken: null,
-				refreshToken: null,
-				role: null,
-		  };
+const localAuth = localStorage.getItem("auth");
+const initialState = localAuth
+	? JSON.parse(localAuth)
+	: {
+			id: null,
+			name: null,
+			role: null,
+			email: null,
+			accessToken: null,
+			refreshToken: null,
+	  };
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		setCredentials: (state, action) => {
-			const { id, name, role } = action.payload;
-			state.id = id;
-			state.name = name;
-			state.role = role;
-			localStorage.setItem(
-				"auth",
-				JSON.stringify({
-					id,
-					name,
-					role,
-					email: state.email,
-					accessToken: state.accessToken,
-					refreshToken: state.refreshToken,
-				})
-			);
-		},
 		logIn: (state, action) => {
-			const { email, accessToken, refreshToken } = action.payload;
+			const {
+				id,
+				firstName,
+				lastName,
+				role,
+				email,
+				accessToken,
+				refreshToken,
+			} = action.payload;
+			state.id = id;
+			state.name = `${firstName} ${lastName}`;
+			state.role = role;
 			state.email = email;
 			state.accessToken = accessToken;
 			state.refreshToken = refreshToken;
-			localStorage.setItem("auth", JSON.stringify(action.payload));
+			localStorage.setItem("auth", JSON.stringify(state));
 		},
-		logOut: (state, action) => {
+		logOut: (state) => {
 			state.id = null;
 			state.name = null;
 			state.email = null;
+			state.role = null;
 			state.accessToken = null;
 			state.refreshToken = null;
-			localStorage.clear();
+			localStorage.removeItem("auth");
+		},
+		updateName: (state, action) => {
+			const { firstName, lastName } = action.payload;
+			state.name = `${firstName} ${lastName}`;
+			localStorage.setItem("auth", JSON.stringify(state));
 		},
 	},
 });
 
 export default authSlice.reducer;
-
-export const { setCredentials, logOut, logIn } = authSlice.actions;
-
+export const { logIn, logOut, updateName } = authSlice.actions;
 export const selectCurrentUser = (state) => state.auth;
