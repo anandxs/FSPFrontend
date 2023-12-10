@@ -1,42 +1,7 @@
-import { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { useVerifyEmailMutation } from "../features/auth/authApiSlice";
+import EmailVerifed from "../components/EmailVerified";
 
-const EmailVerified = () => {
-	const [searchParams] = useSearchParams();
-	const code = searchParams.get("code");
-	const userId = searchParams.get("userid");
-
-	const [verifyEmail, { isLoading, isSuccess, isError }] =
-		useVerifyEmailMutation();
-
-	useEffect(() => {
-		verifyEmail({ code, userId })
-			.unwrap()
-			.then(() => {})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
-
-	return (
-		<section className="flex flex-col items-center justify-center h-full">
-			{isLoading && <p>Loading..</p>}
-			{isSuccess && (
-				<>
-					<p>Your email has been verified</p>
-					<p>
-						Click{" "}
-						<Link className="underline" to={"/login"}>
-							here
-						</Link>{" "}
-						to login
-					</p>
-				</>
-			)}
-			{isError && <p>Something went wrong. Please try again later.</p>}
-		</section>
-	);
+const EmailVerifiedPage = () => {
+	return <EmailVerifed />;
 };
 
-export default EmailVerified;
+export default EmailVerifiedPage;
