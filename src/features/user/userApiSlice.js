@@ -25,7 +25,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-	useGetUserInfoQuery,
+	useLazyGetUserInfoQuery,
 	useUpdateUserInfoMutation,
 	useUpdatePasswordMutation,
 } = userApiSlice;

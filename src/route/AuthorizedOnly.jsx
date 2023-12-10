@@ -3,14 +3,14 @@ import { selectCurrentUser } from "../features/auth/authSlice";
 import { Navigate, Outlet } from "react-router-dom";
 
 const AuthorizedOnly = ({ allowedRoles }) => {
-	const { accessToken, role } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentUser);
 
-	return accessToken === null ? (
-		<Navigate to="/login" />
-	) : allowedRoles.includes("None") || allowedRoles.includes(role) ? (
+	return role === null ? (
+		<Navigate to={"/login"} />
+	) : allowedRoles.includes(role) || allowedRoles.includes("All") ? (
 		<Outlet />
 	) : (
-		<Navigate to="/denied" />
+		<Navigate to={"/accessdenied"} />
 	);
 };
 
