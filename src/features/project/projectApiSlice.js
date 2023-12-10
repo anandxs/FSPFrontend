@@ -4,6 +4,7 @@ export const projectApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getUserProjects: builder.query({
 			query: () => `/api/projects`,
+			providesTags: ["Projects"],
 		}),
 		createProject: builder.mutation({
 			query: ({ body }) => ({
@@ -11,9 +12,11 @@ export const projectApiSlice = apiSlice.injectEndpoints({
 				method: "POST",
 				body,
 			}),
+			invalidatesTags: ["Projects"],
 		}),
 		getProject: builder.query({
 			query: ({ projectId }) => `/api/projects/${projectId}`,
+			providesTags: ["Project"],
 		}),
 		updateProject: builder.mutation({
 			query: ({ projectId, body }) => ({
@@ -21,18 +24,21 @@ export const projectApiSlice = apiSlice.injectEndpoints({
 				method: "PUT",
 				body,
 			}),
+			invalidatesTags: ["Projects", "Project"],
 		}),
 		deleteProject: builder.mutation({
-			query: (projectId) => ({
+			query: ({ projectId }) => ({
 				url: `/api/projects/${projectId}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ["Projects"],
 		}),
 		toggleProjectArchiveStatus: builder.mutation({
 			query: ({ projectId }) => ({
 				url: `/api/projects/${projectId}`,
 				method: "PUT",
 			}),
+			invalidatesTags: ["Projects", "Project"],
 		}),
 	}),
 });

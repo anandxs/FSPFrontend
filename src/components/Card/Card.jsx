@@ -9,7 +9,7 @@ import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
 import DeleteCard from "./DeleteCard";
 
 const Card = () => {
-	const { ownerId, projectId, groupId, cardId } = useParams();
+	const { projectId, groupId, cardId } = useParams();
 
 	const form = useForm();
 	const { register, handleSubmit, formState, setValue } = form;
@@ -18,14 +18,12 @@ const Card = () => {
 	const [toggleUpdate, setToggleUpdate] = useState(false);
 
 	const { data } = useGetCardByIdQuery({
-		ownerId,
 		projectId,
 		groupId,
 		cardId,
 	});
 
 	const { data: groups, isLoading } = useGetProjectGroupsQuery({
-		ownerId,
 		projectId,
 	});
 	const [updateCard] = useUpdateCardMutation();
@@ -40,9 +38,6 @@ const Card = () => {
 	const onSubmit = (data) => {
 		const body = { ...data };
 		updateCard({
-			ownerId,
-			projectId,
-			groupId,
 			cardId,
 			body,
 		})
@@ -86,7 +81,7 @@ const Card = () => {
 					>
 						Update
 					</button>
-					<DeleteCard params={{ ownerId, projectId, groupId, cardId }} />
+					<DeleteCard params={{ projectId, groupId, cardId }} />
 				</div>
 			</section>
 		</div>

@@ -23,17 +23,21 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 	const { register, formState, handleSubmit, setValue } = form;
 	const { errors } = formState;
 
-	const onSubmit = async ({ projectName }) => {
-		try {
-			const response = await updateProject({
-				ownerId,
-				projectId,
-				name: projectName,
-			}).unwrap();
-			setUpdateNameToggle(false);
-		} catch (err) {
-			console.log(err);
-		}
+	const onSubmit = ({ projectName }) => {
+		const body = {
+			name: projectName,
+		};
+		updateProject({
+			projectId,
+			body,
+		})
+			.unwrap()
+			.then(() => {
+				setUpdateNameToggle(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const handleGroupToggle = () => {

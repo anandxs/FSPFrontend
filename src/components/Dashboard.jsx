@@ -2,17 +2,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetCardsForProjectQuery } from "../features/card/cardApiSlice";
 
 const Dashboard = () => {
-	const { ownerId, projectId } = useParams();
+	const { projectId } = useParams();
 	const { data, isLoading, isSuccess, isError, error } =
-		useGetCardsForProjectQuery({ ownerId, projectId });
+		useGetCardsForProjectQuery({ projectId });
 
 	const navigate = useNavigate();
 
 	const goToCard = (card) => {
 		navigate(
-			`/${ownerId}/projects/${projectId}/groups/${card.group.groupId}/cards/${card.cardId}`,
+			`/projects/${projectId}/groups/${card.group.groupId}/cards/${card.cardId}`,
 			{
-				state: { ownerId, projectId, cardId: card.cardId },
+				state: { projectId, cardId: card.cardId },
 			}
 		);
 	};

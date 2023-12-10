@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { selectCurrentUser } from "../../features/auth/authSlice";
 import { useCreateProjectMutation } from "../../features/project/projectApiSlice";
 import { useNavigate } from "react-router-dom";
 
 const CreateProjectModal = ({ handleProjectToggle }) => {
 	const [error, setError] = useState();
-	const { id } = useSelector(selectCurrentUser);
 
 	const form = useForm();
 	const { register, handleSubmit, formState, watch } = form;
@@ -21,29 +18,28 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 		setError(null);
 	}, [watch("projectName")]);
 
-	const onSubmit = async ({ projectName }) => {
+	const onSubmit = ({ projectName }) => {
 		const body = {
-			userId: id,
 			name: projectName,
 		};
-		try {
-			const response = await createProject(body);
-			const { ownerId, projectId } = response?.data;
-			handleProjectToggle();
-			navigate(`/${ownerId}/projects/${projectId}`);
-		} catch (err) {
-			if (err.status === 404) {
-				setError(err.data.Message);
-			} else if (err.status == 401) {
-				await createProject(body);
-			} else if (err.state === 422) {
-				setError("Enter valid data.");
-			} else if (err.status === 500) {
-				setError("Internal server error.");
-			} else {
-				setError("Network error");
-			}
-		}
+		createProject({ body })
+			.unwrap()
+			.then(({ projectId }) => {
+				handleProjectToggle();
+				navigate(`/projects/${projectId}`);
+			})
+			.catch((err) => {
+				console.log("err");
+				if (err.status === 404) {
+					setError(err.data.Message);
+				} else if (err.state === 422) {
+					setError("Enter valid data.");
+				} else if (err.status === 500) {
+					setError("Internal server error.");
+				} else {
+					setError("Network error");
+				}
+			});
 	};
 
 	return (

@@ -9,18 +9,19 @@ const DeleteProject = ({ params }) => {
 	const [deleteToggle, setDeleteToggle] = useState(false);
 
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 
 	const [deleteProject] = useDeleteProjectMutation();
 
-	const handleDelete = async () => {
-		try {
-			const { ownerId, projectId } = params;
-			await deleteProject({ ownerId, projectId });
-			navigate("/");
-		} catch (err) {
-			console.log(err);
-		}
+	const handleDelete = () => {
+		const { projectId } = params;
+		deleteProject({ projectId })
+			.unwrap()
+			.then(() => {
+				navigate("/");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	const handleDeleteToggle = () => {

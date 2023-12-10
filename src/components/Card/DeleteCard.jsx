@@ -11,19 +11,20 @@ const DeleteCard = ({ params }) => {
 
 	const navigate = useNavigate();
 
-	const handleDelete = async () => {
-		const { ownerId, projectId, groupId, cardId } = params;
-		try {
-			const response = await deleteCard({
-				ownerId,
-				projectId,
-				groupId,
-				cardId,
+	const handleDelete = () => {
+		const { projectId, groupId, cardId } = params;
+		deleteCard({
+			projectId,
+			groupId,
+			cardId,
+		})
+			.unwrap()
+			.then(() => {
+				navigate(`/projects/${projectId}/dashboard`);
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-			navigate(`/${ownerId}/projects/${projectId}`);
-		} catch (err) {
-			console.log(err);
-		}
 	};
 
 	const handleDeleteToggle = () => {
