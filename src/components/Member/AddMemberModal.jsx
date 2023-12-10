@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useGetProjectRolesQuery } from "../../features/role/roleApiSlice";
 import { useParams } from "react-router-dom";
 import { useAddMemberMutation } from "../../features/member/memberApiSlice";
 
@@ -8,32 +7,16 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
 
-	const { ownerId, projectId } = useParams();
+	const { projectId } = useParams();
 
-	const { data, isLoading, isSuccess, isError, error } =
-		useGetProjectRolesQuery({ ownerId, projectId });
-
-	const [
-		addMember,
-		{ isLoading: ongoing, isSuccess: success, error: postError },
-	] = useAddMemberMutation();
-
-	let options = "";
-	if (isLoading) {
-		options = <option>Loading...</option>;
-	} else if (isSuccess) {
-		options = data?.map((r) => (
-			<option key={r.roleId} value={r.roleId}>
-				{r.name}
-			</option>
-		));
-	} else if (isError) {
-		console.log(error);
-		options = <option>Something went wrong</option>;
-	}
+	const [addMember, { error }] = useAddMemberMutation();
 
 	const onSubmit = ({ email, roleId }) => {
-		addMember({ ownerId, projectId, email, roleId })
+		const body = {
+			email,
+			role: roleId,
+		};
+		addMember({ projectId, body })
 			.unwrap()
 			.then(() => {
 				handleCreateToggle();
@@ -49,7 +32,7 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 			onClick={(e) => e.stopPropagation()}
 		>
 			<h1 className="text-2xl font-bold mb-2 py-1">Add Member</h1>
-			<p className="text-red-600">{postError?.data?.Message}</p>
+			<p className="text-red-600">{error?.data?.Message}</p>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
 				<div className="my-2">
 					<label htmlFor="email" className="font-semibold text-base block">
@@ -77,7 +60,9 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 						})}
 					>
 						<option value="">Select a role</option>
-						{options}
+						<option value="ADMIN">Admin</option>
+						<option value="MEMBER">Member</option>
+						<option value="OBSERVER">Observer</option>
 					</select>
 					<p className="text-red-600">{errors?.roleId?.message}</p>
 				</div>

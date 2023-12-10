@@ -12,13 +12,12 @@ const Members = () => {
 	const [mId, setMId] = useState();
 
 	const handleToggle = (m) => {
-		setMId(m?.id);
+		setMId(m?.user?.id);
 		setToggle(!toggle);
 	};
 
 	const { data, isLoading, isSuccess, isError, error } =
 		useGetProjectMembersQuery({
-			ownerId,
 			projectId,
 		});
 
@@ -43,13 +42,13 @@ const Members = () => {
 				</thead>
 				<tbody>
 					{data?.map((m) => (
-						<tr key={m?.id}>
+						<tr key={m?.user?.id}>
 							<td
 								className="px-2 py-1 text-sm border border-black hover:underline"
 								onClick={() => handleToggle(m)}
 							>
 								{`${m?.user?.firstName} ${m?.user?.lastName}`}
-								{toggle && mId === m?.id && (
+								{toggle && mId === m?.user?.id && (
 									<Modal action={handleToggle}>
 										<Member
 											params={{ ownerId, projectId, memberId: m?.user?.id }}
@@ -63,7 +62,7 @@ const Members = () => {
 								{m?.user?.email}
 							</td>
 							<td className="px-2 py-1 text-sm border border-black">
-								{m?.projectRole?.name}
+								{m?.role}
 							</td>
 						</tr>
 					))}

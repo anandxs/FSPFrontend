@@ -9,11 +9,10 @@ const Member = ({ member, handleToggle, params }) => {
 	const [removeMember] = useRemoveMemberMutation();
 
 	const handleDelete = () => {
-		const { memberId, ownerId, projectId } = params;
+		const { memberId, projectId } = params;
 		removeMember({
-			memberId,
-			ownerId,
 			projectId,
+			memberId,
 		})
 			.unwrap()
 			.then(() => {
@@ -38,7 +37,7 @@ const Member = ({ member, handleToggle, params }) => {
 				{`${member?.user?.firstName} ${member?.user?.lastName}`}
 			</h1>
 			<p>
-				Role : <span className="font-bold">{member?.projectRole?.name}</span>
+				Role : <span className="font-bold">{member?.role}</span>
 			</p>
 			<button
 				onClick={handleDeleteToggle}
