@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useRegisterMutation } from "../features/auth/authApiSlice";
 import { toast } from "react-toastify";
 
-const Register = () => {
+const Register = ({ setRegSuccess }) => {
 	const form = useForm();
 	const { register, formState, handleSubmit, watch } = form;
 	const { errors, isSubmitting } = formState;
@@ -22,6 +22,7 @@ const Register = () => {
 			.unwrap()
 			.then(() => {
 				toast.success("Account created successfully");
+				setRegSuccess(true);
 			})
 			.catch((err) => {
 				if (err?.status === 400) {

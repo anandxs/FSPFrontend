@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
-import Register from "./components/Register";
+import RegisterPage from "./pages/Register";
 import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
 
@@ -14,7 +14,7 @@ function App() {
 				</Route>
 				<Route element={<UnAuthorizedOnly />}>
 					<Route path={"/login"} element={<Login />} />
-					<Route path={"/register"} element={<Register />} />
+					<Route path={"/register"} element={<RegisterPage />} />
 				</Route>
 			</Route>
 		</Routes>
