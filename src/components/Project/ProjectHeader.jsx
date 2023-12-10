@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { setProject } from "../../features/project/projectSlice";
 import {
-	useGetProjectByIdQuery,
-	useUpdateProjectNameMutation,
+	useGetProjectQuery,
+	useUpdateProjectMutation,
 } from "../../features/project/projectApiSlice";
 import Modal from "../Modal/Modal";
 import CreateGroupModal from "../Group/CreateGroupModal";
@@ -17,19 +15,13 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 	const [groupToggle, setGroupToggle] = useState(false);
 	const [cardToggle, setCardToggle] = useState(false);
 
-	const { data } = useGetProjectByIdQuery({ ownerId, projectId });
-	const [updateProject] = useUpdateProjectNameMutation();
-
-	const dispatch = useDispatch();
+	const { data } = useGetProjectQuery({ projectId });
+	const [updateProject] = useUpdateProjectMutation();
 
 	const form = useForm();
 
 	const { register, formState, handleSubmit, setValue } = form;
 	const { errors } = formState;
-
-	useEffect(() => {
-		dispatch(setProject({ ...data }));
-	}, [data]);
 
 	const onSubmit = async ({ projectName }) => {
 		try {

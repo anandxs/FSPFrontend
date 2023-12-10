@@ -3,20 +3,20 @@ import { apiSlice } from "../../app/api/apiSlice";
 export const groupApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getProjectGroups: builder.query({
-			query: ({ projectId }) => `/api/projects/${projectId}/groups`,
+			query: ({ projectId }) => `/api/project/${projectId}/groups`,
 			providesTags: ["Groups"],
 		}),
 		createGroup: builder.mutation({
 			query: ({ projectId, body }) => ({
-				url: `/api/projects/${projectId}/groups`,
+				url: `/api/project/${projectId}/groups`,
 				method: "POST",
 				body,
 			}),
 			invalidatesTags: ["Groups"],
 		}),
 		updateProjectGroup: builder.mutation({
-			query: ({ projectId, groupId, body }) => ({
-				url: `/api/projects/${projectId}/groups/${groupId}`,
+			query: ({ groupId, body }) => ({
+				url: `/api/groups/${groupId}`,
 				method: "PUT",
 				body,
 			}),

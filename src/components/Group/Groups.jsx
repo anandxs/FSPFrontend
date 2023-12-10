@@ -1,20 +1,14 @@
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
-import {
-	selectOwnerId,
-	selectProjectId,
-} from "../../features/project/projectSlice";
 import Table from "../Table";
 import DeleteGroup from "./DeleteGroup";
 import EditGroup from "./EditGroup";
 
 const Groups = () => {
-	const projectId = useSelector(selectProjectId);
-	const ownerId = useSelector(selectOwnerId);
+	const { projectId } = useParams();
 
 	const { data, isLoading, isError, error, isSuccess } =
 		useGetProjectGroupsQuery({
-			ownerId,
 			projectId,
 		});
 
@@ -31,7 +25,6 @@ const Groups = () => {
 
 	const editAction = (groupId) => {
 		const params = {
-			ownerId,
 			projectId,
 			groupId,
 		};
@@ -40,7 +33,6 @@ const Groups = () => {
 
 	const deleteAction = (groupId) => {
 		const params = {
-			ownerId,
 			projectId,
 			groupId,
 		};

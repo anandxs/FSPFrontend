@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useDeleteProjectMutation } from "../../features/project/projectApiSlice";
-import { unsetProject } from "../../features/project/projectSlice";
 import { useNavigate } from "react-router-dom";
 import Confirmation from "../Confirmation";
 import Modal from "../Modal/Modal";
@@ -18,7 +17,6 @@ const DeleteProject = ({ params }) => {
 		try {
 			const { ownerId, projectId } = params;
 			await deleteProject({ ownerId, projectId });
-			dispatch(unsetProject());
 			navigate("/");
 		} catch (err) {
 			console.log(err);

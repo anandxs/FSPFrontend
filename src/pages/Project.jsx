@@ -6,19 +6,19 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const Project = () => {
-	const { ownerId, projectId } = useParams();
+	const { projectId } = useParams();
 	const sections = [
 		{
 			header: "Dashboard",
-			link: `/${ownerId}/projects/${projectId}/dashboard`,
+			link: `/projects/${projectId}/dashboard`,
 		},
 		{
 			header: "Groups",
-			link: `/${ownerId}/projects/${projectId}/groups`,
+			link: `/projects/${projectId}/groups`,
 		},
 		{
 			header: "Members",
-			link: `/${ownerId}/projects/${projectId}/members`,
+			link: `/projects/${projectId}/members`,
 		},
 	];
 
@@ -30,7 +30,7 @@ const Project = () => {
 	return (
 		<div className="flex flex-col h-full">
 			<Navbar />
-			<ProjectHeader ownerId={ownerId} projectId={projectId} />
+			<ProjectHeader projectId={projectId} />
 			<div className="grid grid-cols-12 flex-1">
 				<Sidebar sections={sections} />
 				<Outlet />

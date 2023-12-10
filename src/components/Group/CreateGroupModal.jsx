@@ -9,20 +9,23 @@ const CreateGroupModal = ({ handleGroupToggle }) => {
 
 	const [createGroup, { isLoading }] = useCreateGroupMutation();
 
-	const { ownerId, projectId } = useParams();
+	const { projectId } = useParams();
 
 	const handleCreateGroup = async ({ groupName }) => {
-		try {
-			const response = await createGroup({
-				ownerId,
-				projectId,
-				groupName,
-			}).unwrap();
-
-			handleGroupToggle();
-		} catch (err) {
-			console.log(err);
-		}
+		const body = {
+			name: groupName,
+		};
+		createGroup({
+			projectId,
+			body,
+		})
+			.unwrap()
+			.then(() => {
+				handleGroupToggle();
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (

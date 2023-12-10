@@ -13,22 +13,23 @@ const EditGroupModal = ({ handleGroupToggle, params, init }) => {
 
 	const [updateGroup] = useUpdateProjectGroupMutation();
 
-	const onSubmit = async (data) => {
-		const { ownerId, projectId, groupId } = params;
-		const { groupName } = data;
+	const onSubmit = async ({ groupName }) => {
+		const { projectId, groupId } = params;
+		const body = {
+			name: groupName,
+		};
 
-		try {
-			const response = await updateGroup({
-				ownerId,
-				projectId,
-				groupId,
-				groupName,
+		updateGroup({
+			groupId,
+			body,
+		})
+			.unwrap()
+			.then(() => {
+				handleGroupToggle();
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-
-			handleGroupToggle();
-		} catch (err) {
-			console.log(err);
-		}
 	};
 
 	return (

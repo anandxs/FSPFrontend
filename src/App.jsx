@@ -100,7 +100,7 @@ function App() {
 						}
 					/>
 					<Route
-						path="/:ownerId/projects/:projectId"
+						path="projects/:projectId"
 						element={
 							<Suspense fallback="Loading...">
 								<Project />
