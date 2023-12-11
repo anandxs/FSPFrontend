@@ -3,7 +3,8 @@ import {
 	useGetUsersQuery,
 	useToggleUserAccountStatusMutation,
 } from "../features/superadmin/superAdminApiSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { customStyles } from "../utils/tableStyle";
 
 const Users = () => {
 	const { data: users, isSuccess } = useGetUsersQuery();
@@ -46,48 +47,6 @@ const Users = () => {
 			},
 		},
 	];
-
-	const customStyles = {
-		table: {
-			style: {
-				border: "1px solid",
-				borderBottom: "0px solid",
-			},
-		},
-		header: {
-			style: {
-				fontSize: "22px",
-				minHeight: "56px",
-				paddingLeft: "16px",
-				paddingRight: "8px",
-			},
-		},
-		headCells: {
-			style: {
-				color: "#fff",
-				backgroundColor: "#0E61DD",
-				fontSize: "0.7rem",
-				fontWeight: "700",
-			},
-		},
-		cells: {
-			style: {
-				backgroundColor: "#CFE1FC",
-				borderBottom: "1px solid",
-			},
-		},
-		pagination: {
-			style: {
-				color: "#000",
-				border: "1px solid",
-				borderTop: "0px solid",
-				backgroundColor: "#CFE1FC",
-			},
-			pageButtonsStyle: {
-				color: "#000",
-			},
-		},
-	};
 
 	const handleToggleBlock = (id) => {
 		toggleUserAccountStatus({ userId: id }).unwrap();
