@@ -3,6 +3,7 @@ import {
 	useGetUsersQuery,
 	useToggleUserAccountStatusMutation,
 } from "../features/superadmin/superAdminApiSlice";
+import { useEffect, useState } from "react";
 
 const Users = () => {
 	const { data: users, isSuccess } = useGetUsersQuery();
@@ -92,24 +93,76 @@ const Users = () => {
 		toggleUserAccountStatus({ userId: id }).unwrap();
 	};
 
+	const [filter, setFilter] = useState("");
+
 	let data = [];
 	if (isSuccess) {
-		data = users.map((u) => {
-			return {
-				firstName: u.firstName,
-				lastName: u.lastName,
-				email: u.email,
-				isBlocked: u.isBlocked ? "Blocked" : "Active",
-				id: u.id,
-			};
-		});
+		data = users
+			.filter((u) => {
+				if (filter === "blocked") {
+					return u.isBlocked === true;
+				} else if (filter === "active") {
+					return u.isBlocked === false;
+				} else {
+					return u;
+				}
+			})
+			.map((u) => {
+				return {
+					firstName: u.firstName,
+					lastName: u.lastName,
+					email: u.email,
+					isBlocked: u.isBlocked ? "Blocked" : "Active",
+					id: u.id,
+				};
+			});
 	}
+
+	const setQueryToActive = () => {
+		setFilter("active");
+	};
+
+	const setQueryToBlocked = () => {
+		setFilter("blocked");
+	};
+
+	const clearQuery = () => {
+		setFilter("");
+	};
 
 	return (
 		<div className="col-span-10 p-4">
-			<h1 className="text-2xl py-2 font-semibold hover:underline">
-				User Management
-			</h1>
+			<div className="flex justify-between items-center mb-2">
+				<h1 className="text-2xl font-semibold hover:underline">
+					User Management
+				</h1>
+				<ul className="flex p-0 text-xs">
+					<li
+						onClick={setQueryToActive}
+						className={`border border-black py-1.5 px-1 w-20 text-center ${
+							filter === "active" ? "bg-primary text-white" : "text-black"
+						} font-bold`}
+					>
+						Active
+					</li>
+					<li
+						onClick={setQueryToBlocked}
+						className={`border border-black py-1.5 px-1 w-20 text-center ${
+							filter === "blocked" ? "bg-primary text-white" : "text-black"
+						} font-bold`}
+					>
+						Blocked
+					</li>
+					<li
+						onClick={clearQuery}
+						className={`border border-black py-1.5 px-1 w-20 text-center ${
+							filter === "" ? "bg-primary text-white" : "text-black"
+						} font-bold`}
+					>
+						All
+					</li>
+				</ul>
+			</div>
 			<DataTable
 				customStyles={customStyles}
 				pagination
