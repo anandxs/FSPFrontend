@@ -79,16 +79,7 @@ function App() {
 								<Admin />
 							</Suspense>
 						}
-					>
-						<Route
-							path="roles"
-							element={
-								<Suspense fallback="Loading...">
-									<RoleManagement />
-								</Suspense>
-							}
-						/>
-					</Route>
+					/>
 				</Route>
 				<Route element={<AuthorizedOnly allowedRoles={["USER"]} />}>
 					<Route
