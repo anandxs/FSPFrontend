@@ -3,9 +3,9 @@ import { selectCurrentUser } from "../features/auth/authSlice";
 import { Navigate, Outlet } from "react-router-dom";
 
 const AuthorizedOnly = ({ allowedRoles }) => {
-	const { accessToken, role } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentUser);
 
-	return accessToken === null ? (
+	return role === null ? (
 		<Navigate to="/login" />
 	) : allowedRoles.includes("None") || allowedRoles.includes(role) ? (
 		<Outlet />
