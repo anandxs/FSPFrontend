@@ -13,8 +13,8 @@ const EditGroupModal = ({ handleGroupToggle, params, init }) => {
 
 	const [updateGroup] = useUpdateProjectGroupMutation();
 
-	const onSubmit = async ({ groupName }) => {
-		const { projectId, groupId } = params;
+	const onSubmit = ({ groupName }) => {
+		const { groupId } = params;
 		const body = {
 			name: groupName,
 		};
