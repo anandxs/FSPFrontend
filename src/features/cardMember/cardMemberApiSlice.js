@@ -5,6 +5,7 @@ export const cardMemberApi = apiSlice.injectEndpoints({
 		getAssigneesForCard: builder.query({
 			query: ({ projectId, cardId }) =>
 				`/api/projects/${projectId}/cards/${cardId}/assignees`,
+			providesTags: ["Assignees"],
 		}),
 		getCardsForMember: builder.query({
 			query: ({ projectId, memberId }) =>
@@ -16,12 +17,14 @@ export const cardMemberApi = apiSlice.injectEndpoints({
 				method: "POST",
 				body,
 			}),
+			invalidatesTags: ["Assignees"],
 		}),
 		removeMemberFromCard: builder.mutation({
 			query: ({ projectId, cardId, assigneeId }) => ({
 				url: `/api/projects/${projectId}/cards/${cardId}/assignees/${assigneeId}`,
 				method: "DELETE",
 			}),
+			invalidatesTags: ["Assignees"],
 		}),
 	}),
 });

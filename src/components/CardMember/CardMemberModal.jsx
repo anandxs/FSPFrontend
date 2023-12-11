@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useGetAssigneesForCardQuery } from "../../features/cardMember/cardMember";
+import { useGetAssigneesForCardQuery } from "../../features/cardMember/cardMemberApiSlice";
 import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice";
+import RemoveCardMember from "./RemoveCardMember";
 
 const AssigneesModal = () => {
 	const { projectId, cardId } = useParams();
@@ -21,6 +22,7 @@ const AssigneesModal = () => {
 	if (isLoading) {
 		members = <p>Loading...</p>;
 	} else if (isSuccess) {
+		console.log(assignees);
 		if (assignees?.length === 0) {
 			members = <p>No members assigned</p>;
 		} else {
@@ -29,6 +31,11 @@ const AssigneesModal = () => {
 					{assignees.map((a) => (
 						<li key={a?.id} className="flex justify-between">
 							{`${a.firstName} ${a.lastName}`}
+							<RemoveCardMember
+								projectId={projectId}
+								memberId={a?.id}
+								cardId={cardId}
+							/>
 						</li>
 					))}
 				</ul>
