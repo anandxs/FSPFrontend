@@ -9,8 +9,8 @@ const Project = () => {
 	const { projectId } = useParams();
 	const sections = [
 		{
-			header: "Dashboard",
-			link: `/projects/${projectId}/dashboard`,
+			header: "Cards",
+			link: `/projects/${projectId}/cards`,
 		},
 		{
 			header: "Groups",
@@ -24,7 +24,7 @@ const Project = () => {
 
 	const navigate = useNavigate();
 	useEffect(() => {
-		navigate("dashboard");
+		navigate("cards");
 	}, []);
 
 	return (
