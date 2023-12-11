@@ -1,18 +1,12 @@
-import { useEffect } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { Outlet, useNavigate } from "react-router-dom";
+import Users from "../components/Users";
 
 const Admin = () => {
-	const navigate = useNavigate();
-	useEffect(() => {
-		navigate("roles");
-	}, []);
-
 	const sections = [
 		{
-			header: "Roles",
-			link: `/admin/roles`,
+			header: "Users",
+			link: `/admin`,
 		},
 	];
 
@@ -21,7 +15,7 @@ const Admin = () => {
 			<Navbar />
 			<div className="grid grid-cols-12 flex-1">
 				<Sidebar sections={sections} />
-				<Outlet />
+				<Users />
 			</div>
 		</div>
 	);

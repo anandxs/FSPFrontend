@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logIn } from "../features/auth/authSlice";
 import { useLoginMutation } from "../features/auth/authApiSlice";
 import { useLazyGetUserInfoQuery } from "../features/user/userApiSlice";
 
 const Login = () => {
 	const [error, setError] = useState();
+	const navigate = useNavigate();
 
 	const form = useForm();
 	const { register, handleSubmit, formState } = form;
@@ -38,6 +39,10 @@ const Login = () => {
 								refreshToken,
 							})
 						);
+
+						if (role === "SUPERADMIN") {
+							navigate("/admin");
+						}
 					})
 					.catch((err) => {
 						console.log(err);

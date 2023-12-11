@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthorizedOnly from "./route/AuthorizedOnly";
@@ -79,16 +79,7 @@ function App() {
 								<Admin />
 							</Suspense>
 						}
-					>
-						<Route
-							path="roles"
-							element={
-								<Suspense fallback="Loading...">
-									<RoleManagement />
-								</Suspense>
-							}
-						/>
-					</Route>
+					/>
 				</Route>
 				<Route element={<AuthorizedOnly allowedRoles={["USER"]} />}>
 					<Route
