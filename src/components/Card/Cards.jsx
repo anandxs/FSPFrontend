@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetCardsForProjectQuery } from "../../features/card/cardApiSlice";
 import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
+import CardFilter from "./CardFilter";
 
 const Cards = () => {
 	const { projectId } = useParams();
@@ -52,7 +53,10 @@ const Cards = () => {
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
-			<h1 className="text-xl font-bold hover:underline">Dashboard</h1>
+			<div className="flex justify-between mb-3">
+				<h1 className="text-xl font-bold hover:underline">Dashboard</h1>
+				<CardFilter />
+			</div>
 			<DataTable
 				customStyles={customStyles}
 				pagination
