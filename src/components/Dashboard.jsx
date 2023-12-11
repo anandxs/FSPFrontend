@@ -9,12 +9,9 @@ const Dashboard = () => {
 	const navigate = useNavigate();
 
 	const goToCard = (card) => {
-		navigate(
-			`/projects/${projectId}/groups/${card.group.groupId}/cards/${card.cardId}`,
-			{
-				state: { projectId, cardId: card.cardId },
-			}
-		);
+		navigate(`/projects/${projectId}/cards/${card.cardId}`, {
+			state: { projectId, cardId: card.cardId },
+		});
 	};
 
 	let content = "";

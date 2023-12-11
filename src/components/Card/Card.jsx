@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
 import DeleteCard from "./DeleteCard";
+import Assignees from "../CardMember/CardMembers";
 
 const Card = () => {
 	const { projectId, groupId, cardId } = useParams();
@@ -75,6 +76,7 @@ const Card = () => {
 					)}
 				</div>
 				<div className="w-1/3 m-1 h-full bg-accent flex flex-col gap-1">
+					<Assignees />
 					<button
 						className="bg-primary text-white text-sm rounded px-1 w-full"
 						onClick={handleUpdate}

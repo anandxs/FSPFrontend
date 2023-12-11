@@ -124,7 +124,7 @@ function App() {
 							}
 						/>
 						<Route
-							path="groups/:groupId/cards/:cardId"
+							path="cards/:cardId"
 							element={
 								<Suspense fallback="Loading...">
 									<Card />
