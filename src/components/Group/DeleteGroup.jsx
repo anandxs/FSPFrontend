@@ -8,17 +8,16 @@ const DeleteGroup = ({ params }) => {
 
 	const [deleteGroup] = useDeleteProjectGroupMutation();
 
-	const handleDelete = async () => {
-		const { ownerId, projectId, groupId } = params;
-		try {
-			const response = await deleteGroup({
-				ownerId,
-				projectId,
-				groupId,
+	const handleDelete = () => {
+		const { groupId } = params;
+		deleteGroup({
+			groupId,
+		})
+			.unwrap()
+			.then(() => {})
+			.catch((err) => {
+				console.log(err);
 			});
-		} catch (err) {
-			console.log(err);
-		}
 	};
 
 	const handleDeleteToggle = () => {

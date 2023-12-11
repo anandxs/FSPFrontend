@@ -3,12 +3,12 @@ import { apiSlice } from "../../app/api/apiSlice";
 export const groupApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getProjectGroups: builder.query({
-			query: ({ projectId }) => `/api/project/${projectId}/groups`,
+			query: ({ projectId }) => `/api/projects/${projectId}/groups`,
 			providesTags: ["Groups"],
 		}),
 		createGroup: builder.mutation({
 			query: ({ projectId, body }) => ({
-				url: `/api/project/${projectId}/groups`,
+				url: `/api/projects/${projectId}/groups`,
 				method: "POST",
 				body,
 			}),
