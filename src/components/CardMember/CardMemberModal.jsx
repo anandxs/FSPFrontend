@@ -2,33 +2,41 @@ import { useParams } from "react-router-dom";
 import { useGetAssigneesForCardQuery } from "../../features/cardMember/cardMemberApiSlice";
 import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice";
 import RemoveCardMember from "./RemoveCardMember";
+import AddCardMember from "./AddCardMember";
 
 const AssigneesModal = () => {
 	const { projectId, cardId } = useParams();
 
 	const {
-		data: assignees,
-		isLoading,
-		isSuccess,
-		isError,
-		error,
+		data: cardMembers,
+		isLoading: cmLoadingStatus,
+		isSuccess: cmSuccesStatus,
+		isError: cmErrorStatus,
+		error: cmError,
 	} = useGetAssigneesForCardQuery({
 		projectId,
 		cardId,
 	});
 
-	let members;
+	const {
+		data: projectMembers,
+		isLoading: pmLoadingStatus,
+		isSuccess: pmSuccessStatus,
+		isError: pmErrorStatus,
+		error: pmError,
+	} = useGetProjectMembersQuery({ projectId });
 
-	if (isLoading) {
-		members = <p>Loading...</p>;
-	} else if (isSuccess) {
-		console.log(assignees);
-		if (assignees?.length === 0) {
-			members = <p>No members assigned</p>;
+	let assignees;
+
+	if (cmLoadingStatus) {
+		assignees = <p>Loading...</p>;
+	} else if (cmSuccesStatus) {
+		if (cardMembers?.length === 0) {
+			assignees = <p>No members assigned</p>;
 		} else {
-			members = (
-				<ul className="pr-4">
-					{assignees.map((a) => (
+			assignees = (
+				<ul className="pr-4 flex flex-col gap-1">
+					{cardMembers.map((a) => (
 						<li key={a?.id} className="flex justify-between">
 							{`${a.firstName} ${a.lastName}`}
 							<RemoveCardMember
@@ -41,8 +49,33 @@ const AssigneesModal = () => {
 				</ul>
 			);
 		}
-	} else if (isError) {
-		members = <p>{error}</p>;
+	} else if (cmErrorStatus) {
+		assignees = <p>{cmError}</p>;
+	}
+
+	let unassignedMembers;
+	if (pmLoadingStatus) {
+		unassignedMembers = <p>Loading...</p>;
+	} else if (pmSuccessStatus) {
+		let temp = projectMembers.filter(
+			(x) => !cardMembers.map((y) => y.id).includes(x.user.id)
+		);
+		unassignedMembers = (
+			<ul className="pr-4 flex flex-col gap-1">
+				{temp?.map((pm) => (
+					<li key={pm?.user?.id} className="flex justify-between">
+						{`${pm?.user?.firstName} ${pm?.user?.lastName}`}
+						<AddCardMember
+							projectId={projectId}
+							cardId={cardId}
+							assigneeId={pm?.user?.id}
+						/>
+					</li>
+				))}
+			</ul>
+		);
+	} else if (pmErrorStatus) {
+		unassignedMembers = <p>{pmError}</p>;
 	}
 
 	return (
@@ -50,8 +83,14 @@ const AssigneesModal = () => {
 			className="bg-accent p-3 w-1/2 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Assigned Members</h1>
-			<div>{members}</div>
+			<div className="mb-2">
+				<h1 className="text-xl font-bold mb-2 py-1">Assigned Members</h1>
+				{assignees}
+			</div>
+			<div>
+				<h2 className="text-xl font-bold mb-2 py-1">Assign Members</h2>
+				{unassignedMembers}
+			</div>
 		</div>
 	);
 };

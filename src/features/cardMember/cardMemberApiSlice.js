@@ -12,10 +12,9 @@ export const cardMemberApi = apiSlice.injectEndpoints({
 				`/api/projects/${projectId}/assignee/${memberId}/cards`,
 		}),
 		assignCardToMember: builder.mutation({
-			query: ({ projectId, cardId, assigneeId, body }) => ({
+			query: ({ projectId, cardId, assigneeId }) => ({
 				url: `/api/projects/${projectId}/cards/${cardId}/assignees/${assigneeId}`,
 				method: "POST",
-				body,
 			}),
 			invalidatesTags: ["Assignees"],
 		}),
