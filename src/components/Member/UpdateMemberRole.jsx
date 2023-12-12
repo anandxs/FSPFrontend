@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "../Modal/Modal";
+import UpdateMemberRoleModal from "./UpdateMemberRoleModal";
 
 const UpdateMemberRole = () => {
 	const [toggle, setToggle] = useState(false);
@@ -18,10 +19,7 @@ const UpdateMemberRole = () => {
 			</button>
 			{toggle && (
 				<Modal action={handleToggle}>
-					<div
-						className="bg-accent p-3 w-1/3 min-w-max"
-						onClick={(e) => e.stopPropagation()}
-					></div>
+					<UpdateMemberRoleModal handleToggle={handleToggle} />
 				</Modal>
 			)}
 		</>

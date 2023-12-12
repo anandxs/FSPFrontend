@@ -60,7 +60,6 @@ const Members = () => {
 	const navigate = useNavigate();
 
 	const goToMember = (member) => {
-		console.log(member);
 		navigate(`${member.user.id}`);
 	};
 
