@@ -23,8 +23,6 @@ const Members = () => {
 			projectId,
 		});
 
-	console.log(data);
-
 	const columns = [
 		{
 			name: "Name",
@@ -43,16 +41,76 @@ const Members = () => {
 		},
 	];
 
+	const [filter, setFilter] = useState("");
+
 	let members;
 	if (isSuccess) {
-		members = data.map((m) => m);
+		members = data
+			.filter((m) => {
+				switch (filter) {
+					case "ADMIN":
+						if (m.role === "ADMIN") {
+							return m;
+						}
+						break;
+					case "MEMBER":
+						if (m.role === "MEMBER") {
+							return m;
+						}
+						break;
+					case "OBSERVER":
+						if (m.role === "OBSERVER") {
+							return m;
+						}
+						break;
+					default:
+						return m;
+				}
+			})
+			.map((m) => m);
 	}
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<div className="mb-2 flex justify-between">
-				<h1 className="text-xl font-bold hover:underline">Members</h1>
-				<AddMember />
+				<div className="flex gap-2">
+					<h1 className="text-xl font-bold hover:underline">Members</h1>
+					<AddMember />
+				</div>
+				<ul className="flex p-0 text-xs">
+					<li
+						onClick={() => setFilter("ADMIN")}
+						className={`border border-black py-1.5 px-1 w-20 text-center ${
+							filter === "ADMIN" ? "bg-primary text-white" : "text-black"
+						} font-bold`}
+					>
+						ADMIN
+					</li>
+					<li
+						onClick={() => setFilter("MEMBER")}
+						className={`border border-black py-1.5 px-1 w-20 text-center ${
+							filter === "MEMBER" ? "bg-primary text-white" : "text-black"
+						} font-bold`}
+					>
+						MEMBER
+					</li>
+					<li
+						onClick={() => setFilter("OBSERVER")}
+						className={`border border-black py-1.5 px-1 w-20 text-center ${
+							filter === "OBSERVER" ? "bg-primary text-white" : "text-black"
+						} font-bold`}
+					>
+						OBSERVER
+					</li>
+					<li
+						onClick={() => setFilter("")}
+						className={`border border-black py-1.5 px-1 w-20 text-center ${
+							filter === "" ? "bg-primary text-white" : "text-black"
+						} font-bold`}
+					>
+						ALL
+					</li>
+				</ul>
 			</div>
 			<DataTable
 				customStyles={customStyles}
