@@ -56,9 +56,9 @@ const AssigneesModal = () => {
 	let unassignedMembers;
 	if (pmLoadingStatus) {
 		unassignedMembers = <p>Loading...</p>;
-	} else if (pmSuccessStatus) {
+	} else if (pmSuccessStatus && cmSuccesStatus) {
 		let temp = projectMembers.filter(
-			(x) => !cardMembers.map((y) => y.id).includes(x.user.id)
+			(x) => !cardMembers?.map((y) => y.id).includes(x.user.id)
 		);
 		unassignedMembers = (
 			<ul className="pr-4 flex flex-col gap-1">

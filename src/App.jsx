@@ -9,7 +9,7 @@ import EmailVerified from "./pages/EmailVerified";
 const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Home = lazy(() => import("./pages/Home"));
-const Dashboard = lazy(() => import("./components/Dashboard"));
+const Cards = lazy(() => import("./components/Card/Cards"));
 const Login = lazy(() => import("./components/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const Groups = lazy(() => import("./components/Group/Groups"));
@@ -99,10 +99,10 @@ function App() {
 						}
 					>
 						<Route
-							path="dashboard"
+							path="cards"
 							element={
 								<Suspense fallback="Loading...">
-									<Dashboard />
+									<Cards />
 								</Suspense>
 							}
 						/>
