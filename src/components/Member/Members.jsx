@@ -1,27 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice";
 import AddMember from "./AddMember";
 import { useState } from "react";
-import Modal from "../Modal/Modal";
-import Member from "./Member";
 import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
 
 const Members = () => {
 	const { projectId } = useParams();
-
-	const [toggle, setToggle] = useState(false);
-	const [mId, setMId] = useState();
-
-	const handleToggle = (m) => {
-		setMId(m?.user?.id);
-		setToggle(!toggle);
-	};
-
-	const { data, isLoading, isSuccess, isError, error } =
-		useGetProjectMembersQuery({
-			projectId,
-		});
+	const { data, isSuccess } = useGetProjectMembersQuery({
+		projectId,
+	});
 
 	const columns = [
 		{
@@ -42,7 +30,6 @@ const Members = () => {
 	];
 
 	const [filter, setFilter] = useState("");
-
 	let members;
 	if (isSuccess) {
 		members = data
@@ -69,6 +56,13 @@ const Members = () => {
 			})
 			.map((m) => m);
 	}
+
+	const navigate = useNavigate();
+
+	const goToMember = (member) => {
+		console.log(member);
+		navigate(`${member.user.id}`);
+	};
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
@@ -114,6 +108,7 @@ const Members = () => {
 			</div>
 			<DataTable
 				customStyles={customStyles}
+				onRowClicked={goToMember}
 				pagination
 				columns={columns}
 				data={members}

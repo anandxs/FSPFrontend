@@ -1,55 +1,17 @@
-import { useState } from "react";
-import Modal from "../Modal/Modal";
-import Confirmation from "../Confirmation";
-import { useRemoveMemberMutation } from "../../features/member/memberApiSlice";
+import RemoveMember from "./RemoveMember";
 
-const Member = ({ member, handleToggle, params }) => {
-	const [deleteToggle, setDeleteToggle] = useState(false);
-
-	const [removeMember] = useRemoveMemberMutation();
-
-	const handleDelete = () => {
-		const { memberId, projectId } = params;
-		removeMember({
-			projectId,
-			memberId,
-		})
-			.unwrap()
-			.then(() => {
-				handleDeleteToggle();
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
-	const handleDeleteToggle = () => {
-		setDeleteToggle(!deleteToggle);
-	};
-
+const Member = () => {
 	return (
-		<div
-			onClick={(e) => e.stopPropagation()}
-			className="bg-accent p-3 w-1/3 min-w-max"
-		>
-			<h1 className="text-2xl font-bold mb-2 py-1">
-				{`${member?.user?.firstName} ${member?.user?.lastName}`}
+		<div className="col-span-10 p-2 mt-3 ml-3">
+			<h1 className="text-xl font-bold mb-2 py-1 hover:underline">
+				Member Details
 			</h1>
-			<p>
-				Role : <span className="font-bold">{member?.role}</span>
-			</p>
-			<button
-				onClick={handleDeleteToggle}
-				className="bg-orange-500 text-white px-3 py-0.5 text-sm rounded-sm"
-			>
-				Remove
-			</button>
-			{deleteToggle && (
-				<Modal action={handleDeleteToggle}>
-					<Confirmation success={handleDelete} cancel={handleDeleteToggle} />
-				</Modal>
-			)}
+			<p>First Name</p>
+			<p>Last Name</p>
+			<p>Email</p>
+			<p>Role</p>
+			<button>Change Role</button>
+			<RemoveMember />
 		</div>
 	);
 };
