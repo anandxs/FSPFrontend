@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { ROLE_ADMIN, ROLE_MEMBER, ROLE_OBSERVER } from "../../utils/constants";
 
 const Members = () => {
 	const { projectId } = useParams();
@@ -37,18 +38,18 @@ const Members = () => {
 		members = data
 			.filter((m) => {
 				switch (filter) {
-					case "ADMIN":
-						if (m.role === "ADMIN") {
+					case ROLE_ADMIN:
+						if (m.role === ROLE_ADMIN) {
 							return m;
 						}
 						break;
-					case "MEMBER":
-						if (m.role === "MEMBER") {
+					case ROLE_MEMBER:
+						if (m.role === ROLE_MEMBER) {
 							return m;
 						}
 						break;
-					case "OBSERVER":
-						if (m.role === "OBSERVER") {
+					case ROLE_OBSERVER:
+						if (m.role === ROLE_OBSERVER) {
 							return m;
 						}
 						break;
@@ -72,29 +73,29 @@ const Members = () => {
 			<div className="mb-2 flex justify-between">
 				<div className="flex gap-2">
 					<h1 className="text-xl font-bold hover:underline">Members</h1>
-					{role !== "OBSERVER" && <AddMember />}
+					{role !== ROLE_OBSERVER && <AddMember />}
 				</div>
 				<ul className="flex p-0 text-xs">
 					<li
-						onClick={() => setFilter("ADMIN")}
+						onClick={() => setFilter(ROLE_ADMIN)}
 						className={`border border-black py-1.5 px-1 w-20 text-center ${
-							filter === "ADMIN" ? "bg-primary text-white" : "text-black"
+							filter === ROLE_ADMIN ? "bg-primary text-white" : "text-black"
 						} font-bold`}
 					>
 						ADMIN
 					</li>
 					<li
-						onClick={() => setFilter("MEMBER")}
+						onClick={() => setFilter(ROLE_MEMBER)}
 						className={`border border-black py-1.5 px-1 w-20 text-center ${
-							filter === "MEMBER" ? "bg-primary text-white" : "text-black"
+							filter === ROLE_MEMBER ? "bg-primary text-white" : "text-black"
 						} font-bold`}
 					>
 						MEMBER
 					</li>
 					<li
-						onClick={() => setFilter("OBSERVER")}
+						onClick={() => setFilter(ROLE_OBSERVER)}
 						className={`border border-black py-1.5 px-1 w-20 text-center ${
-							filter === "OBSERVER" ? "bg-primary text-white" : "text-black"
+							filter === ROLE_OBSERVER ? "bg-primary text-white" : "text-black"
 						} font-bold`}
 					>
 						OBSERVER

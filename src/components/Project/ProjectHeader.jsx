@@ -11,6 +11,7 @@ import ArchiveProject from "./ArchiveProject";
 import DeleteProject from "./DeleteProject";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { ROLE_OBSERVER } from "../../utils/constants";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
@@ -97,7 +98,7 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 					</p>
 				)}
 			</div>
-			{role !== "OBSERVER" && (
+			{role !== ROLE_OBSERVER && (
 				<div className="flex flex-row gap-2">
 					<button
 						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"

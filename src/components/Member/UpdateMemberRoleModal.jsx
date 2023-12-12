@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useUpdateMemberMutation } from "../../features/member/memberApiSlice";
 import { useParams } from "react-router-dom";
+import { ROLE_ADMIN, ROLE_MEMBER, ROLE_OBSERVER } from "../../utils/constants";
 
 const UpdateMemberRoleModal = ({ handleToggle }) => {
 	const form = useForm();
@@ -42,9 +43,9 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 					})}
 				>
 					<option value="">Select Role</option>
-					<option value="ADMIN">ADMIN</option>
-					<option value="MEMBER">MEMBER</option>
-					<option value="OBSERVER">OBSERVER</option>
+					<option value={ROLE_ADMIN}>ADMIN</option>
+					<option value={ROLE_MEMBER}>MEMBER</option>
+					<option value={ROLE_OBSERVER}>OBSERVER</option>
 				</select>
 				<div className="flex justify-between">
 					<button

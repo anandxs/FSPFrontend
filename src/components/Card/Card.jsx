@@ -10,6 +10,7 @@ import DeleteCard from "./DeleteCard";
 import Assignees from "../CardMember/CardMembers";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { ROLE_OBSERVER } from "../../utils/constants";
 
 const Card = () => {
 	const { projectId, groupId, cardId } = useParams();
@@ -81,7 +82,7 @@ const Card = () => {
 				</div>
 				<div className="w-1/3 m-1 h-full bg-accent flex flex-col gap-1">
 					<Assignees />
-					{role !== "OBSERVER" && (
+					{role !== ROLE_OBSERVER && (
 						<>
 							<button
 								className="bg-primary text-white text-sm rounded px-1 w-full"
