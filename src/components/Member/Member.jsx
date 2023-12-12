@@ -1,4 +1,5 @@
 import RemoveMember from "./RemoveMember";
+import UpdateMemberRole from "./UpdateMemberRole";
 
 const Member = () => {
 	return (
@@ -10,7 +11,7 @@ const Member = () => {
 			<p>Last Name</p>
 			<p>Email</p>
 			<p>Role</p>
-			<button>Change Role</button>
+			<UpdateMemberRole />
 			<RemoveMember />
 		</div>
 	);
