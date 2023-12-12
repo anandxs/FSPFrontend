@@ -54,7 +54,7 @@ const Cards = () => {
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<div className="flex justify-between mb-3">
-				<h1 className="text-xl font-bold hover:underline">Dashboard</h1>
+				<h1 className="text-xl font-bold hover:underline">Cards</h1>
 				<CardFilter />
 			</div>
 			<DataTable

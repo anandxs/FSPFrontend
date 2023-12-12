@@ -4,6 +4,8 @@ import AddMember from "./AddMember";
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Members = () => {
 	const { projectId } = useParams();
@@ -63,12 +65,14 @@ const Members = () => {
 		navigate(`${member.user.id}`);
 	};
 
+	const { role } = useSelector(selectCurrentProjectRole);
+
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<div className="mb-2 flex justify-between">
 				<div className="flex gap-2">
 					<h1 className="text-xl font-bold hover:underline">Members</h1>
-					<AddMember />
+					{role !== "OBSERVER" && <AddMember />}
 				</div>
 				<ul className="flex p-0 text-xs">
 					<li

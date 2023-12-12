@@ -9,6 +9,8 @@ import CreateGroupModal from "../Group/CreateGroupModal";
 import CreateCardModal from "../Card/CreateCardModal";
 import ArchiveProject from "./ArchiveProject";
 import DeleteProject from "./DeleteProject";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
@@ -47,6 +49,8 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 	const handleCardToggle = () => {
 		setCardToggle(!cardToggle);
 	};
+
+	const { role } = useSelector(selectCurrentProjectRole);
 
 	return (
 		<div className="bg-blue-300 py-2 flex flex-row justify-between px-4">
@@ -93,32 +97,34 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 					</p>
 				)}
 			</div>
-			<div className="flex flex-row gap-2">
-				<button
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-					onClick={handleGroupToggle}
-				>
-					Create Group
-				</button>
-				{groupToggle && (
-					<Modal action={handleGroupToggle}>
-						<CreateGroupModal handleGroupToggle={handleGroupToggle} />
-					</Modal>
-				)}
-				<button
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-					onClick={handleCardToggle}
-				>
-					Create Card
-				</button>
-				{cardToggle && (
-					<Modal action={handleCardToggle}>
-						<CreateCardModal handleCardToggle={handleCardToggle} />
-					</Modal>
-				)}
-				<ArchiveProject params={{ ownerId, projectId }} data={data} />
-				<DeleteProject params={{ ownerId, projectId }} />
-			</div>
+			{role !== "OBSERVER" && (
+				<div className="flex flex-row gap-2">
+					<button
+						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+						onClick={handleGroupToggle}
+					>
+						Create Group
+					</button>
+					{groupToggle && (
+						<Modal action={handleGroupToggle}>
+							<CreateGroupModal handleGroupToggle={handleGroupToggle} />
+						</Modal>
+					)}
+					<button
+						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+						onClick={handleCardToggle}
+					>
+						Create Card
+					</button>
+					{cardToggle && (
+						<Modal action={handleCardToggle}>
+							<CreateCardModal handleCardToggle={handleCardToggle} />
+						</Modal>
+					)}
+					<ArchiveProject params={{ ownerId, projectId }} data={data} />
+					<DeleteProject params={{ ownerId, projectId }} />
+				</div>
+			)}
 		</div>
 	);
 };

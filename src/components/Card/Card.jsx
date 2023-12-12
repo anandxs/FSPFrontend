@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { useGetProjectGroupsQuery } from "../../features/group/groupApiSlice";
 import DeleteCard from "./DeleteCard";
 import Assignees from "../CardMember/CardMembers";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Card = () => {
 	const { projectId, groupId, cardId } = useParams();
@@ -51,6 +53,8 @@ const Card = () => {
 			});
 	};
 
+	const { role } = useSelector(selectCurrentProjectRole);
+
 	return !toggleUpdate ? (
 		<div className="col-span-10 p-3">
 			<section className="flex justify-between gap-3 m-1 px-4 py-3 bg-secondary rounded-md w-full max-w-md">
@@ -77,13 +81,17 @@ const Card = () => {
 				</div>
 				<div className="w-1/3 m-1 h-full bg-accent flex flex-col gap-1">
 					<Assignees />
-					<button
-						className="bg-primary text-white text-sm rounded px-1 w-full"
-						onClick={handleUpdate}
-					>
-						Update
-					</button>
-					<DeleteCard params={{ projectId, groupId, cardId }} />
+					{role !== "OBSERVER" && (
+						<>
+							<button
+								className="bg-primary text-white text-sm rounded px-1 w-full"
+								onClick={handleUpdate}
+							>
+								Update
+							</button>
+							<DeleteCard params={{ projectId, groupId, cardId }} />
+						</>
+					)}
 				</div>
 			</section>
 		</div>

@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useGetProjectMemberQuery } from "../../features/member/memberApiSlice";
 import RemoveMember from "./RemoveMember";
 import UpdateMemberRole from "./UpdateMemberRole";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Member = () => {
 	const { projectId, memberId } = useParams();
@@ -12,6 +14,8 @@ const Member = () => {
 		member = data;
 		console.log(member);
 	}
+
+	const { role } = useSelector(selectCurrentProjectRole);
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
@@ -24,10 +28,13 @@ const Member = () => {
 				<p>Email: {member?.user?.email}</p>
 				<p>Role: {member?.role}</p>
 			</div>
-			<div className="flex gap-2">
-				<UpdateMemberRole />
-				<RemoveMember />
-			</div>
+
+			{role === "ADMIN" && (
+				<div className="flex gap-2">
+					<UpdateMemberRole />
+					<RemoveMember />
+				</div>
+			)}
 		</div>
 	);
 };
