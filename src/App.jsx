@@ -26,6 +26,7 @@ const AccessDenied = lazy(() => import("./components/AccessDenied"));
 const RoleManagement = lazy(() =>
 	import("./components/DefaultRole/RoleManagement")
 );
+import Member from "./components/Member/Member";
 
 function App() {
 	return (
@@ -127,6 +128,14 @@ function App() {
 							element={
 								<Suspense fallback="Loading...">
 									<Members />
+								</Suspense>
+							}
+						/>
+						<Route
+							path="members/:memberId"
+							element={
+								<Suspense fallback="Loading...">
+									<Member />
 								</Suspense>
 							}
 						/>

@@ -1,55 +1,33 @@
-import { useState } from "react";
-import Modal from "../Modal/Modal";
-import Confirmation from "../Confirmation";
-import { useRemoveMemberMutation } from "../../features/member/memberApiSlice";
+import { useParams } from "react-router-dom";
+import { useGetProjectMemberQuery } from "../../features/member/memberApiSlice";
+import RemoveMember from "./RemoveMember";
+import UpdateMemberRole from "./UpdateMemberRole";
 
-const Member = ({ member, handleToggle, params }) => {
-	const [deleteToggle, setDeleteToggle] = useState(false);
+const Member = () => {
+	const { projectId, memberId } = useParams();
+	const { data, isSuccess } = useGetProjectMemberQuery({ projectId, memberId });
 
-	const [removeMember] = useRemoveMemberMutation();
-
-	const handleDelete = () => {
-		const { memberId, projectId } = params;
-		removeMember({
-			projectId,
-			memberId,
-		})
-			.unwrap()
-			.then(() => {
-				handleDeleteToggle();
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
-
-	const handleDeleteToggle = () => {
-		setDeleteToggle(!deleteToggle);
-	};
+	let member;
+	if (isSuccess) {
+		member = data;
+		console.log(member);
+	}
 
 	return (
-		<div
-			onClick={(e) => e.stopPropagation()}
-			className="bg-accent p-3 w-1/3 min-w-max"
-		>
-			<h1 className="text-2xl font-bold mb-2 py-1">
-				{`${member?.user?.firstName} ${member?.user?.lastName}`}
+		<div className="col-span-10 p-2 mt-3 ml-3">
+			<h1 className="text-xl font-bold mb-2 py-1 hover:underline">
+				Member Details
 			</h1>
-			<p>
-				Role : <span className="font-bold">{member?.role}</span>
-			</p>
-			<button
-				onClick={handleDeleteToggle}
-				className="bg-orange-500 text-white px-3 py-0.5 text-sm rounded-sm"
-			>
-				Remove
-			</button>
-			{deleteToggle && (
-				<Modal action={handleDeleteToggle}>
-					<Confirmation success={handleDelete} cancel={handleDeleteToggle} />
-				</Modal>
-			)}
+			<div className="flex flex-col gap-2 mb-3">
+				<p>First Name: {member?.user?.firstName}</p>
+				<p>Last Name: {member?.user?.lastName}</p>
+				<p>Email: {member?.user?.email}</p>
+				<p>Role: {member?.role}</p>
+			</div>
+			<div className="flex gap-2">
+				<UpdateMemberRole />
+				<RemoveMember />
+			</div>
 		</div>
 	);
 };
