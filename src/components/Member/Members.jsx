@@ -4,9 +4,11 @@ import AddMember from "./AddMember";
 import { useState } from "react";
 import Modal from "../Modal/Modal";
 import Member from "./Member";
+import DataTable from "react-data-table-component";
+import { customStyles } from "../../utils/tableStyle";
 
 const Members = () => {
-	const { ownerId, projectId } = useParams();
+	const { projectId } = useParams();
 
 	const [toggle, setToggle] = useState(false);
 	const [mId, setMId] = useState();
@@ -21,63 +23,43 @@ const Members = () => {
 			projectId,
 		});
 
-	let content = "";
-	if (isLoading) {
-		content = <p>Loading...</p>;
-	} else if (isSuccess) {
-		content = (
-			<table className="table-fixed w-10/12 mt-3 border border-black">
-				<thead className="table-header-group bg-primary text-white">
-					<tr>
-						<th className="text-left text-sm px-2 py-1 border border-black">
-							Name
-						</th>
-						<th className="text-left text-sm px-2 py-1 border border-black">
-							Email
-						</th>
-						<th className="text-left text-sm px-2 py-1 border border-black">
-							Role
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{data?.map((m) => (
-						<tr key={m?.user?.id}>
-							<td
-								className="px-2 py-1 text-sm border border-black hover:underline"
-								onClick={() => handleToggle(m)}
-							>
-								{`${m?.user?.firstName} ${m?.user?.lastName}`}
-								{toggle && mId === m?.user?.id && (
-									<Modal action={handleToggle}>
-										<Member
-											params={{ ownerId, projectId, memberId: m?.user?.id }}
-											member={{ ...m }}
-											handleToggle={handleToggle}
-										/>
-									</Modal>
-								)}
-							</td>
-							<td className="px-2 py-1 text-sm border border-black">
-								{m?.user?.email}
-							</td>
-							<td className="px-2 py-1 text-sm border border-black">
-								{m?.role}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		);
-	} else if (isError) {
-		console.log(error);
+	console.log(data);
+
+	const columns = [
+		{
+			name: "Name",
+			selector: (row) => `${row.user.firstName} ${row.user.lastName}`,
+			sortable: true,
+		},
+		{
+			name: "Email",
+			selector: (row) => row.user.email,
+			sortable: true,
+		},
+		{
+			name: "Role",
+			selector: (row) => row.role,
+			sortable: true,
+		},
+	];
+
+	let members;
+	if (isSuccess) {
+		members = data.map((m) => m);
 	}
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
-			<h1 className="text-xl font-bold hover:underline">Members</h1>
-			<AddMember />
-			{content}
+			<div className="mb-2 flex justify-between">
+				<h1 className="text-xl font-bold hover:underline">Members</h1>
+				<AddMember />
+			</div>
+			<DataTable
+				customStyles={customStyles}
+				pagination
+				columns={columns}
+				data={members}
+			/>
 		</div>
 	);
 };
