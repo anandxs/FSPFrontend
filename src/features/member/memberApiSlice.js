@@ -14,6 +14,13 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ["Members"],
 		}),
+		updateMember: builder.mutation({
+			query: ({ projectId, body }) => ({
+				url: `/api/projects/${projectId}/members`,
+				method: "PUT",
+				body,
+			}),
+		}),
 		exitProject: builder.mutation({
 			query: ({ projectId }) => ({
 				url: `/api/projects/${projectId}/members`,
@@ -34,6 +41,7 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 export const {
 	useGetProjectMembersQuery,
 	useAddMemberMutation,
+	useUpdateMemberMutation,
 	useExitProjectMutation,
 	useRemoveMemberMutation,
 } = memberApiSlice;
