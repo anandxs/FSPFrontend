@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	projectId: null,
+	ownerId: null,
 	role: null,
 };
 
@@ -10,12 +11,15 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		setRole: (state, action) => {
-			const { projectId, role } = action.payload;
-			(state.projectId = projectId), (state.role = role);
+			const { projectId, role, ownerId } = action.payload;
+			state.projectId = projectId;
+			state.role = role;
+			state.ownerId = ownerId;
 		},
 		clearRole: (state) => {
 			state.projectId = null;
 			state.role = null;
+			state.ownerId = null;
 		},
 	},
 });

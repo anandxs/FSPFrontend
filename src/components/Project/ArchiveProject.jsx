@@ -14,9 +14,8 @@ const ArchiveProject = ({ params, data }) => {
 
 	const handleArchive = async () => {
 		try {
-			const { ownerId, projectId } = params;
+			const { projectId } = params;
 			const response = await toggleProjectArchiveStatus({
-				ownerId,
 				projectId,
 			});
 

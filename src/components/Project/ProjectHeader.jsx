@@ -12,8 +12,10 @@ import DeleteProject from "./DeleteProject";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
 import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import ExitProject from "./ExitProject";
 
-const ProjectHeader = ({ ownerId, projectId }) => {
+const ProjectHeader = ({ projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
 	const [groupToggle, setGroupToggle] = useState(false);
 	const [cardToggle, setCardToggle] = useState(false);
@@ -51,7 +53,8 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 		setCardToggle(!cardToggle);
 	};
 
-	const { role } = useSelector(selectCurrentProjectRole);
+	const { id } = useSelector(selectCurrentUser);
+	const { role, ownerId } = useSelector(selectCurrentProjectRole);
 
 	return (
 		<div className="bg-blue-300 py-2 flex flex-row justify-between px-4">
@@ -126,12 +129,13 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 					)}
 					{role === ROLE_ADMIN && (
 						<>
-							<ArchiveProject params={{ ownerId, projectId }} data={data} />
-							<DeleteProject params={{ ownerId, projectId }} />
+							<ArchiveProject params={{ projectId }} data={data} />
+							<DeleteProject params={{ projectId }} />
 						</>
 					)}
 				</div>
 			)}
+			{ownerId !== id && <ExitProject />}
 		</div>
 	);
 };
