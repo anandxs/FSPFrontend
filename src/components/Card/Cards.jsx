@@ -47,7 +47,7 @@ const Cards = () => {
 			group: c.group.name,
 			description:
 				c.description === null ? "- -" : c.description.substring(0, 30),
-			dueDate: c.dueDate === null ? "- -" : c.dueDate,
+			dueDate: c.dueDate === null ? "- -" : new Date(c.dueDate).toDateString(),
 		}));
 	}
 

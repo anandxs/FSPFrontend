@@ -20,7 +20,7 @@ const DeleteCard = ({ params }) => {
 		})
 			.unwrap()
 			.then(() => {
-				navigate(`/projects/${projectId}/dashboard`);
+				navigate(`/projects/${projectId}/cards`);
 			})
 			.catch((err) => {
 				console.log(err);
