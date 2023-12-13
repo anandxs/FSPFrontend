@@ -9,6 +9,9 @@ import CreateGroupModal from "../Group/CreateGroupModal";
 import CreateCardModal from "../Card/CreateCardModal";
 import ArchiveProject from "./ArchiveProject";
 import DeleteProject from "./DeleteProject";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
@@ -48,6 +51,8 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 		setCardToggle(!cardToggle);
 	};
 
+	const { role } = useSelector(selectCurrentProjectRole);
+
 	return (
 		<div className="bg-blue-300 py-2 flex flex-row justify-between px-4">
 			<div className="flex flex-row gap-3">
@@ -86,39 +91,47 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 						className="text-md font-bold"
 						onClick={() => {
 							setValue("projectName", data?.name);
-							setUpdateNameToggle(true);
+							if (role === ROLE_ADMIN) {
+								setUpdateNameToggle(true);
+							}
 						}}
 					>
 						{data?.name}
 					</p>
 				)}
 			</div>
-			<div className="flex flex-row gap-2">
-				<button
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-					onClick={handleGroupToggle}
-				>
-					Create Group
-				</button>
-				{groupToggle && (
-					<Modal action={handleGroupToggle}>
-						<CreateGroupModal handleGroupToggle={handleGroupToggle} />
-					</Modal>
-				)}
-				<button
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
-					onClick={handleCardToggle}
-				>
-					Create Card
-				</button>
-				{cardToggle && (
-					<Modal action={handleCardToggle}>
-						<CreateCardModal handleCardToggle={handleCardToggle} />
-					</Modal>
-				)}
-				<ArchiveProject params={{ ownerId, projectId }} data={data} />
-				<DeleteProject params={{ ownerId, projectId }} />
-			</div>
+			{role !== ROLE_OBSERVER && (
+				<div className="flex flex-row gap-2">
+					<button
+						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+						onClick={handleGroupToggle}
+					>
+						Create Group
+					</button>
+					{groupToggle && (
+						<Modal action={handleGroupToggle}>
+							<CreateGroupModal handleGroupToggle={handleGroupToggle} />
+						</Modal>
+					)}
+					<button
+						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+						onClick={handleCardToggle}
+					>
+						Create Card
+					</button>
+					{cardToggle && (
+						<Modal action={handleCardToggle}>
+							<CreateCardModal handleCardToggle={handleCardToggle} />
+						</Modal>
+					)}
+					{role === ROLE_ADMIN && (
+						<>
+							<ArchiveProject params={{ ownerId, projectId }} data={data} />
+							<DeleteProject params={{ ownerId, projectId }} />
+						</>
+					)}
+				</div>
+			)}
 		</div>
 	);
 };

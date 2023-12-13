@@ -1,10 +1,18 @@
 import CreateProjectCard from "./CreateProjectCard";
 import ProjectCard from "./ProjectCard";
 import { useGetUserProjectsQuery } from "../../features/project/projectApiSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { clearRole } from "../../features/user/userSlice";
 
 const Projects = () => {
 	const { data, isLoading, isSuccess, isError, error } =
 		useGetUserProjectsQuery();
+
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(clearRole());
+	}, []);
 
 	let content = "";
 	if (isLoading) {

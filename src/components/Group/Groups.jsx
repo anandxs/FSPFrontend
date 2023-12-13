@@ -4,11 +4,16 @@ import { useParams } from "react-router";
 import { customStyles } from "../../utils/tableStyle";
 import EditGroup from "./EditGroup";
 import DeleteGroup from "./DeleteGroup";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 
 const Groups = () => {
 	const { projectId } = useParams();
 
 	const { data: groups, isSuccess } = useGetProjectGroupsQuery({ projectId });
+
+	const { role } = useSelector(selectCurrentProjectRole);
 
 	const columns = [
 		{
@@ -18,11 +23,14 @@ const Groups = () => {
 		},
 		{
 			name: "Option",
+			omit: role === ROLE_OBSERVER,
 			cell: (row, index, column, id) => {
 				return (
 					<div className="flex gap-2">
 						<EditGroup params={{ groupId: row.id }} init={row.name} />
-						<DeleteGroup params={{ groupId: row.id }} />
+						{role === ROLE_ADMIN && (
+							<DeleteGroup params={{ groupId: row.id }} />
+						)}
 					</div>
 				);
 			},

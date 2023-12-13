@@ -3,6 +3,9 @@ import { useGetAssigneesForCardQuery } from "../../features/cardMember/cardMembe
 import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice";
 import RemoveCardMember from "./RemoveCardMember";
 import AddCardMember from "./AddCardMember";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 
 const AssigneesModal = () => {
 	const { projectId, cardId } = useParams();
@@ -26,8 +29,9 @@ const AssigneesModal = () => {
 		error: pmError,
 	} = useGetProjectMembersQuery({ projectId });
 
-	let assignees;
+	const { role } = useSelector(selectCurrentProjectRole);
 
+	let assignees;
 	if (cmLoadingStatus) {
 		assignees = <p>Loading...</p>;
 	} else if (cmSuccesStatus) {
@@ -39,11 +43,13 @@ const AssigneesModal = () => {
 					{cardMembers.map((a) => (
 						<li key={a?.id} className="flex justify-between">
 							{`${a.firstName} ${a.lastName}`}
-							<RemoveCardMember
-								projectId={projectId}
-								memberId={a?.id}
-								cardId={cardId}
-							/>
+							{role === ROLE_ADMIN && (
+								<RemoveCardMember
+									projectId={projectId}
+									memberId={a?.id}
+									cardId={cardId}
+								/>
+							)}
 						</li>
 					))}
 				</ul>
@@ -87,10 +93,12 @@ const AssigneesModal = () => {
 				<h1 className="text-xl font-bold mb-2 py-1">Assigned Members</h1>
 				{assignees}
 			</div>
-			<div>
-				<h2 className="text-xl font-bold mb-2 py-1">Assign Members</h2>
-				{unassignedMembers}
-			</div>
+			{role === ROLE_ADMIN && (
+				<div>
+					<h2 className="text-xl font-bold mb-2 py-1">Assign Members</h2>
+					{unassignedMembers}
+				</div>
+			)}
 		</div>
 	);
 };

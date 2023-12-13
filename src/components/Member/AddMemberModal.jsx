@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useAddMemberMutation } from "../../features/member/memberApiSlice";
+import { ROLE_ADMIN, ROLE_MEMBER, ROLE_OBSERVER } from "../../utils/constants";
 
 const AddMemberModal = ({ handleCreateToggle }) => {
 	const form = useForm();
@@ -60,9 +61,9 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 						})}
 					>
 						<option value="">Select a role</option>
-						<option value="ADMIN">Admin</option>
-						<option value="MEMBER">Member</option>
-						<option value="OBSERVER">Observer</option>
+						<option value={ROLE_ADMIN}>Admin</option>
+						<option value={ROLE_MEMBER}>Member</option>
+						<option value={ROLE_OBSERVER}>Observer</option>
 					</select>
 					<p className="text-red-600">{errors?.roleId?.message}</p>
 				</div>

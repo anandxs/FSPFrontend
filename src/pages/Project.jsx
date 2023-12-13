@@ -4,6 +4,10 @@ import ProjectHeader from "../components/Project/ProjectHeader";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { useLazyGetProjectMemberQuery } from "../features/member/memberApiSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUser } from "../features/auth/authSlice";
+import { setRole } from "../features/user/userSlice";
 
 const Project = () => {
 	const { projectId } = useParams();
@@ -22,8 +26,25 @@ const Project = () => {
 		},
 	];
 
+	const { id } = useSelector(selectCurrentUser);
+	const [getRole] = useLazyGetProjectMemberQuery();
+
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	useEffect(() => {
+		getRole({ projectId, memberId: id })
+			.unwrap()
+			.then((response) => {
+				dispatch(
+					setRole({
+						projectId,
+						role: response?.role,
+					})
+				);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 		navigate("cards");
 	}, []);
 

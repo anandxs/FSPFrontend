@@ -47,6 +47,7 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 export const {
 	useGetProjectMembersQuery,
 	useGetProjectMemberQuery,
+	useLazyGetProjectMemberQuery,
 	useAddMemberMutation,
 	useUpdateMemberMutation,
 	useExitProjectMutation,
