@@ -133,9 +133,9 @@ const ProjectHeader = ({ projectId }) => {
 							<DeleteProject params={{ projectId }} />
 						</>
 					)}
+					{ownerId !== id && <ExitProject />}
 				</div>
 			)}
-			{ownerId !== id && <ExitProject />}
 		</div>
 	);
 };
