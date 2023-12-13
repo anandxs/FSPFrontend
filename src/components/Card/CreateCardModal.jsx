@@ -12,23 +12,23 @@ const CreateCardModal = ({ handleCardToggle }) => {
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
 
-	const onSubmit = async (data) => {
-		try {
-			const body = {
-				title: data.cardName,
-				description: data.description === "" ? null : data.description,
-			};
-			const response = await createCard({
-				ownerId,
-				projectId,
-				groupId: data.groupId,
-				body,
+	const onSubmit = (data) => {
+		const body = {
+			title: data.cardName,
+			description: data.description === "" ? null : data.description,
+			dueDate: data.dueDate === "" ? null : data.dueDate,
+		};
+		createCard({
+			groupId: data.groupId,
+			body,
+		})
+			.unwrap()
+			.then(() => {
+				handleCardToggle();
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-
-			handleCardToggle();
-		} catch (err) {
-			console.log(err);
-		}
 	};
 
 	return (
@@ -83,6 +83,12 @@ const CreateCardModal = ({ handleCardToggle }) => {
 						className="w-full"
 						{...register("description")}
 					></textarea>
+				</div>
+				<div className="mb-3">
+					<label htmlFor="due-date" className="font-semibold text-xl block">
+						Due date (optional)
+					</label>
+					<input type="date" {...register("dueDate")} />
 				</div>
 				<button
 					type="submit"

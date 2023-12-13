@@ -40,7 +40,10 @@ const Card = () => {
 	};
 
 	const onSubmit = (data) => {
-		const body = { ...data };
+		const body = {
+			...data,
+			dueDate: data.dueDate === "" ? null : data.dueDate,
+		};
 		updateCard({
 			cardId,
 			body,
@@ -77,6 +80,19 @@ const Card = () => {
 								Description
 							</h2>
 							<p className="text-sm">{data?.description}</p>
+						</div>
+					)}
+					{data?.dueDate && (
+						<div className="mb-3">
+							<h2 className="text-sm hover:cursor-pointer">Due date</h2>
+							<p className="text-sm flex gap-2">
+								<span>{new Date(data?.dueDate).toDateString()}</span>
+								{new Date(data?.dueDate) < Date.now() && (
+									<span className="bg-red-500 text-white px-2 py-0.5 text-xs">
+										Overdue
+									</span>
+								)}
+							</p>
 						</div>
 					)}
 				</div>
@@ -148,6 +164,12 @@ const Card = () => {
 							rows="4"
 							{...register("description")}
 						></textarea>
+					</div>
+					<div className="mb-3">
+						<label htmlFor="due-date" className="font-semibold text-xl block">
+							Due date (optional)
+						</label>
+						<input type="date" {...register("dueDate")} />
 					</div>
 					<div className="flex gap-2">
 						<button
