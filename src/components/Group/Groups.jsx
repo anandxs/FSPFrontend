@@ -47,7 +47,7 @@ const Groups = () => {
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
-			<h2 className="text-xl font-bold hover:underline">Project Groups</h2>
+			<h2 className="text-xl font-bold hover:underline mb-3">Project Groups</h2>
 			<DataTable
 				customStyles={customStyles}
 				pagination

@@ -3,6 +3,9 @@ import { useGetCardsForProjectQuery } from "../../features/card/cardApiSlice";
 import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
 import CardFilter from "./CardFilter";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectCurrentFilters } from "../../features/filter/filterSlice";
 
 const Cards = () => {
 	const { projectId } = useParams();
@@ -54,16 +57,23 @@ const Cards = () => {
 		},
 	];
 
+	const { groups } = useSelector(selectCurrentFilters);
+
 	let data;
 	if (isSuccess) {
-		data = cards.map((c) => ({
-			cardId: c.cardId,
-			title: c.title,
-			group: c.group.name,
-			description:
-				c.description === null ? "- -" : c.description.substring(0, 30),
-			dueDate: c.dueDate,
-		}));
+		data = cards
+			.filter((c) => {
+				if (groups.length === 0) return c;
+				if (groups.includes(c?.group?.groupId)) return c;
+			})
+			.map((c) => ({
+				cardId: c.cardId,
+				title: c.title,
+				group: c.group.name,
+				description:
+					c.description === null ? "- -" : c.description.substring(0, 30),
+				dueDate: c.dueDate,
+			}));
 	}
 
 	return (
