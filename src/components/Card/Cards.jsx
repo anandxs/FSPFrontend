@@ -3,6 +3,7 @@ import { useGetCardsForProjectQuery } from "../../features/card/cardApiSlice";
 import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
 import CardFilter from "./CardFilter";
+import { useState } from "react";
 
 const Cards = () => {
 	const { projectId } = useParams();
@@ -54,23 +55,31 @@ const Cards = () => {
 		},
 	];
 
+	const [filters, setFilters] = useState([]);
+	console.log(filters);
+
 	let data;
 	if (isSuccess) {
-		data = cards.map((c) => ({
-			cardId: c.cardId,
-			title: c.title,
-			group: c.group.name,
-			description:
-				c.description === null ? "- -" : c.description.substring(0, 30),
-			dueDate: c.dueDate,
-		}));
+		data = cards
+			.filter((c) => {
+				if (filters.length === 0) return c;
+				if (filters.includes(c?.group?.groupId)) return c;
+			})
+			.map((c) => ({
+				cardId: c.cardId,
+				title: c.title,
+				group: c.group.name,
+				description:
+					c.description === null ? "- -" : c.description.substring(0, 30),
+				dueDate: c.dueDate,
+			}));
 	}
 
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<div className="flex justify-between mb-3">
 				<h1 className="text-xl font-bold hover:underline">Cards</h1>
-				<CardFilter />
+				<CardFilter filters={filters} setFilters={setFilters} />
 			</div>
 			<DataTable
 				customStyles={customStyles}
