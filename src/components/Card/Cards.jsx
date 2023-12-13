@@ -36,6 +36,21 @@ const Cards = () => {
 			name: "Due Date",
 			selector: (row) => row.dueDate,
 			sortable: true,
+			cell: (row) => {
+				const date =
+					row.dueDate !== null ? new Date(row.dueDate).toDateString() : "- -";
+				return (
+					<p
+						className={`${
+							row.dueDate !== null && new Date(row.dueDate) < Date.now()
+								? "bg-red-600 px-2 py-1 text-white rounded"
+								: ""
+						}`}
+					>
+						{date}
+					</p>
+				);
+			},
 		},
 	];
 
@@ -47,7 +62,7 @@ const Cards = () => {
 			group: c.group.name,
 			description:
 				c.description === null ? "- -" : c.description.substring(0, 30),
-			dueDate: c.dueDate === null ? "- -" : new Date(c.dueDate).toDateString(),
+			dueDate: c.dueDate,
 		}));
 	}
 
