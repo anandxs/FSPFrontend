@@ -5,7 +5,7 @@ import RemoveCardMember from "./RemoveCardMember";
 import AddCardMember from "./AddCardMember";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
-import { ROLE_OBSERVER } from "../../utils/constants";
+import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 
 const AssigneesModal = () => {
 	const { projectId, cardId } = useParams();
@@ -43,7 +43,7 @@ const AssigneesModal = () => {
 					{cardMembers.map((a) => (
 						<li key={a?.id} className="flex justify-between">
 							{`${a.firstName} ${a.lastName}`}
-							{role !== ROLE_OBSERVER && (
+							{role === ROLE_ADMIN && (
 								<RemoveCardMember
 									projectId={projectId}
 									memberId={a?.id}
@@ -93,7 +93,7 @@ const AssigneesModal = () => {
 				<h1 className="text-xl font-bold mb-2 py-1">Assigned Members</h1>
 				{assignees}
 			</div>
-			{role !== ROLE_OBSERVER && (
+			{role === ROLE_ADMIN && (
 				<div>
 					<h2 className="text-xl font-bold mb-2 py-1">Assign Members</h2>
 					{unassignedMembers}

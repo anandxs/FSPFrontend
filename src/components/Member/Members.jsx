@@ -73,7 +73,7 @@ const Members = () => {
 			<div className="mb-2 flex justify-between">
 				<div className="flex gap-2">
 					<h1 className="text-xl font-bold hover:underline">Members</h1>
-					{role !== ROLE_OBSERVER && <AddMember />}
+					{role === ROLE_ADMIN && <AddMember />}
 				</div>
 				<ul className="flex p-0 text-xs">
 					<li

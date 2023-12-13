@@ -6,6 +6,7 @@ import EditGroup from "./EditGroup";
 import DeleteGroup from "./DeleteGroup";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 
 const Groups = () => {
 	const { projectId } = useParams();
@@ -22,12 +23,14 @@ const Groups = () => {
 		},
 		{
 			name: "Option",
-			omit: role !== "ADMIN",
+			omit: role === ROLE_OBSERVER,
 			cell: (row, index, column, id) => {
 				return (
 					<div className="flex gap-2">
 						<EditGroup params={{ groupId: row.id }} init={row.name} />
-						<DeleteGroup params={{ groupId: row.id }} />
+						{role === ROLE_ADMIN && (
+							<DeleteGroup params={{ groupId: row.id }} />
+						)}
 					</div>
 				);
 			},

@@ -10,7 +10,7 @@ import DeleteCard from "./DeleteCard";
 import Assignees from "../CardMember/CardMembers";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
-import { ROLE_OBSERVER } from "../../utils/constants";
+import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 
 const Card = () => {
 	const { projectId, groupId, cardId } = useParams();
@@ -90,7 +90,9 @@ const Card = () => {
 							>
 								Update
 							</button>
-							<DeleteCard params={{ projectId, groupId, cardId }} />
+							{role === ROLE_ADMIN && (
+								<DeleteCard params={{ projectId, groupId, cardId }} />
+							)}
 						</>
 					)}
 				</div>

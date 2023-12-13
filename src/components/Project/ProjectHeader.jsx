@@ -11,7 +11,7 @@ import ArchiveProject from "./ArchiveProject";
 import DeleteProject from "./DeleteProject";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
-import { ROLE_OBSERVER } from "../../utils/constants";
+import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 
 const ProjectHeader = ({ ownerId, projectId }) => {
 	const [updateNameToggle, setUpdateNameToggle] = useState(false);
@@ -91,7 +91,9 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 						className="text-md font-bold"
 						onClick={() => {
 							setValue("projectName", data?.name);
-							setUpdateNameToggle(true);
+							if (role === ROLE_ADMIN) {
+								setUpdateNameToggle(true);
+							}
 						}}
 					>
 						{data?.name}
@@ -122,8 +124,12 @@ const ProjectHeader = ({ ownerId, projectId }) => {
 							<CreateCardModal handleCardToggle={handleCardToggle} />
 						</Modal>
 					)}
-					<ArchiveProject params={{ ownerId, projectId }} data={data} />
-					<DeleteProject params={{ ownerId, projectId }} />
+					{role === ROLE_ADMIN && (
+						<>
+							<ArchiveProject params={{ ownerId, projectId }} data={data} />
+							<DeleteProject params={{ ownerId, projectId }} />
+						</>
+					)}
 				</div>
 			)}
 		</div>
