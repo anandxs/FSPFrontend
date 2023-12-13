@@ -4,6 +4,8 @@ import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
 import CardFilter from "./CardFilter";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectCurrentFilters } from "../../features/filter/filterSlice";
 
 const Cards = () => {
 	const { projectId } = useParams();
@@ -55,15 +57,14 @@ const Cards = () => {
 		},
 	];
 
-	const [filters, setFilters] = useState([]);
-	console.log(filters);
+	const { groups } = useSelector(selectCurrentFilters);
 
 	let data;
 	if (isSuccess) {
 		data = cards
 			.filter((c) => {
-				if (filters.length === 0) return c;
-				if (filters.includes(c?.group?.groupId)) return c;
+				if (groups.length === 0) return c;
+				if (groups.includes(c?.group?.groupId)) return c;
 			})
 			.map((c) => ({
 				cardId: c.cardId,
@@ -79,7 +80,7 @@ const Cards = () => {
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<div className="flex justify-between mb-3">
 				<h1 className="text-xl font-bold hover:underline">Cards</h1>
-				<CardFilter filters={filters} setFilters={setFilters} />
+				<CardFilter />
 			</div>
 			<DataTable
 				customStyles={customStyles}
