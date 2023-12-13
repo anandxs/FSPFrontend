@@ -12,7 +12,6 @@ const Member = () => {
 	let member;
 	if (isSuccess) {
 		member = data;
-		console.log(member);
 	}
 
 	const { role } = useSelector(selectCurrentProjectRole);

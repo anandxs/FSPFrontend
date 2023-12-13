@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useDeleteProjectMutation } from "../../features/project/projectApiSlice";
 import { useNavigate } from "react-router-dom";
 import Confirmation from "../Confirmation";

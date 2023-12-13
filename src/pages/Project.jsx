@@ -39,6 +39,7 @@ const Project = () => {
 					setRole({
 						projectId,
 						role: response?.role,
+						ownerId: response?.project?.ownerId,
 					})
 				);
 			})
