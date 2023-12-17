@@ -4,14 +4,10 @@ import {
 	useGetProjectQuery,
 	useUpdateProjectMutation,
 } from "../../features/project/projectApiSlice";
-import Modal from "../Modal/Modal";
-// import CreateGroupModal from "../Group/CreateGroupModal";
-// import CreateCardModal from "../Card/CreateCardModal";
 import ArchiveProject from "./ArchiveProject";
 import DeleteProject from "./DeleteProject";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
-import { ROLE_ADMIN, ROLE_OBSERVER } from "../../utils/constants";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import ExitProject from "./ExitProject";
 
@@ -94,18 +90,15 @@ const ProjectHeader = ({ projectId }) => {
 						className="text-md font-bold"
 						onClick={() => {
 							setValue("projectName", data?.name);
-							if (role === ROLE_ADMIN) {
-								setUpdateNameToggle(true);
-							}
+							setUpdateNameToggle(true);
 						}}
 					>
 						{data?.name}
 					</p>
 				)}
 			</div>
-			{role !== ROLE_OBSERVER && (
-				<div className="flex flex-row gap-2">
-					{/* <button
+			<div className="flex flex-row gap-2">
+				{/* <button
 						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
 						onClick={handleGroupToggle}
 					>
@@ -116,7 +109,7 @@ const ProjectHeader = ({ projectId }) => {
 							<CreateGroupModal handleGroupToggle={handleGroupToggle} />
 						</Modal>
 					)} */}
-					{/* <button
+				{/* <button
 						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
 						onClick={handleCardToggle}
 					>
@@ -127,15 +120,12 @@ const ProjectHeader = ({ projectId }) => {
 							<CreateCardModal handleCardToggle={handleCardToggle} />
 						</Modal>
 					)} */}
-					{role === ROLE_ADMIN && (
-						<>
-							<ArchiveProject params={{ projectId }} data={data} />
-							<DeleteProject params={{ projectId }} />
-						</>
-					)}
-					{ownerId !== id && <ExitProject />}
-				</div>
-			)}
+				<>
+					<ArchiveProject params={{ projectId }} data={data} />
+					<DeleteProject params={{ projectId }} />
+				</>
+				{ownerId !== id && <ExitProject />}
+			</div>
 		</div>
 	);
 };
