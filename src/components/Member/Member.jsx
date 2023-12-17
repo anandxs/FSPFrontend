@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useGetProjectMemberQuery } from "../../features/member/memberApiSlice";
+import { useGetMemberByIdQuery } from "../../features/member/memberApiSlice";
 import RemoveMember from "./RemoveMember";
 import UpdateMemberRole from "./UpdateMemberRole";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { selectCurrentUser } from "../../features/auth/authSlice";
 
 const Member = () => {
 	const { projectId, memberId } = useParams();
-	const { data, isSuccess } = useGetProjectMemberQuery({ projectId, memberId });
+	const { data, isSuccess } = useGetMemberByIdQuery({ projectId, memberId });
 
 	let member;
 	if (isSuccess) {

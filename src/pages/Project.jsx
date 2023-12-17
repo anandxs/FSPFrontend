@@ -4,7 +4,7 @@ import ProjectHeader from "../components/Project/ProjectHeader";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import { useLazyGetProjectMemberQuery } from "../features/member/memberApiSlice";
+import { useLazyGetMemberByIdQuery } from "../features/member/memberApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../features/auth/authSlice";
 import { setRole } from "../features/user/userSlice";
@@ -27,7 +27,7 @@ const Project = () => {
 	];
 
 	const { id } = useSelector(selectCurrentUser);
-	const [getRole] = useLazyGetProjectMemberQuery();
+	const [getRole] = useLazyGetMemberByIdQuery();
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();

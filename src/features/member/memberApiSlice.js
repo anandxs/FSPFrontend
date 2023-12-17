@@ -57,6 +57,7 @@ export const {
 	useUpdateMemberMutation,
 	useExitProjectMutation,
 	useGetMemberByIdQuery,
+	useLazyGetMemberByIdQuery,
 	useRemoveMemberMutation,
 	useAcceptInviteMutation,
 } = memberApiSlice;

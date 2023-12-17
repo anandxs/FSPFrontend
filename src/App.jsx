@@ -1,191 +1,56 @@
-import { Suspense, lazy } from "react";
-import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Routes, Route } from "react-router-dom";
 import AuthorizedOnly from "./route/AuthorizedOnly";
 import UnAuthorizedOnly from "./route/UnAuthorizedOnly";
-import Profile from "./pages/Profile";
+import Login from "./components/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
 import EmailVerified from "./pages/EmailVerified";
-const ForgotPassword = lazy(() => import("./pages/ForgotPassword"));
-const ResetPassword = lazy(() => import("./pages/ResetPassword"));
-const Home = lazy(() => import("./pages/Home"));
-const Cards = lazy(() => import("./components/Card/Cards"));
-const Login = lazy(() => import("./components/Login"));
-const Register = lazy(() => import("./pages/Register"));
-const Groups = lazy(() => import("./components/Group/Groups"));
-const Card = lazy(() => import("./components/Card/Card"));
-const NotFound = lazy(() => import("./components/NotFound"));
-const Project = lazy(() => import("./pages/Project"));
-const UpdateProfile = lazy(() => import("./components/Profile/UpdateProfile"));
-const UpdatePassword = lazy(() =>
-	import("./components/Profile/UpdatePassword")
-);
-const Members = lazy(() => import("./components/Member/Members"));
-const Admin = lazy(() => import("./pages/Admin"));
-const AccessDenied = lazy(() => import("./components/AccessDenied"));
-const RoleManagement = lazy(() =>
-	import("./components/DefaultRole/RoleManagement")
-);
-import Member from "./components/Member/Member";
+import ResetPassword from "./pages/ResetPassword";
+import Home from "./pages/Home";
+import { ALL_AUTHENTICATED, SUPERADMIN, USER } from "./utils/constants";
+import Admin from "./pages/Admin";
+import AccessDenied from "./components/AccessDenied";
+import NotFound from "./components/NotFound";
+import Profile from "./pages/Profile";
+import UpdateProfile from "./components/Profile/UpdateProfile";
+import UpdatePassword from "./components/Profile/UpdatePassword";
 
-function App() {
+const App = () => {
 	return (
 		<>
 			<ToastContainer theme="colored" />
 
 			<Routes>
-				<Route
-					element={<AuthorizedOnly allowedRoles={["USER", "SUPERADMIN"]} />}
-				>
-					<Route
-						path="/denied"
-						element={
-							<Suspense>
-								<AccessDenied />
-							</Suspense>
-						}
-					/>
-					<Route path="/profile" element={<Profile />}>
-						<Route
-							path="details"
-							element={
-								<Suspense fallback="Loading..">
-									<UpdateProfile />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="passwordchange"
-							element={
-								<Suspense fallback="Loading...">
-									<UpdatePassword />
-								</Suspense>
-							}
-						/>
-					</Route>
-					<Route
-						path="/resetpassword"
-						element={
-							<Suspense fallback="Loading...">
-								<ResetPassword />
-							</Suspense>
-						}
-					/>
-				</Route>
-				<Route element={<AuthorizedOnly allowedRoles={["SUPERADMIN"]} />}>
-					<Route
-						path="/admin"
-						element={
-							<Suspense fallback="Loading...">
-								<Admin />
-							</Suspense>
-						}
-					/>
-				</Route>
-				<Route element={<AuthorizedOnly allowedRoles={["USER"]} />}>
-					<Route
-						path="/"
-						element={
-							<Suspense fallback="Loading...">
-								<Home />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="projects/:projectId"
-						element={
-							<Suspense fallback="Loading...">
-								<Project />
-							</Suspense>
-						}
-					>
-						<Route
-							path="cards"
-							element={
-								<Suspense fallback="Loading...">
-									<Cards />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="groups"
-							element={
-								<Suspense fallback="Loading...">
-									<Groups />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="cards/:cardId"
-							element={
-								<Suspense fallback="Loading...">
-									<Card />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="members"
-							element={
-								<Suspense fallback="Loading...">
-									<Members />
-								</Suspense>
-							}
-						/>
-						<Route
-							path="members/:memberId"
-							element={
-								<Suspense fallback="Loading...">
-									<Member />
-								</Suspense>
-							}
-						/>
-					</Route>
-				</Route>
 				<Route element={<UnAuthorizedOnly />}>
-					<Route
-						path="/login"
-						element={
-							<Suspense fallback="Loading...">
-								<Login />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="/register"
-						element={
-							<Suspense fallback="Loading...">
-								<Register />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="/forgotpassword"
-						element={
-							<Suspense fallback="Loading...">
-								<ForgotPassword />
-							</Suspense>
-						}
-					/>
-					<Route
-						path="/verifyemail"
-						element={
-							<Suspense fallback="Loading...">
-								<EmailVerified />
-							</Suspense>
-						}
-					/>
+					<Route path="/login" element={<Login />} />
+					<Route path="/register" element={<Register />} />
+					<Route path="/forgotpassword" element={<ForgotPassword />} />
+					<Route path="/verifyemail" element={<EmailVerified />} />
+					<Route path="/resetpassword" element={<ResetPassword />} />
 				</Route>
-				<Route
-					path="/*"
-					element={
-						<Suspense fallback="Loading...">
-							<NotFound />
-						</Suspense>
-					}
-				/>
+
+				<Route element={<AuthorizedOnly allowedRoles={[USER]} />}>
+					<Route path="/" element={<Home />} />
+					<Route path="/profile" element={<Profile />}>
+						<Route path="details" element={<UpdateProfile />} />
+						<Route path="passwordchange" element={<UpdatePassword />} />
+					</Route>
+				</Route>
+
+				<Route element={<AuthorizedOnly allowedRoles={[SUPERADMIN]} />}>
+					<Route path="/admin" element={<Admin />} />
+				</Route>
+
+				<Route element={<AuthorizedOnly allowedRoles={[ALL_AUTHENTICATED]} />}>
+					<Route path="/denied" element={<AccessDenied />} />
+				</Route>
+
+				<Route path="/*" element={<NotFound />} />
 			</Routes>
 		</>
 	);
-}
+};
 
 export default App;

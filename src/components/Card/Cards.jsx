@@ -1,15 +1,14 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetCardsForProjectQuery } from "../../features/card/cardApiSlice";
+// import { useGetCardsForProjectQuery } from "../../features/card/cardApiSlice";
 import DataTable from "react-data-table-component";
 import { customStyles } from "../../utils/tableStyle";
 import CardFilter from "./CardFilter";
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectCurrentFilters } from "../../features/filter/filterSlice";
 
 const Cards = () => {
 	const { projectId } = useParams();
-	const { data: cards, isSuccess } = useGetCardsForProjectQuery({ projectId });
+	// const { data: cards, isSuccess } = useGetCardsForProjectQuery({ projectId });
 
 	const navigate = useNavigate();
 

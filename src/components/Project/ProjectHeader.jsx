@@ -5,8 +5,8 @@ import {
 	useUpdateProjectMutation,
 } from "../../features/project/projectApiSlice";
 import Modal from "../Modal/Modal";
-import CreateGroupModal from "../Group/CreateGroupModal";
-import CreateCardModal from "../Card/CreateCardModal";
+// import CreateGroupModal from "../Group/CreateGroupModal";
+// import CreateCardModal from "../Card/CreateCardModal";
 import ArchiveProject from "./ArchiveProject";
 import DeleteProject from "./DeleteProject";
 import { useSelector } from "react-redux";
@@ -105,7 +105,7 @@ const ProjectHeader = ({ projectId }) => {
 			</div>
 			{role !== ROLE_OBSERVER && (
 				<div className="flex flex-row gap-2">
-					<button
+					{/* <button
 						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
 						onClick={handleGroupToggle}
 					>
@@ -115,8 +115,8 @@ const ProjectHeader = ({ projectId }) => {
 						<Modal action={handleGroupToggle}>
 							<CreateGroupModal handleGroupToggle={handleGroupToggle} />
 						</Modal>
-					)}
-					<button
+					)} */}
+					{/* <button
 						className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
 						onClick={handleCardToggle}
 					>
@@ -126,7 +126,7 @@ const ProjectHeader = ({ projectId }) => {
 						<Modal action={handleCardToggle}>
 							<CreateCardModal handleCardToggle={handleCardToggle} />
 						</Modal>
-					)}
+					)} */}
 					{role === ROLE_ADMIN && (
 						<>
 							<ArchiveProject params={{ projectId }} data={data} />
