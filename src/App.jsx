@@ -18,6 +18,7 @@ import UpdateProfile from "./components/Profile/UpdateProfile";
 import UpdatePassword from "./components/Profile/UpdatePassword";
 import Project from "./pages/Project";
 import Stages from "./components/Stage/Stages";
+import TaskTypes from "./components/Type/Types";
 
 const App = () => {
 	return (
@@ -49,7 +50,7 @@ const App = () => {
 
 							<Route path="stages" element={<Stages />} />
 
-							<Route path="types" element={<h1>types</h1>} />
+							<Route path="types" element={<TaskTypes />} />
 
 							<Route path="roles" element={<h1>roles</h1>} />
 
