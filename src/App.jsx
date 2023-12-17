@@ -17,6 +17,7 @@ import Profile from "./pages/Profile";
 import UpdateProfile from "./components/Profile/UpdateProfile";
 import UpdatePassword from "./components/Profile/UpdatePassword";
 import Project from "./pages/Project";
+import Stages from "./components/Stage/Stages";
 
 const App = () => {
 	return (
@@ -43,12 +44,19 @@ const App = () => {
 					<Route path="/projects">
 						<Route path=":projectId" element={<Project />}>
 							<Route path="dashboard" element={<h1>dashboard</h1>} />
+
 							<Route path="tasks" element={<h1>tasks</h1>} />
-							<Route path="stages" element={<h1>stages</h1>} />
+
+							<Route path="stages" element={<Stages />} />
+
 							<Route path="types" element={<h1>types</h1>} />
+
 							<Route path="roles" element={<h1>roles</h1>} />
+
 							<Route path="members" element={<h1>members</h1>} />
+
 							<Route path="settings" element={<h1>settings</h1>} />
+
 							<Route path="*" element={<Navigate to="/" />} />
 						</Route>
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Modal from "../Modal/Modal";
-import EditGroupModal from "./EditGroupModal";
+import EditStageModal from "./EditStageModal";
 
-const EditGroup = ({ params, init }) => {
+const EditStage = () => {
 	const [toggleEdit, setToggleEdit] = useState(false);
 
-	const handleGroupToggle = () => {
+	const handleToggle = () => {
 		setToggleEdit(!toggleEdit);
 	};
 
@@ -13,21 +13,17 @@ const EditGroup = ({ params, init }) => {
 		<>
 			<button
 				className="bg-primary text-white px-3 py-0.5 text-sm rounded-sm"
-				onClick={handleGroupToggle}
+				onClick={handleToggle}
 			>
 				Edit
 			</button>
 			{toggleEdit && (
-				<Modal action={handleGroupToggle}>
-					<EditGroupModal
-						init={init}
-						params={params}
-						handleGroupToggle={handleGroupToggle}
-					/>
+				<Modal action={handleToggle}>
+					<EditStageModal handleToggle={handleToggle} />
 				</Modal>
 			)}
 		</>
 	);
 };
 
-export default EditGroup;
+export default EditStage;

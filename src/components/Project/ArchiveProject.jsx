@@ -13,16 +13,17 @@ const ArchiveProject = ({ params, data }) => {
 	};
 
 	const handleArchive = async () => {
-		try {
-			const { projectId } = params;
-			const response = await toggleProjectArchiveStatus({
-				projectId,
+		const { projectId } = params;
+		toggleProjectArchiveStatus({
+			projectId,
+		})
+			.unwrap()
+			.then(() => {
+				handleArchiveToggle();
+			})
+			.catch((err) => {
+				console.log(err);
 			});
-
-			handleArchiveToggle();
-		} catch (err) {
-			console.log(err);
-		}
 	};
 
 	return (

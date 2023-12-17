@@ -46,7 +46,7 @@ export const stageApiSlice = apiSlice.injectEndpoints({
 
 export const {
 	useGetProjectStagesQuery,
-	useCreateRoleMutation,
+	useCreateStageMutation,
 	useGetStageByIdQuery,
 	useUpdateStageMutation,
 	useDeleteStageMutation,
