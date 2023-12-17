@@ -20,6 +20,8 @@ import Project from "./pages/Project";
 import Stages from "./components/Stage/Stages";
 import TaskTypes from "./components/Type/Types";
 import Roles from "./components/Role/Roles";
+import Members from "./components/Member/Members";
+import Member from "./components/Member/Member";
 
 const App = () => {
 	return (
@@ -55,7 +57,10 @@ const App = () => {
 
 							<Route path="roles" element={<Roles />} />
 
-							<Route path="members" element={<h1>members</h1>} />
+							<Route path="members">
+								<Route index element={<Members />} />
+								<Route path=":memberId" element={<Member />} />
+							</Route>
 
 							<Route path="settings" element={<h1>settings</h1>} />
 

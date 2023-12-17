@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useUpdateMemberMutation } from "../../features/member/memberApiSlice";
 import { useParams } from "react-router-dom";
-import { ROLE_ADMIN, ROLE_MEMBER, ROLE_OBSERVER } from "../../utils/constants";
+import { useUpdateMemberMutation } from "../../features/member/memberApiSlice";
+import { useGetProjectRolesQuery } from "../../features/role/roleApiSlice";
 
 const UpdateMemberRoleModal = ({ handleToggle }) => {
 	const form = useForm();
@@ -11,10 +11,10 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 	const { projectId, memberId } = useParams();
 	const [updateMemberRole] = useUpdateMemberMutation();
 
-	const onSubmit = ({ role }) => {
+	const onSubmit = ({ roleId }) => {
 		const body = {
 			memberId,
-			role,
+			roleId,
 		};
 		console.log(body);
 		updateMemberRole({ projectId, body })
@@ -27,25 +27,47 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 			});
 	};
 
+	const {
+		data: roles,
+		isSuccess,
+		isLoading,
+		isError,
+		error,
+	} = useGetProjectRolesQuery({ projectId });
+	let roleOptions;
+	if (isLoading) {
+		roleOptions = <option>Loading...</option>;
+	} else if (isSuccess) {
+		if (roles?.length === 0) {
+			roleOptions = <option>No Roles</option>;
+		} else {
+			roleOptions = roles.map((role) => (
+				<option key={role?.roleId} value={role?.roleId}>
+					{role?.name}
+				</option>
+			));
+		}
+	} else if (isError) {
+		console.log(error);
+		roleOptions = <option>Something went wrong!</option>;
+	}
+
 	return (
 		<div
 			className="bg-accent p-3 w-1/4 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-xl font-bold mb-2 py-1">Edit Role</h1>
+			<h1 className="text-xl font-bold mb-2 py-1">Edit Member Role</h1>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
-				<p className="text-sm text-red-600">{errors?.role?.message}</p>
+				<p className="text-sm text-red-600">{errors?.roleId?.message}</p>
 				<select
-					id="role"
+					id="roleId"
 					className="mb-3"
-					{...register("role", {
+					{...register("roleId", {
 						required: "Role is a required field.",
 					})}
 				>
-					<option value="">Select Role</option>
-					<option value={ROLE_ADMIN}>ADMIN</option>
-					<option value={ROLE_MEMBER}>MEMBER</option>
-					<option value={ROLE_OBSERVER}>OBSERVER</option>
+					{roleOptions}
 				</select>
 				<div className="flex justify-between">
 					<button

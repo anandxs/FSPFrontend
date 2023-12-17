@@ -6,7 +6,9 @@ import Confirmation from "../Confirmation";
 
 const RemoveMember = () => {
 	const [deleteToggle, setDeleteToggle] = useState(false);
+
 	const navigate = useNavigate();
+
 	const { projectId, memberId } = useParams();
 	const [removeMember] = useRemoveMemberMutation();
 	const handleDelete = () => {

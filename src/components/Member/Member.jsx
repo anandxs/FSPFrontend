@@ -3,7 +3,6 @@ import { useGetMemberByIdQuery } from "../../features/member/memberApiSlice";
 import RemoveMember from "./RemoveMember";
 import UpdateMemberRole from "./UpdateMemberRole";
 import { useSelector } from "react-redux";
-import { selectCurrentProjectRole } from "../../features/user/userSlice";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 
 const Member = () => {
@@ -15,9 +14,6 @@ const Member = () => {
 		member = data;
 	}
 
-	const { role, ownerId } = useSelector(selectCurrentProjectRole);
-	const { id } = useSelector(selectCurrentUser);
-
 	return (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<h1 className="text-xl font-bold mb-2 py-1 hover:underline">
@@ -27,17 +23,13 @@ const Member = () => {
 				<p>First Name: {member?.user?.firstName}</p>
 				<p>Last Name: {member?.user?.lastName}</p>
 				<p>Email: {member?.user?.email}</p>
-				<p>
-					Role: {member?.role} {ownerId === id && <span>(Project Owner)</span>}
-				</p>
+				<p>Role: {member?.role?.name}</p>
 			</div>
 
-			{role === "ADMIN" && ownerId !== memberId && (
-				<div className="flex gap-2">
-					<UpdateMemberRole />
-					<RemoveMember />
-				</div>
-			)}
+			<div className="flex gap-2">
+				<UpdateMemberRole />
+				<RemoveMember />
+			</div>
 		</div>
 	);
 };
