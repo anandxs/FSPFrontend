@@ -6,12 +6,7 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 			query: ({ projectId }) => `/api/projects/${projectId}/members`,
 			providesTags: ["Members"],
 		}),
-		getProjectMember: builder.query({
-			query: ({ projectId, memberId }) =>
-				`/api/projects/${projectId}/members/${memberId}`,
-			providesTags: ["Member"],
-		}),
-		addMember: builder.mutation({
+		inviteMember: builder.mutation({
 			query: ({ projectId, body }) => ({
 				url: `/api/projects/${projectId}/members`,
 				method: "POST",
@@ -34,6 +29,11 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ["Members"],
 		}),
+		getMemberById: builder.query({
+			query: ({ projectId, memberId }) =>
+				`/api/projects/${projectId}/members/${memberId}`,
+			providesTags: ["Member"],
+		}),
 		removeMember: builder.mutation({
 			query: ({ projectId, memberId }) => ({
 				url: `/api/projects/${projectId}/members/${memberId}`,
@@ -41,15 +41,22 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ["Members"],
 		}),
+		acceptInvite: builder.mutation({
+			query: ({ projectId, body }) => ({
+				url: `/api/projects/${projectId}/members/accept`,
+				method: "POST",
+				body,
+			}),
+		}),
 	}),
 });
 
 export const {
 	useGetProjectMembersQuery,
-	useGetProjectMemberQuery,
-	useLazyGetProjectMemberQuery,
-	useAddMemberMutation,
+	useInviteMemberMutation,
 	useUpdateMemberMutation,
 	useExitProjectMutation,
+	useGetMemberByIdQuery,
 	useRemoveMemberMutation,
+	useAcceptInviteMutation,
 } = memberApiSlice;
