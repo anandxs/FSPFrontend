@@ -6,6 +6,7 @@ import DeleteTask from "./DeleteTask";
 import TaskStage from "./TaskStage";
 import TaskType from "./TaskType";
 import TaskDueDate from "./TaskDueDate";
+import TaskTitle from "./TaskTitle";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -46,10 +47,8 @@ const Task = () => {
 	) : (
 		<TaskContext.Provider value={{ ...task }}>
 			<section className="col-span-10 p-3">
-				<div className="flex justify-between items-center mb-3">
-					<h1 className="text-2xl font-bold hover:underline w-fit">
-						{task?.title}
-					</h1>
+				<div className="flex items-center gap-2 mb-3">
+					<TaskTitle title={task?.title} />
 					<DeleteTask />
 				</div>
 				<div className="grid grid-cols-12 mb-3">
