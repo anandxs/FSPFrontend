@@ -22,6 +22,7 @@ import TaskTypes from "./components/Type/Types";
 import Roles from "./components/Role/Roles";
 import Members from "./components/Member/Members";
 import Member from "./components/Member/Member";
+import ProjectSettings from "./components/Project/ProjectSettings";
 
 const App = () => {
 	return (
@@ -62,7 +63,7 @@ const App = () => {
 								<Route path=":memberId" element={<Member />} />
 							</Route>
 
-							<Route path="settings" element={<h1>settings</h1>} />
+							<Route path="settings" element={<ProjectSettings />} />
 
 							<Route path="*" element={<Navigate to="/" />} />
 						</Route>

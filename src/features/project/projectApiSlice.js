@@ -35,7 +35,7 @@ export const projectApiSlice = apiSlice.injectEndpoints({
 		}),
 		toggleProjectArchiveStatus: builder.mutation({
 			query: ({ projectId }) => ({
-				url: `/api/projects/${projectId}`,
+				url: `/api/projects/${projectId}/archive`,
 				method: "PUT",
 			}),
 			invalidatesTags: ["Projects", "Project"],

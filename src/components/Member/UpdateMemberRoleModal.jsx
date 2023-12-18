@@ -16,7 +16,6 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 			memberId,
 			roleId,
 		};
-		console.log(body);
 		updateMemberRole({ projectId, body })
 			.unwrap()
 			.then(() => {

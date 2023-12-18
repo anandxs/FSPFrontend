@@ -1,20 +1,35 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetMemberByIdQuery } from "../../features/member/memberApiSlice";
 import RemoveMember from "./RemoveMember";
 import UpdateMemberRole from "./UpdateMemberRole";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const Member = () => {
 	const { projectId, memberId } = useParams();
-	const { data, isSuccess } = useGetMemberByIdQuery({ projectId, memberId });
+	const { data, isLoading, isSuccess, isError, error } = useGetMemberByIdQuery({
+		projectId,
+		memberId,
+	});
+
+	const navigate = useNavigate();
 
 	let member;
-	if (isSuccess) {
+	if (isLoading) {
+	} else if (isSuccess) {
 		member = data;
+	} else if (isError) {
+		console.log(error);
+		let message = "Something went wrong.";
+		if (error?.status == 404) {
+			navigate(-1);
+			message = "Not a member.";
+		}
+		toast.error(message);
 	}
 
-	return (
+	return isLoading ? (
+		<p>Loading...</p>
+	) : (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<h1 className="text-xl font-bold mb-2 py-1 hover:underline">
 				Member Details
