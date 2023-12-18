@@ -4,7 +4,7 @@ const ProjectCard = ({ message, data }) => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
-		navigate(`/projects/${data.projectId}`);
+		navigate(`/projects/${data.projectId}/dashboard`);
 	};
 
 	return (

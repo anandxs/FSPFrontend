@@ -1,24 +1,35 @@
-import { useParams } from "react-router-dom";
-import { useGetProjectMemberQuery } from "../../features/member/memberApiSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetMemberByIdQuery } from "../../features/member/memberApiSlice";
 import RemoveMember from "./RemoveMember";
 import UpdateMemberRole from "./UpdateMemberRole";
-import { useSelector } from "react-redux";
-import { selectCurrentProjectRole } from "../../features/user/userSlice";
-import { selectCurrentUser } from "../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const Member = () => {
 	const { projectId, memberId } = useParams();
-	const { data, isSuccess } = useGetProjectMemberQuery({ projectId, memberId });
+	const { data, isLoading, isSuccess, isError, error } = useGetMemberByIdQuery({
+		projectId,
+		memberId,
+	});
+
+	const navigate = useNavigate();
 
 	let member;
-	if (isSuccess) {
+	if (isLoading) {
+	} else if (isSuccess) {
 		member = data;
+	} else if (isError) {
+		console.log(error);
+		let message = "Something went wrong.";
+		if (error?.status == 404) {
+			navigate(-1);
+			message = "Not a member.";
+		}
+		toast.error(message);
 	}
 
-	const { role, ownerId } = useSelector(selectCurrentProjectRole);
-	const { id } = useSelector(selectCurrentUser);
-
-	return (
+	return isLoading ? (
+		<p>Loading...</p>
+	) : (
 		<div className="col-span-10 p-2 mt-3 ml-3">
 			<h1 className="text-xl font-bold mb-2 py-1 hover:underline">
 				Member Details
@@ -27,17 +38,13 @@ const Member = () => {
 				<p>First Name: {member?.user?.firstName}</p>
 				<p>Last Name: {member?.user?.lastName}</p>
 				<p>Email: {member?.user?.email}</p>
-				<p>
-					Role: {member?.role} {ownerId === id && <span>(Project Owner)</span>}
-				</p>
+				<p>Role: {member?.role?.name}</p>
 			</div>
 
-			{role === "ADMIN" && ownerId !== memberId && (
-				<div className="flex gap-2">
-					<UpdateMemberRole />
-					<RemoveMember />
-				</div>
-			)}
+			<div className="flex gap-2">
+				<UpdateMemberRole />
+				<RemoveMember />
+			</div>
 		</div>
 	);
 };

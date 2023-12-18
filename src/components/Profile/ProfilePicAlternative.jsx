@@ -12,7 +12,7 @@ const ProfilePicAlternative = () => {
 			temp += w[0];
 		});
 		setDisplayName(temp.toUpperCase());
-	}, []);
+	}, [name]);
 
 	return <>{displayName}</>;
 };

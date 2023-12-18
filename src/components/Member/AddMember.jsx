@@ -16,7 +16,7 @@ const AddMember = () => {
 				className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
 				onClick={handleCreateToggle}
 			>
-				Add
+				Add Member
 			</button>
 			{toggleCreate && (
 				<Modal action={handleCreateToggle}>

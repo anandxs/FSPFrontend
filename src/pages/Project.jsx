@@ -1,58 +1,44 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
-import ProjectHeader from "../components/Project/ProjectHeader";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { useLazyGetProjectMemberQuery } from "../features/member/memberApiSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser } from "../features/auth/authSlice";
-import { setRole } from "../features/user/userSlice";
 
 const Project = () => {
 	const { projectId } = useParams();
 	const sections = [
 		{
-			header: "Cards",
-			link: `/projects/${projectId}/cards`,
+			header: "Dashboard",
+			link: `/projects/${projectId}/dashboard`,
 		},
 		{
-			header: "Groups",
-			link: `/projects/${projectId}/groups`,
+			header: "Tasks",
+			link: `/projects/${projectId}/tasks`,
+		},
+		{
+			header: "Stages",
+			link: `/projects/${projectId}/stages`,
+		},
+		{
+			header: "Task Types",
+			link: `/projects/${projectId}/types`,
+		},
+		{
+			header: "Roles",
+			link: `/projects/${projectId}/roles`,
 		},
 		{
 			header: "Members",
 			link: `/projects/${projectId}/members`,
 		},
+		{
+			header: "Settings",
+			link: `/projects/${projectId}/settings`,
+		},
 	];
-
-	const { id } = useSelector(selectCurrentUser);
-	const [getRole] = useLazyGetProjectMemberQuery();
-
-	const dispatch = useDispatch();
-	const navigate = useNavigate();
-	useEffect(() => {
-		getRole({ projectId, memberId: id })
-			.unwrap()
-			.then((response) => {
-				dispatch(
-					setRole({
-						projectId,
-						role: response?.role,
-						ownerId: response?.project?.ownerId,
-					})
-				);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-		navigate("cards");
-	}, []);
 
 	return (
 		<div className="flex flex-col h-full">
 			<Navbar />
-			<ProjectHeader projectId={projectId} />
 			<div className="grid grid-cols-12 flex-1">
 				<Sidebar sections={sections} />
 				<Outlet />
