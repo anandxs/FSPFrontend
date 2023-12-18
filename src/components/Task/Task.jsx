@@ -7,6 +7,7 @@ import TaskStage from "./TaskStage";
 import TaskType from "./TaskType";
 import TaskDueDate from "./TaskDueDate";
 import TaskTitle from "./TaskTitle";
+import TaskAssignee from "./TaskAssignee";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -56,17 +57,7 @@ const Task = () => {
 					<div className="col-span-1 mb-3"></div>
 					<TaskType type={task?.type} />
 					<div className="col-span-1 mb-3"></div>
-					<div className="col-span-5 flex justify-between items-center mb-3">
-						<p>
-							<span className="font-semibold">Assignee : </span>
-							{task?.assignee
-								? `${task?.assignee?.firstName} ${task?.assignee?.lastName}`
-								: "Unassigned"}
-						</p>
-						<button className="bg-primary text-white text-sm px-2 py-1 rounded">
-							Change
-						</button>
-					</div>
+					<TaskAssignee assignee={task?.assignee} />
 					<div className="col-span-1 mb-3"></div>
 					<TaskDueDate dueDate={task?.dueDate} />
 					<div className="col-span-12 mb-3">
