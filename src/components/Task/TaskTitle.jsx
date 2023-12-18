@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "../Modal/Modal";
-import UpdateTaskTimeModal from "./UpdateTaskTitleModal";
+import ChangeTaskTimeModal from "./ChangeTaskTitleModal";
 
 const TaskTitle = ({ title }) => {
 	const [toggle, setToggle] = useState(false);
@@ -30,7 +30,7 @@ const TaskTitle = ({ title }) => {
 			</button>
 			{toggle && (
 				<Modal action={handleToggle}>
-					<UpdateTaskTimeModal handleToggle={handleToggle} />
+					<ChangeTaskTimeModal handleToggle={handleToggle} />
 				</Modal>
 			)}
 		</>

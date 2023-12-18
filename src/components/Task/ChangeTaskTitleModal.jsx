@@ -4,7 +4,7 @@ import { TaskContext } from "./Task";
 import { useUpdateTaskMutation } from "../../features/task/taskApiSlice";
 import { useParams } from "react-router-dom";
 
-const UpdateTaskTitleModal = ({ handleToggle }) => {
+const ChangeTaskTitleModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
 	const { title } = task;
 
@@ -73,4 +73,4 @@ const UpdateTaskTitleModal = ({ handleToggle }) => {
 	);
 };
 
-export default UpdateTaskTitleModal;
+export default ChangeTaskTitleModal;

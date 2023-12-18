@@ -8,6 +8,7 @@ import TaskType from "./TaskType";
 import TaskDueDate from "./TaskDueDate";
 import TaskTitle from "./TaskTitle";
 import TaskAssignee from "./TaskAssignee";
+import TaskDescription from "./TaskDescription";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -60,25 +61,7 @@ const Task = () => {
 					<TaskAssignee assignee={task?.assignee} />
 					<div className="col-span-1 mb-3"></div>
 					<TaskDueDate dueDate={task?.dueDate} />
-					<div className="col-span-12 mb-3">
-						{task?.description ? (
-							<div>
-								<div className="flex gap-2 items-center">
-									<h2 className="underline font-semibold text-lg mb-1">
-										Description
-									</h2>
-									<button className="bg-orange-500 text-white px-3 py-0.5 text-xs rounded-sm">
-										Delete
-									</button>
-								</div>
-								<p>{task?.description}</p>
-							</div>
-						) : (
-							<button className="bg-primary text-white text-sm px-2 py-1 rounded">
-								Add Description
-							</button>
-						)}
-					</div>
+					<TaskDescription description={task?.description} />
 				</div>
 			</section>
 		</TaskContext.Provider>
