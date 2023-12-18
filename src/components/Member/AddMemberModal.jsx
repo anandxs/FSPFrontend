@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useAddMemberMutation } from "../../features/member/memberApiSlice";
-import { ROLE_ADMIN, ROLE_MEMBER, ROLE_OBSERVER } from "../../utils/constants";
+import { useInviteMemberMutation } from "../../features/member/memberApiSlice";
+import { useGetProjectRolesQuery } from "../../features/role/roleApiSlice";
 
 const AddMemberModal = ({ handleCreateToggle }) => {
 	const form = useForm();
@@ -10,12 +10,12 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 
 	const { projectId } = useParams();
 
-	const [addMember, { error }] = useAddMemberMutation();
+	const [addMember, { error }] = useInviteMemberMutation();
 
 	const onSubmit = ({ email, roleId }) => {
 		const body = {
 			email,
-			role: roleId,
+			roleId,
 		};
 		addMember({ projectId, body })
 			.unwrap()
@@ -26,6 +26,31 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 				console.log(err);
 			});
 	};
+
+	const {
+		data: roles,
+		isSuccess,
+		isLoading,
+		isError,
+		error: roleError,
+	} = useGetProjectRolesQuery({ projectId });
+	let roleOptions;
+	if (isLoading) {
+		roleOptions = <option>Loading...</option>;
+	} else if (isSuccess) {
+		if (roles?.length === 0) {
+			roleOptions = <option>No Roles</option>;
+		} else {
+			roleOptions = roles.map((role) => (
+				<option key={role?.roleId} value={role?.roleId}>
+					{role?.name}
+				</option>
+			));
+		}
+	} else if (isError) {
+		console.log(roleError);
+		roleOptions = <option>Something went wrong!</option>;
+	}
 
 	return (
 		<div
@@ -60,10 +85,7 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 							required: "Role is a required field.",
 						})}
 					>
-						<option value="">Select a role</option>
-						<option value={ROLE_ADMIN}>Admin</option>
-						<option value={ROLE_MEMBER}>Member</option>
-						<option value={ROLE_OBSERVER}>Observer</option>
+						{roleOptions}
 					</select>
 					<p className="text-red-600">{errors?.roleId?.message}</p>
 				</div>

@@ -5,7 +5,7 @@ export const commentApiSlice = apiSlice.injectEndpoints({
 		getAllTaskComments: builder.query({
 			query: ({ projectId, taskId }) =>
 				`/api/projects/${projectId}/tasks/${taskId}/comments`,
-			providesTags: ["Commnets"],
+			providesTags: ["Comments"],
 		}),
 		addCommentToTask: builder.mutation({
 			query: ({ projectId, taskId, body }) => ({
@@ -13,6 +13,7 @@ export const commentApiSlice = apiSlice.injectEndpoints({
 				method: "POST",
 				body,
 			}),
+			invalidatesTags: ["Comments"],
 		}),
 	}),
 });

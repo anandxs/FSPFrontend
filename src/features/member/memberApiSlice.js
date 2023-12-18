@@ -27,7 +27,7 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 				url: `/api/projects/${projectId}/members`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["Members"],
+			invalidatesTags: ["Members", "Projects"],
 		}),
 		getMemberById: builder.query({
 			query: ({ projectId, memberId }) =>

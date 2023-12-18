@@ -27,7 +27,7 @@ export const taskApiSlice = apiSlice.injectEndpoints({
 			}),
 			invalidatesTags: ["Tasks", "Task"],
 		}),
-		deletetask: builder.mutation({
+		deleteTask: builder.mutation({
 			query: ({ projectId, taskId }) => ({
 				url: `/api/projects/${projectId}/tasks/${taskId}`,
 				method: "DELETE",
@@ -41,6 +41,7 @@ export const {
 	useGetProjectTasksQuery,
 	useCreateTaskMutation,
 	useGetTaskByIdQuery,
+	useLazyGetTaskByIdQuery,
 	useUpdateTaskMutation,
-	useDeletetaskMutation,
+	useDeleteTaskMutation,
 } = taskApiSlice;

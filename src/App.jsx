@@ -20,6 +20,11 @@ import Project from "./pages/Project";
 import Stages from "./components/Stage/Stages";
 import TaskTypes from "./components/Type/Types";
 import Roles from "./components/Role/Roles";
+import Members from "./components/Member/Members";
+import Member from "./components/Member/Member";
+import ProjectSettings from "./components/Project/ProjectSettings";
+import Tasks from "./components/Task/Tasks";
+import Task from "./components/Task/Task";
 
 const App = () => {
 	return (
@@ -47,17 +52,20 @@ const App = () => {
 						<Route path=":projectId" element={<Project />}>
 							<Route path="dashboard" element={<h1>dashboard</h1>} />
 
-							<Route path="tasks" element={<h1>tasks</h1>} />
-
 							<Route path="stages" element={<Stages />} />
-
 							<Route path="types" element={<TaskTypes />} />
-
 							<Route path="roles" element={<Roles />} />
+							<Route path="settings" element={<ProjectSettings />} />
 
-							<Route path="members" element={<h1>members</h1>} />
+							<Route path="tasks">
+								<Route index element={<Tasks />} />
+								<Route path=":taskId" element={<Task />} />
+							</Route>
 
-							<Route path="settings" element={<h1>settings</h1>} />
+							<Route path="members">
+								<Route index element={<Members />} />
+								<Route path=":memberId" element={<Member />} />
+							</Route>
 
 							<Route path="*" element={<Navigate to="/" />} />
 						</Route>
