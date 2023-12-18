@@ -9,6 +9,7 @@ import TaskDueDate from "./TaskDueDate";
 import TaskTitle from "./TaskTitle";
 import TaskAssignee from "./TaskAssignee";
 import TaskDescription from "./TaskDescription";
+import Comments from "./Comments";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -62,6 +63,7 @@ const Task = () => {
 					<div className="col-span-1 mb-3"></div>
 					<TaskDueDate dueDate={task?.dueDate} />
 					<TaskDescription description={task?.description} />
+					<Comments />
 				</div>
 			</section>
 		</TaskContext.Provider>
