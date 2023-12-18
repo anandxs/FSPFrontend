@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { createContext, useEffect } from "react";
 import DeleteTask from "./DeleteTask";
 import TaskStage from "./TaskStage";
+import TaskType from "./TaskType";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -53,15 +54,8 @@ const Task = () => {
 				<div className="grid grid-cols-12 mb-3">
 					<TaskStage stage={task?.stage} />
 					<div className="col-span-1 mb-3"></div>
-					<div className="col-span-5 flex justify-between items-center mb-3">
-						<p>
-							<span className="font-semibold">Task Type : </span>
-							{task?.type?.name}
-						</p>
-						<button className="bg-primary text-white text-sm px-2 py-1 rounded">
-							Change
-						</button>
-					</div>
+					<TaskType type={task?.type} />
+					<div className="col-span-1 mb-3"></div>
 					<div className="col-span-5 flex justify-between items-center mb-3">
 						<p>
 							<span className="font-semibold">Assignee : </span>

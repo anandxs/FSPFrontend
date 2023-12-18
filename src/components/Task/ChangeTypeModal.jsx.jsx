@@ -1,18 +1,18 @@
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useGetProjectStagesQuery } from "../../features/stage/stageApiSlice";
+import { useGetProjectTaskTypesQuery } from "../../features/taskType/taskTypeApiSlice";
 import { useUpdateTaskMutation } from "../../features/task/taskApiSlice";
 import { useContext } from "react";
 import { TaskContext } from "./Task";
 
-const ChangeStageModal = ({ handleToggle }) => {
+const ChangeTypeModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
-	const { stage } = task;
-	const stageId = stage?.stageId;
+	const { type } = task;
+	const typeId = type?.typeId;
 
 	const form = useForm({
 		defaultValues: {
-			stageId,
+			typeId,
 		},
 	});
 	const { register, handleSubmit, formState } = form;
@@ -21,12 +21,12 @@ const ChangeStageModal = ({ handleToggle }) => {
 	const { projectId, taskId } = useParams();
 
 	const { data, isLoading, isSuccess, isError, error } =
-		useGetProjectStagesQuery({ projectId });
-	let stagesOptions;
+		useGetProjectTaskTypesQuery({ projectId });
+	let typeOptions;
 	if (isSuccess) {
-		stagesOptions = data.map((stage) => (
-			<option key={stage?.stageId} value={stage?.stageId}>
-				{stage?.name}
+		typeOptions = data.map((type) => (
+			<option key={type?.typeId} value={type?.typeId}>
+				{type?.name}
 			</option>
 		));
 	} else if (isError) {
@@ -34,15 +34,15 @@ const ChangeStageModal = ({ handleToggle }) => {
 	}
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
-	const onSubmit = ({ stageId }) => {
-		const { title, dueDate, description, assignee, type } = task;
+	const onSubmit = ({ typeId }) => {
+		const { title, dueDate, description, assignee, stage } = task;
 
 		const body = {
-			stageId,
+			typeId,
 			title,
 			description,
 			dueDate,
-			typeId: type?.typeId,
+			stageId: stage?.stageId,
 			assigneeId: assignee?.id,
 		};
 
@@ -61,24 +61,24 @@ const ChangeStageModal = ({ handleToggle }) => {
 			className="bg-accent p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Update Task Stage</h1>
+			<h1 className="text-2xl font-bold mb-2 py-1">Update Task Type</h1>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
 				<div className="mb-3">
-					<label htmlFor="stage" className="font-semibold text-md block">
-						Stage
+					<label htmlFor="type" className="font-semibold text-md block">
+						Task Type
 					</label>
 					<select
-						id="stage"
+						id="type"
 						className="block w-full text-xs p-1"
-						{...register("stageId", {
-							required: "Select a stage",
+						{...register("typeId", {
+							required: "Select a type",
 						})}
 					>
-						<option value="">Select a stage</option>
+						<option value="">Select a type</option>
 						{isLoading && <option>Loading</option>}
-						{stagesOptions}
+						{typeOptions}
 					</select>
-					<p className="text-red-600">{errors?.stageId?.message}</p>
+					<p className="text-red-600">{errors?.typeId?.message}</p>
 				</div>
 				<button
 					type="submit"
@@ -91,4 +91,4 @@ const ChangeStageModal = ({ handleToggle }) => {
 	);
 };
 
-export default ChangeStageModal;
+export default ChangeTypeModal;
