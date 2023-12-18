@@ -30,7 +30,7 @@ const DeleteTask = () => {
 	return (
 		<>
 			<button
-				className="bg-orange-500 text-white px-3 py-0.5 text-sm rounded-sm"
+				className="bg-orange-500 text-white px-3 py-0.5 text-md rounded-sm"
 				onClick={handleToggle}
 			>
 				Delete
