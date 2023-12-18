@@ -5,6 +5,7 @@ import { createContext, useEffect } from "react";
 import DeleteTask from "./DeleteTask";
 import TaskStage from "./TaskStage";
 import TaskType from "./TaskType";
+import TaskDueDate from "./TaskDueDate";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -68,17 +69,7 @@ const Task = () => {
 						</button>
 					</div>
 					<div className="col-span-1 mb-3"></div>
-					<div className="col-span-5 flex justify-between items-center mb-3">
-						<p>
-							<span className="font-semibold">Due Date :</span>{" "}
-							{task?.dueDate
-								? new Date(task.dueDate).toLocaleDateString()
-								: "- -"}
-						</p>
-						<button className="bg-primary text-white text-sm px-2 py-1 rounded">
-							Change
-						</button>
-					</div>
+					<TaskDueDate dueDate={task?.dueDate} />
 					<div className="col-span-12 mb-3">
 						{task?.description ? (
 							<div>
