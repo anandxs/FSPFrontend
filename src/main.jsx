@@ -8,6 +8,9 @@ import store from "./app/store.js";
 import { ErrorBoundary } from "react-error-boundary";
 import FallBack from "./components/ErrorBoundary/FallBack.jsx";
 import App from "./App.jsx";
+import { registerLicense } from "@syncfusion/ej2-base";
+
+registerLicense(import.meta.env.VITE_SYNCFUSION_KEY);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>

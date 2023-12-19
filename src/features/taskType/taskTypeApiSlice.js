@@ -12,7 +12,7 @@ export const taskTypeApiSlice = apiSlice.injectEndpoints({
 				method: "POST",
 				body,
 			}),
-			invalidatesTags: ["Types", "Type"],
+			invalidatesTags: ["Types", "Type", "TasksPerStage"],
 		}),
 		getTaskTypeById: builder.query({
 			query: ({ projectId, typeId }) =>
@@ -25,21 +25,21 @@ export const taskTypeApiSlice = apiSlice.injectEndpoints({
 				method: "PUT",
 				body,
 			}),
-			invalidatesTags: ["Types", "Type"],
+			invalidatesTags: ["Types", "Type", "TasksPerStage"],
 		}),
 		deleteTaskType: builder.mutation({
 			query: ({ projectId, typeId }) => ({
 				url: `/api/projects/${projectId}/types/${typeId}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["Types", "Type"],
+			invalidatesTags: ["Types", "Type", "TasksPerStage"],
 		}),
 		toggleTaskTypeArchiveStatus: builder.mutation({
 			query: ({ projectId, typeId }) => ({
 				url: `/api/projects/${projectId}/types/${typeId}`,
 				method: "PUT",
 			}),
-			invalidatesTags: ["Types", "Type"],
+			invalidatesTags: ["Types", "Type", "TasksPerStage"],
 		}),
 	}),
 });
