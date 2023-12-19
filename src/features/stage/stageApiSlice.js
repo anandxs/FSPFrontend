@@ -12,7 +12,7 @@ export const stageApiSlice = apiSlice.injectEndpoints({
 				method: "POST",
 				body,
 			}),
-			invalidatesTags: ["Stages", "Stage"],
+			invalidatesTags: ["Stages", "Stage", "TasksPerStage"],
 		}),
 		getStageById: builder.query({
 			query: ({ projectId, stageId }) =>
@@ -25,21 +25,21 @@ export const stageApiSlice = apiSlice.injectEndpoints({
 				method: "PUT",
 				body,
 			}),
-			invalidatesTags: ["Stages", "Stage"],
+			invalidatesTags: ["Stages", "Stage", "TasksPerStage"],
 		}),
 		deleteStage: builder.mutation({
 			query: ({ projectId, stageId }) => ({
 				url: `/api/projects/${projectId}/stages/${stageId}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["Stages", "Stage"],
+			invalidatesTags: ["Stages", "Stage", "TasksPerStage"],
 		}),
 		toggleStageArchiveStatus: builder.mutation({
 			query: ({ projectId, stageId }) => ({
 				url: `/api/projects/${projectId}/stages/${stageId}`,
 				method: "PUT",
 			}),
-			invalidatesTags: ["Stages", "Stage"],
+			invalidatesTags: ["Stages", "Stage", "TasksPerStage"],
 		}),
 	}),
 });
