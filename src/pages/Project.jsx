@@ -2,8 +2,12 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 import { useParams } from "react-router-dom";
-import { useGetProjectQuery } from "../features/project/projectApiSlice";
-import { createContext } from "react";
+import { useLazyGetProjectQuery } from "../features/project/projectApiSlice";
+import { useLazyGetMemberByIdQuery } from "../features/member/memberApiSlice";
+import { createContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUser } from "../features/auth/authSlice";
+import { selectCurrentProjectRole, setRole } from "../features/user/userSlice";
 
 export const ProjectContext = createContext({
 	projectId: null,
@@ -13,7 +17,41 @@ export const ProjectContext = createContext({
 
 const Project = () => {
 	const { projectId } = useParams();
-	const sections = [
+
+	const [getProjectAsync] = useLazyGetProjectQuery();
+	const [getMemberAsync] = useLazyGetMemberByIdQuery();
+	const { id } = useSelector(selectCurrentUser);
+
+	const dispatch = useDispatch();
+
+	const [data, setData] = useState({});
+	useEffect(() => {
+		getProjectAsync({ projectId })
+			.unwrap()
+			.then((project) => {
+				setData(project);
+
+				getMemberAsync({ projectId, memberId: id })
+					.unwrap()
+					.then(({ role }) => {
+						dispatch(
+							setRole({
+								projectId,
+								ownerId: project?.ownerId,
+								role,
+							})
+						);
+					})
+					.catch((err) => {
+						console.log(err);
+					});
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
+	let sections = [
 		{
 			header: "Tasks",
 			link: `/projects/${projectId}/tasks`,
@@ -44,19 +82,19 @@ const Project = () => {
 		},
 	];
 
-	const {
-		data: project,
-		isLoading,
-		isSuccess,
-		isError,
-		error,
-	} = useGetProjectQuery({ projectId });
+	const { role } = useSelector(selectCurrentProjectRole);
 
-	let data;
-	if (isSuccess) {
-		data = project;
-	} else if (isError) {
-		console.log(error);
+	if (role?.name !== "ADMIN") {
+		sections = [
+			{
+				header: "Tasks",
+				link: `/projects/${projectId}/tasks`,
+			},
+			{
+				header: "Settings",
+				link: `/projects/${projectId}/settings`,
+			},
+		];
 	}
 
 	return (

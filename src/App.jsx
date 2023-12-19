@@ -26,6 +26,7 @@ import ProjectSettings from "./components/Project/ProjectSettings";
 import Tasks from "./components/Task/Tasks";
 import Task from "./components/Task/Task";
 import Dashboard from "./components/Dashboard/Dashboard";
+import ProjectAdminOnly from "./route/ProjectAdminOnly";
 
 const App = () => {
 	return (
@@ -51,24 +52,24 @@ const App = () => {
 
 					<Route path="/projects">
 						<Route path=":projectId" element={<Project />}>
-							<Route path="dashboard" element={<Dashboard />} />
-
-							<Route path="stages" element={<Stages />} />
-							<Route path="types" element={<TaskTypes />} />
-							<Route path="roles" element={<Roles />} />
-							<Route path="settings" element={<ProjectSettings />} />
-
 							<Route path="tasks">
 								<Route index element={<Tasks />} />
 								<Route path=":taskId" element={<Task />} />
 							</Route>
+							<Route path="settings" element={<ProjectSettings />} />
 
-							<Route path="members">
-								<Route index element={<Members />} />
-								<Route path=":memberId" element={<Member />} />
+							<Route element={<ProjectAdminOnly />}>
+								<Route path="dashboard" element={<Dashboard />} />
+								<Route path="stages" element={<Stages />} />
+								<Route path="types" element={<TaskTypes />} />
+								<Route path="roles" element={<Roles />} />
+								<Route path="members">
+									<Route index element={<Members />} />
+									<Route path=":memberId" element={<Member />} />
+								</Route>
 							</Route>
 
-							<Route path="*" element={<Navigate to="/" />} />
+							<Route path="*" element={<NotFound />} />
 						</Route>
 
 						<Route path="*" element={<Navigate to="/" />} />

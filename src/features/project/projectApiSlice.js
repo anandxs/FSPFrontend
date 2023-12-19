@@ -47,6 +47,7 @@ export const {
 	useGetUserProjectsQuery,
 	useCreateProjectMutation,
 	useGetProjectQuery,
+	useLazyGetProjectQuery,
 	useUpdateProjectMutation,
 	useDeleteProjectMutation,
 	useToggleProjectArchiveStatusMutation,
