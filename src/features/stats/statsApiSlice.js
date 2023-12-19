@@ -6,7 +6,12 @@ export const statsApiSlice = apiSlice.injectEndpoints({
 			query: ({ projectId }) => `/api/projects/${projectId}/tasksperstage`,
 			providesTags: ["TasksPerStage"],
 		}),
+		getTasksPerTypeData: builder.query({
+			query: ({ projectId }) => `/api/projects/${projectId}/taskspertype`,
+			providesTags: ["TasksPerStage"],
+		}),
 	}),
 });
 
-export const { useGetTasksPerStageDataQuery } = statsApiSlice;
+export const { useGetTasksPerStageDataQuery, useGetTasksPerTypeDataQuery } =
+	statsApiSlice;
