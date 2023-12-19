@@ -15,12 +15,12 @@ const Project = () => {
 	const { projectId } = useParams();
 	const sections = [
 		{
-			header: "Dashboard",
-			link: `/projects/${projectId}/dashboard`,
-		},
-		{
 			header: "Tasks",
 			link: `/projects/${projectId}/tasks`,
+		},
+		{
+			header: "Dashboard",
+			link: `/projects/${projectId}/dashboard`,
 		},
 		{
 			header: "Stages",
