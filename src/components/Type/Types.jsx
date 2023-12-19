@@ -55,7 +55,7 @@ const Types = () => {
 	];
 
 	return (
-		<div className="col-span-10 p-2 mt-3 ml-3">
+		<div className="m-2 p-2">
 			<div className="flex justify-between items-center">
 				<h2 className="text-xl font-bold hover:underline mb-3">Task Types</h2>
 				<TypeContext.Provider value={{ projectId }}>

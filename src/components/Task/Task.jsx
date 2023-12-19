@@ -48,8 +48,8 @@ const Task = () => {
 	return isLoading ? (
 		<p>Loading...</p>
 	) : (
-		<TaskContext.Provider value={{ ...task }}>
-			<section className="col-span-10 p-3">
+		<div className="m-2 p-2">
+			<TaskContext.Provider value={{ ...task }}>
 				<div className="flex items-center gap-2 mb-3">
 					<TaskTitle title={task?.title} />
 					<DeleteTask />
@@ -65,8 +65,8 @@ const Task = () => {
 					<TaskDescription description={task?.description} />
 					<Comments />
 				</div>
-			</section>
-		</TaskContext.Provider>
+			</TaskContext.Provider>
+		</div>
 	);
 };
 

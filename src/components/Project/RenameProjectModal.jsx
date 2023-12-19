@@ -1,9 +1,17 @@
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useUpdateProjectMutation } from "../../features/project/projectApiSlice";
+import { useContext } from "react";
+import { ProjectContext } from "../../pages/Project";
 
 const RenameProjectModal = ({ handleToggle }) => {
-	const form = useForm();
+	const { name } = useContext(ProjectContext);
+
+	const form = useForm({
+		defaultValues: {
+			name,
+		},
+	});
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
 

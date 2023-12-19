@@ -1,29 +1,15 @@
-import { useGetProjectQuery } from "../../features/project/projectApiSlice";
-import { useParams } from "react-router-dom";
 import DeleteProject from "./DeleteProject";
 import ArchiveProject from "./ArchiveProject";
 import ExitProject from "./ExitProject";
 import RenameProject from "./RenameProject";
+import { useContext } from "react";
+import { ProjectContext } from "../../pages/Project";
 
 const ProjectSettings = () => {
-	const { projectId } = useParams();
-	const {
-		data: project,
-		isLoading,
-		isSuccess,
-		isError,
-		error,
-	} = useGetProjectQuery({ projectId });
-
-	let data;
-	if (isSuccess) {
-		data = project;
-	} else if (isError) {
-		console.log(error);
-	}
+	const data = useContext(ProjectContext);
 
 	return (
-		<div className="col-span-10 p-2 mt-3 mx-3">
+		<div className="m-2 p-2">
 			<h1 className="text-xl font-bold hover:underline w-fit mb-3">
 				Project Settings
 			</h1>
