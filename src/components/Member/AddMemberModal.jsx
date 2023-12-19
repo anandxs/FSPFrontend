@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useInviteMemberMutation } from "../../features/member/memberApiSlice";
 import { useGetProjectRolesQuery } from "../../features/role/roleApiSlice";
+import { toast } from "react-toastify";
 
 const AddMemberModal = ({ handleCreateToggle }) => {
 	const form = useForm();
@@ -19,7 +20,9 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 		};
 		addMember({ projectId, body })
 			.unwrap()
-			.then(() => {
+			.then((response) => {
+				console.log(response);
+				toast.success(response?.message);
 				handleCreateToggle();
 			})
 			.catch((err) => {
