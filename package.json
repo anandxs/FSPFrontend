@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource-variable/schibsted-grotesk": "^5.0.18",
     "@reduxjs/toolkit": "^1.9.7",
+    "@syncfusion/ej2-react-charts": "^24.1.41",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-data-table-component": "^7.5.4",

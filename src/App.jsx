@@ -25,6 +25,7 @@ import Member from "./components/Member/Member";
 import ProjectSettings from "./components/Project/ProjectSettings";
 import Tasks from "./components/Task/Tasks";
 import Task from "./components/Task/Task";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 const App = () => {
 	return (
@@ -50,7 +51,7 @@ const App = () => {
 
 					<Route path="/projects">
 						<Route path=":projectId" element={<Project />}>
-							<Route path="dashboard" element={<h1>dashboard</h1>} />
+							<Route path="dashboard" element={<Dashboard />} />
 
 							<Route path="stages" element={<Stages />} />
 							<Route path="types" element={<TaskTypes />} />
