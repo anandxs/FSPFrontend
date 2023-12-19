@@ -12,7 +12,7 @@ export const taskApiSlice = apiSlice.injectEndpoints({
 				method: "POST",
 				body,
 			}),
-			invalidatesTags: ["Tasks", "Task"],
+			invalidatesTags: ["Tasks", "Task", "TasksPerStage"],
 		}),
 		getTaskById: builder.query({
 			query: ({ projectId, taskId }) =>
@@ -25,14 +25,14 @@ export const taskApiSlice = apiSlice.injectEndpoints({
 				method: "PUT",
 				body,
 			}),
-			invalidatesTags: ["Tasks", "Task"],
+			invalidatesTags: ["Tasks", "Task", "TasksPerStage"],
 		}),
 		deleteTask: builder.mutation({
 			query: ({ projectId, taskId }) => ({
 				url: `/api/projects/${projectId}/tasks/${taskId}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["Tasks", "Task"],
+			invalidatesTags: ["Tasks", "Task", "TasksPerStage"],
 		}),
 	}),
 });
