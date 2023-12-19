@@ -6,10 +6,12 @@ import { useContext } from "react";
 import { ProjectContext } from "../../pages/Project";
 import { useSelector } from "react-redux";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import { selectCurrentUser } from "../../features/auth/authSlice";
 
 const ProjectSettings = () => {
 	const data = useContext(ProjectContext);
-	const { role } = useSelector(selectCurrentProjectRole);
+	const { role, ownerId } = useSelector(selectCurrentProjectRole);
+	const { id } = useSelector(selectCurrentUser);
 
 	return (
 		<div className="m-2 p-2">
@@ -23,14 +25,18 @@ const ProjectSettings = () => {
 							<p>Rename Project</p>
 							<RenameProject />
 						</div>
-						<div className="flex justify-between items-center border border-black rounded-md p-2">
-							<p>Archive/Close this project</p>
-							<ArchiveProject data={data} />
-						</div>
-						<div className="flex justify-between items-center border border-black rounded-md p-2">
-							<p>Delete this project</p>
-							<DeleteProject />
-						</div>
+						{false && (
+							<div className="flex justify-between items-center border border-black rounded-md p-2">
+								<p>Archive/Close this project</p>
+								<ArchiveProject data={data} />
+							</div>
+						)}
+						{ownerId === id && (
+							<div className="flex justify-between items-center border border-black rounded-md p-2">
+								<p>Delete this project</p>
+								<DeleteProject />
+							</div>
+						)}
 					</>
 				) : (
 					<div className="flex justify-between items-center border border-black rounded-md p-2">

@@ -35,18 +35,20 @@ const Roles = () => {
 			name: "Option",
 			cell: (row) => {
 				return (
-					<div className="flex gap-2">
-						<RoleContext.Provider
-							value={{
-								projectId,
-								roleId: row.id,
-								init: row.name,
-							}}
-						>
-							<EditRole />
-							<DeleteRole />
-						</RoleContext.Provider>
-					</div>
+					row?.name.toUpperCase() !== "ADMIN" && (
+						<div className="flex gap-2">
+							<RoleContext.Provider
+								value={{
+									projectId,
+									roleId: row.id,
+									init: row.name,
+								}}
+							>
+								<EditRole />
+								<DeleteRole />
+							</RoleContext.Provider>
+						</div>
+					)
 				);
 			},
 		},
