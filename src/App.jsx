@@ -27,6 +27,7 @@ import Tasks from "./components/Task/Tasks";
 import Task from "./components/Task/Task";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ProjectAdminOnly from "./route/ProjectAdminOnly";
+import AcceptInvite from "./components/AcceptInvite";
 
 const App = () => {
 	return (
@@ -44,6 +45,8 @@ const App = () => {
 
 				<Route element={<AuthorizedOnly allowedRoles={[USER]} />}>
 					<Route path="/" element={<Home />} />
+
+					<Route path="/acceptinvite" element={<AcceptInvite />} />
 
 					<Route path="/profile" element={<Profile />}>
 						<Route path="details" element={<UpdateProfile />} />

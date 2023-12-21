@@ -11,12 +11,17 @@ const EmailVerified = () => {
 		useVerifyEmailMutation();
 
 	useEffect(() => {
-		verifyEmail({ code, userId })
+		const promise = verifyEmail({ code, userId });
+		promise
 			.unwrap()
 			.then(() => {})
 			.catch((err) => {
 				console.log(err);
 			});
+
+		return function () {
+			promise.abort();
+		};
 	}, []);
 
 	return (

@@ -26,7 +26,7 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 			.unwrap()
 			.then(({ projectId }) => {
 				handleProjectToggle();
-				navigate(`/projects/${projectId}`);
+				navigate(`/projects/${projectId}/tasks`);
 			})
 			.catch((err) => {
 				console.log("err");

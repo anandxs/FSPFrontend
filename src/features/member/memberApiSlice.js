@@ -42,10 +42,9 @@ export const memberApiSlice = apiSlice.injectEndpoints({
 			invalidatesTags: ["Members"],
 		}),
 		acceptInvite: builder.mutation({
-			query: ({ projectId, body }) => ({
+			query: ({ projectId }) => ({
 				url: `/api/projects/${projectId}/members/accept`,
 				method: "POST",
-				body,
 			}),
 		}),
 	}),

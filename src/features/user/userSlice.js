@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-	projectId: null,
-	ownerId: null,
-	role: null,
-};
+const initialState = localStorage.getItem("projectrole")
+	? JSON.parse(localStorage.getItem("projectrole"))
+	: {
+			projectId: null,
+			ownerId: null,
+			role: null,
+	  };
 
 const userSlice = createSlice({
 	name: "userRole",
@@ -15,11 +17,16 @@ const userSlice = createSlice({
 			state.projectId = projectId;
 			state.role = role;
 			state.ownerId = ownerId;
+			localStorage.setItem(
+				"projectrole",
+				JSON.stringify({ projectId, role, ownerId })
+			);
 		},
 		clearRole: (state) => {
 			state.projectId = null;
 			state.role = null;
 			state.ownerId = null;
+			localStorage.removeItem("projectrole");
 		},
 	},
 });
