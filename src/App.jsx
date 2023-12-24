@@ -28,6 +28,7 @@ import Task from "./components/Task/Task";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ProjectAdminOnly from "./route/ProjectAdminOnly";
 import AcceptInvite from "./components/AcceptInvite";
+import Chat from "./components/Chat/Chat";
 
 const App = () => {
 	return (
@@ -60,6 +61,7 @@ const App = () => {
 								<Route path=":taskId" element={<Task />} />
 							</Route>
 							<Route path="settings" element={<ProjectSettings />} />
+							<Route path="chat" element={<Chat />} />
 
 							<Route element={<ProjectAdminOnly />}>
 								<Route path="dashboard" element={<Dashboard />} />
