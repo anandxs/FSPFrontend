@@ -80,6 +80,10 @@ const Project = () => {
 			header: "Settings",
 			link: `/projects/${projectId}/settings`,
 		},
+		{
+			header: "Chat",
+			link: `/projects/${projectId}/chat`,
+		},
 	];
 
 	const { role } = useSelector(selectCurrentProjectRole);
@@ -93,6 +97,10 @@ const Project = () => {
 			{
 				header: "Settings",
 				link: `/projects/${projectId}/settings`,
+			},
+			{
+				header: "Chat",
+				link: `/projects/${projectId}/chat`,
 			},
 		];
 	}
