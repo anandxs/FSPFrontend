@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource-variable/schibsted-grotesk": "^5.0.18",
+    "@microsoft/signalr": "^6.0.25",
     "@reduxjs/toolkit": "^1.9.7",
     "@syncfusion/ej2-react-charts": "^24.1.41",
     "jwt-decode": "^4.0.0",
