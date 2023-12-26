@@ -88,7 +88,7 @@ const Chat = () => {
 					))}
 				</ul>
 			</div>
-			<div class={`fixed bottom-0 left-0 right-0 bg-gray-100 p-4`}>
+			<div className={`fixed bottom-0 left-0 right-0 bg-gray-100 p-4`}>
 				<div className="flex">
 					<input
 						type="text"

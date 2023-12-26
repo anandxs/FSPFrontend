@@ -2,7 +2,7 @@ import { useState } from "react";
 import Modal from "../Modal/Modal";
 import CreateTaskModal from "./CreateTaskModal";
 
-const CreateStage = () => {
+const CreateTask = () => {
 	const [toggleEdit, setToggleEdit] = useState(false);
 
 	const handleToggle = () => {
@@ -26,4 +26,4 @@ const CreateStage = () => {
 	);
 };
 
-export default CreateStage;
+export default CreateTask;

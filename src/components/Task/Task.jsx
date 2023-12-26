@@ -10,6 +10,7 @@ import TaskTitle from "./TaskTitle";
 import TaskAssignee from "./TaskAssignee";
 import TaskDescription from "./TaskDescription";
 import Comments from "./Comments";
+import AddAttachment from "./Attachment/Attachments";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -35,7 +36,6 @@ const Task = () => {
 	const navigate = useNavigate();
 	useEffect(() => {
 		if (isSuccess) {
-			console.log(task);
 		} else if (isError) {
 			console.log(error);
 			toast.error("Could not fetch task data");
@@ -63,6 +63,7 @@ const Task = () => {
 					<div className="col-span-1 mb-3"></div>
 					<TaskDueDate dueDate={task?.dueDate} />
 					<TaskDescription description={task?.description} />
+					<AddAttachment />
 					<Comments />
 				</div>
 			</TaskContext.Provider>
