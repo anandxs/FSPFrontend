@@ -49,8 +49,13 @@ const Login = () => {
 					});
 			})
 			.catch((err) => {
-				if (err.status === 401) setError("Invalid credentials");
-				else if (err.status === 403) setError("You have been blocked");
+				if (err.status === 401) {
+					if (err?.data?.Message) {
+						setError(err?.data?.Message);
+					} else {
+						setError("Invalid credentials");
+					}
+				} else if (err.status === 403) setError("You have been blocked");
 				else if (err.status === 500) setError("Internal server error");
 				else setError("Network error");
 			});
