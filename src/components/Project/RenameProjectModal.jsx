@@ -3,6 +3,11 @@ import { useParams } from "react-router-dom";
 import { useUpdateProjectMutation } from "../../features/project/projectApiSlice";
 import { useContext } from "react";
 import { ProjectContext } from "../../pages/Project";
+import { useDispatch, useSelector } from "react-redux";
+import {
+	selectCurrentProjectRole,
+	setRole,
+} from "../../features/user/userSlice";
 
 const RenameProjectModal = ({ handleToggle }) => {
 	const { name } = useContext(ProjectContext);
@@ -15,10 +20,10 @@ const RenameProjectModal = ({ handleToggle }) => {
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
 
+	const [renameProjectAsync, { error }] = useUpdateProjectMutation();
 	const { projectId } = useParams();
-
-	const [renameProjectAsync, { isLoading, error }] = useUpdateProjectMutation();
-
+	const dispatch = useDispatch();
+	const userRole = useSelector(selectCurrentProjectRole);
 	const onSubmit = ({ name }) => {
 		const body = {
 			name,
@@ -27,6 +32,7 @@ const RenameProjectModal = ({ handleToggle }) => {
 			.unwrap()
 			.then(() => {
 				handleToggle();
+				dispatch(setRole({ ...userRole, projectName: name }));
 			})
 			.catch((err) => {
 				console.log(err);

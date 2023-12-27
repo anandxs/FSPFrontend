@@ -37,6 +37,7 @@ const Project = () => {
 						dispatch(
 							setRole({
 								projectId,
+								projectName: project?.name,
 								ownerId: project?.ownerId,
 								role,
 							})
@@ -77,16 +78,16 @@ const Project = () => {
 			link: `/projects/${projectId}/members`,
 		},
 		{
-			header: "Settings",
-			link: `/projects/${projectId}/settings`,
-		},
-		{
 			header: "Chat",
 			link: `/projects/${projectId}/chat`,
 		},
+		{
+			header: "Settings",
+			link: `/projects/${projectId}/settings`,
+		},
 	];
 
-	const { role } = useSelector(selectCurrentProjectRole);
+	const { role, projectName } = useSelector(selectCurrentProjectRole);
 
 	if (role?.name !== "ADMIN") {
 		sections = [
@@ -95,12 +96,12 @@ const Project = () => {
 				link: `/projects/${projectId}/tasks`,
 			},
 			{
-				header: "Settings",
-				link: `/projects/${projectId}/settings`,
-			},
-			{
 				header: "Chat",
 				link: `/projects/${projectId}/chat`,
+			},
+			{
+				header: "Settings",
+				link: `/projects/${projectId}/settings`,
 			},
 		];
 	}
@@ -113,7 +114,7 @@ const Project = () => {
 					<Sidebar sections={sections} />
 					<div className="col-span-10">
 						<h1 className="underline px-3 py-1 font-bold text-lg bg-primary text-white">
-							{data?.name}
+							{projectName ? projectName : "Loading..."}
 						</h1>
 						<Outlet />
 					</div>

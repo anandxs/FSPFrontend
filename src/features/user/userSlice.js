@@ -4,6 +4,7 @@ const initialState = localStorage.getItem("projectrole")
 	? JSON.parse(localStorage.getItem("projectrole"))
 	: {
 			projectId: null,
+			projectName: null,
 			ownerId: null,
 			role: null,
 	  };
@@ -13,17 +14,19 @@ const userSlice = createSlice({
 	initialState,
 	reducers: {
 		setRole: (state, action) => {
-			const { projectId, role, ownerId } = action.payload;
+			const { projectId, role, ownerId, projectName } = action.payload;
 			state.projectId = projectId;
+			state.projectName = projectName;
 			state.role = role;
 			state.ownerId = ownerId;
 			localStorage.setItem(
 				"projectrole",
-				JSON.stringify({ projectId, role, ownerId })
+				JSON.stringify({ projectId, projectName, role, ownerId })
 			);
 		},
 		clearRole: (state) => {
 			state.projectId = null;
+			state.projectName = null;
 			state.role = null;
 			state.ownerId = null;
 			localStorage.removeItem("projectrole");

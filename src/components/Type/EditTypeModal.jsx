@@ -10,7 +10,7 @@ const EditTypeModal = ({ handleToggle }) => {
 
 	const { projectId, typeId, init } = useContext(TypeContext);
 
-	const [updateTypeAsync] = useUpdateTaskTypeMutation();
+	const [updateTypeAsync, { error }] = useUpdateTaskTypeMutation();
 
 	useEffect(() => {
 		setValue("typeName", init);
@@ -40,8 +40,9 @@ const EditTypeModal = ({ handleToggle }) => {
 			className="bg-accent p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Edit Type</h1>
+			<h1 className="text-2xl font-bold mb-1 pt-1">Edit Type</h1>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
+				<p className="text-red-600 text-xs my-1">{error?.data?.Message}</p>
 				<div className="mb-2">
 					<input
 						type="text"

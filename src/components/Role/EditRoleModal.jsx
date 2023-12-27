@@ -10,7 +10,7 @@ const EditRoleModal = ({ handleToggle }) => {
 
 	const { projectId, roleId, init } = useContext(RoleContext);
 
-	const [udpateRoleAsync] = useUpdateRoleMutation();
+	const [udpateRoleAsync, { error }] = useUpdateRoleMutation();
 
 	useEffect(() => {
 		setValue("role", init);
@@ -40,8 +40,9 @@ const EditRoleModal = ({ handleToggle }) => {
 			className="bg-accent p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Edit Role</h1>
+			<h1 className="text-2xl font-bold mb-1 pt-1">Edit Role</h1>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
+				<p className="text-red-600 text-xs my-1">{error?.data?.Message}</p>
 				<div className="mb-2">
 					<input
 						type="text"

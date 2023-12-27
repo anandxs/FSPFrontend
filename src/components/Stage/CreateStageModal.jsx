@@ -10,7 +10,7 @@ const CreateStageModal = ({ handleToggle }) => {
 
 	const { projectId } = useContext(StageContext);
 
-	const [createStageAsync, { isLoading }] = useCreateStageMutation();
+	const [createStageAsync, { isLoading, error }] = useCreateStageMutation();
 
 	const handleStage = ({ stageName }) => {
 		const body = {
@@ -31,17 +31,20 @@ const CreateStageModal = ({ handleToggle }) => {
 			className="bg-accent p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Create Stage</h1>
+			<h1 className="text-2xl font-bold mb-2 pt-1">Create Stage</h1>
 			<form noValidate onSubmit={handleSubmit(handleStage)}>
-				<p className="text-red-600 text-xs">{errors?.stageName?.message}</p>
 				<input
 					type="text"
-					className="block mb-2 w-full"
+					className="block mb-1 w-full"
 					placeholder="Enter stage name"
 					{...register("stageName", {
 						required: "Stage name is required.",
 					})}
 				/>
+				<p className="text-red-600 text-xs my-1">
+					{errors?.stageName?.message}
+				</p>
+				<p className="text-red-600 text-xs my-1">{error?.data?.Message}</p>
 				<button
 					type="submit"
 					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded w-full disabled:opacity-50"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiSlice } from "../../../app/api/apiSlice";
+import { useDispatch } from "react-redux";
 
 const AddAttachmentModal = ({ handleToggle }) => {
 	const { projectId, taskId } = useParams();
@@ -8,6 +9,7 @@ const AddAttachmentModal = ({ handleToggle }) => {
 	const [file, setFile] = useState();
 	const [error, setError] = useState();
 
+	const dispatch = useDispatch();
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -31,7 +33,7 @@ const AddAttachmentModal = ({ handleToggle }) => {
 			.then((response) => {
 				if (response.status == 204) {
 					handleToggle();
-					apiSlice.util.invalidateTags(["Attachments"]);
+					dispatch(apiSlice.util.invalidateTags(["Attachments"]));
 				} else if (response.status == 400) {
 					setError("Duplicate name. Rename and try again.");
 				}

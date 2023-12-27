@@ -10,7 +10,7 @@ const EditGroupModal = ({ handleToggle }) => {
 
 	const { projectId, stageId, init } = useContext(StageContext);
 
-	const [updateStageAsync] = useUpdateStageMutation();
+	const [updateStageAsync, { error }] = useUpdateStageMutation();
 
 	useEffect(() => {
 		setValue("stageName", init);
@@ -40,8 +40,9 @@ const EditGroupModal = ({ handleToggle }) => {
 			className="bg-accent p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Edit Stage</h1>
+			<h1 className="text-2xl font-bold mb-1 pt-1">Edit Stage</h1>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
+				<p className="text-red-600 text-xs my-1">{error?.data?.Message}</p>
 				<div className="mb-2">
 					<input
 						type="text"
