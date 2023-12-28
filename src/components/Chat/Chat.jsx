@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -10,6 +10,8 @@ const Chat = () => {
 	const [message, setMessage] = useState("");
 	const { projectId } = useParams();
 	const roomId = projectId.toUpperCase();
+
+	const divRef = useRef(null);
 
 	useEffect(() => {
 		const hubConnection = new HubConnectionBuilder()
@@ -24,20 +26,24 @@ const Chat = () => {
 				hubConnection
 					.invoke("JoinGroup", roomId)
 					.then((data) => {
-						console.log(data);
-						setMessages([
-							...data.map((entity) => {
-								return {
-									id: entity?.id,
-									message: entity?.message,
-									sender: {
-										firstName: entity?.sender?.firstName,
-										lastName: entity?.sender?.lastName,
-									},
-									sentAt: entity?.sentAt,
-								};
-							}),
-						]);
+						if (data) {
+							setMessages([
+								...data.map((entity) => {
+									return {
+										id: entity?.id,
+										message: entity?.message,
+										sender: {
+											id: entity?.sender?.id,
+											firstName: entity?.sender?.firstName,
+											lastName: entity?.sender?.lastName,
+										},
+										sentAt: entity?.sentAt,
+									};
+								}),
+							]);
+						} else {
+							setMessage(["x"]);
+						}
 					})
 					.catch((err) => {
 						console.log(err);
@@ -52,23 +58,23 @@ const Chat = () => {
 		};
 	}, []);
 
+	const { id: currId, name } = useSelector(selectCurrentUser);
+
 	useEffect(() => {
 		if (connection) {
 			connection.on("groupMessage", (message) => {
-				console.log(message);
 				setMessages([...messages, message]);
 			});
 		}
 	}, [connection, messages]);
 
-	const { id, name } = useSelector(selectCurrentUser);
 	const sendMessage = () => {
 		if (message.length == 0 || message.length > 500) {
 			return;
 		}
 
 		const sender = {
-			id,
+			id: currId,
 			name,
 		};
 
@@ -77,48 +83,54 @@ const Chat = () => {
 	};
 
 	return (
-		<section className="bg-gray-100 p-4 rounded">
-			<div className="m-4">
-				<ul id="messages" className="list-disc pl-4">
-					{messages?.map(({ id, message, sender, sentAt }) => (
-						<li key={id}>
-							<span>{message}</span>
-							<span>{`${sender?.firstName} ${sender?.lastName}`}</span>
+		<section className="grid-row-12">
+			<div className="row-span-10 h-[79vh] p-4 overflow-auto">
+				<ul id="messages" className="flex flex-col">
+					{messages?.map(({ id, message, sender, sentAt }, index) => (
+						<li
+							key={id}
+							className={`border-2 border-accent mb-0.5 p-1 text-sm w-fit ${
+								currId === sender?.id ? "self-end" : ""
+							}`}
+						>
+							<p className="font-semibold">{`${sender?.firstName} ${sender?.lastName}`}</p>
+							<p>{message}</p>
+							<p className="text-[12px]">
+								Sent at {new Date(sentAt).toLocaleString()}
+							</p>
 						</li>
 					))}
 				</ul>
 			</div>
-			<div className={`fixed bottom-0 left-0 right-0 bg-gray-100 p-4`}>
-				<div className="flex">
-					<input
-						type="text"
-						id="message"
-						placeholder="Write a message..."
-						className="flex-1 mr-2 p-2 border border-gray-300 rounded-lg"
-						onChange={(e) => setMessage(e.target.value)}
-						value={message}
-					/>
-					<button
-						type="submit"
-						className="bg-primary text-white p-1"
-						onClick={sendMessage}
+			<div className="row-span-2 border border-primary bg-accent flex items-stretch p-1 h-8">
+				<input
+					type="text"
+					id="message"
+					placeholder="Write a message..."
+					className="p-0.5 w-full"
+					onChange={(e) => setMessage(e.target.value)}
+					value={message}
+				/>
+				<button
+					type="submit"
+					className="bg-primary p-1 w-12 flex justify-center items-center"
+					onClick={sendMessage}
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						strokeWidth={1.5}
+						stroke="currentColor"
+						className="w-4 h-4"
 					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="w-4 h-4"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-							/>
-						</svg>
-					</button>
-				</div>
+						<path
+							strokeLinecap="round"
+							strokeLinejoin="round"
+							d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+						/>
+					</svg>
+				</button>
 			</div>
 		</section>
 	);
