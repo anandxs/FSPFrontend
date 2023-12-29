@@ -4,6 +4,13 @@ import { logIn, logOut } from "../../features/auth/authSlice";
 const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_BASE_URL,
 	credentials: "include",
+	prepareHeaders: (headers, { getState }) => {
+		const token = getState().auth.accessToken;
+		if (token) {
+			headers.set("Authorization", `Bearer ${token}`);
+		}
+		return headers;
+	},
 });
 
 const baseQueryWithReauth = async (args, api, extraOptions) => {

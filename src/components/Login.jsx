@@ -25,7 +25,13 @@ const Login = () => {
 			.then((authTokens) => {
 				const accessToken = authTokens.accessToken;
 				const refreshToken = authTokens.refreshToken;
-				getUser()
+				// dispatch(
+				// 	logIn({
+				// 		accessToken,
+				// 		refreshToken,
+				// 	})
+				// );
+				getUser({ accessToken })
 					.unwrap()
 					.then(({ id, role, firstName, lastName, email }) => {
 						dispatch(

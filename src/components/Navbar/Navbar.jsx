@@ -12,7 +12,12 @@ const Navbar = () => {
 	const auth = useSelector(selectCurrentUser);
 
 	const handleLogout = () => {
-		logOutUser()
+		const { accessToken, refreshToken } = auth;
+		const body = {
+			accessToken,
+			refreshToken,
+		};
+		logOutUser({ body })
 			.unwrap()
 			.then(() => {
 				dispatch(logOut());

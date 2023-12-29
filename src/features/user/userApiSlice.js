@@ -3,7 +3,12 @@ import { apiSlice } from "../../app/api/apiSlice";
 export const userApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getUserInfo: builder.query({
-			query: () => "/api/profile",
+			query: ({ accessToken }) => ({
+				url: "/api/profile",
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
+			}),
 			providesTags: ["User"],
 		}),
 		updateUserInfo: builder.mutation({

@@ -10,9 +10,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
 			}),
 		}),
 		logOut: builder.mutation({
-			query: () => ({
+			query: ({ body }) => ({
 				url: "/api/authentication",
 				method: "DELETE",
+				body,
 			}),
 		}),
 		login: builder.mutation({
