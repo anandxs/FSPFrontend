@@ -23,7 +23,11 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 			const refreshResult = await baseQuery(
 				{
 					url: "/api/token/refresh",
-					method: "GET",
+					method: "POST",
+					body: {
+						accessToken: state.auth.accessToken,
+						refreshToken: state.auth.refreshToken,
+					},
 				},
 				api,
 				extraOptions
@@ -39,10 +43,10 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 				);
 
 				result = await baseQuery(args, api, extraOptions);
-			} else {
-				api.dispatch(logOut());
-				console.log("refresh token expired");
 			}
+			// else { api.dispatch(logOut());
+			// 	console.log("refresh token expired/blacklisted");
+			// }
 		}
 	}
 

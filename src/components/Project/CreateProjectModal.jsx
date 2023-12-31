@@ -29,7 +29,6 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 				navigate(`/projects/${projectId}/tasks`);
 			})
 			.catch((err) => {
-				console.log("err");
 				if (err.status === 404) {
 					setError(err.data.Message);
 				} else if (err.state === 422) {
