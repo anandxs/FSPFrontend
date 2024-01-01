@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { HubConnectionBuilder } from "@microsoft/signalr";
+import { HttpTransportType, HubConnectionBuilder } from "@microsoft/signalr";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
@@ -13,9 +13,13 @@ const Chat = () => {
 
 	const divRef = useRef(null);
 
+	const { accessToken } = useSelector(selectCurrentUser);
+
 	useEffect(() => {
 		const hubConnection = new HubConnectionBuilder()
-			.withUrl(`${import.meta.env.VITE_BASE_URL}/chat`)
+			.withUrl(`${import.meta.env.VITE_BASE_URL}/chat`, {
+				accessTokenFactory: () => accessToken,
+			})
 			.build();
 
 		setConnection(hubConnection);
