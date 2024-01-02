@@ -110,11 +110,15 @@ const Project = () => {
 
 	return (
 		<ProjectContext.Provider value={{ ...data }}>
-			<div className="flex flex-col h-screen">
+			<div
+				className={`flex flex-col h-screen ${
+					toggle ? "overflow-hidden sm:overflow-auto" : ""
+				}`}
+			>
 				<Navbar />
 				<div className="flex">
 					{toggle && <Sidebar sections={sections} close={setToggle} />}
-					<div className="flex-1 w-full ">
+					<div className="flex-1 w-full">
 						<div className="bg-primary flex gap-5 items-center p-1 pl-2">
 							<SideBarToggle toggle={toggle} setToggle={setToggle} />
 							<h1 className="font-semibold text-lg text-white">

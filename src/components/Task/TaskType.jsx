@@ -10,14 +10,14 @@ const TaskType = ({ type }) => {
 	};
 
 	return (
-		<div className="col-span-5 flex justify-between items-center mb-3">
+		<div className="flex justify-between sm:justify-start sm:gap-2 items-center text-xs mb-3 col-span-12 sm:col-span-6">
 			<p>
 				<span className="font-semibold">Task Type : </span>
 				{type?.name}
 			</p>
 			<button
 				onClick={handleToggle}
-				className="bg-primary text-white text-sm px-2 py-1 rounded"
+				className="bg-primary text-white sm:text-sm px-2 py-1 rounded"
 			>
 				Change
 			</button>
