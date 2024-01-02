@@ -37,7 +37,7 @@ const Types = () => {
 			name: "Option",
 			cell: (row) => {
 				return (
-					<div className="flex gap-2">
+					<div className="flex gap-2 items-center">
 						<TypeContext.Provider
 							value={{
 								projectId,
@@ -56,8 +56,10 @@ const Types = () => {
 
 	return (
 		<div className="m-2 p-2">
-			<div className="flex justify-between items-center">
-				<h2 className="text-xl font-bold hover:underline mb-3">Task Types</h2>
+			<div className="flex gap-2 justify-between items-center mb-3">
+				<h2 className="text-xs sm:text-lg font-bold hover:underline">
+					Task Types
+				</h2>
 				<TypeContext.Provider value={{ projectId }}>
 					<CreateType />
 				</TypeContext.Provider>

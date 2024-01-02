@@ -108,11 +108,11 @@ const Project = () => {
 
 	return (
 		<ProjectContext.Provider value={{ ...data }}>
-			<div className="flex flex-col h-full">
+			<div className="flex flex-col h-screen">
 				<Navbar />
-				<div className="grid grid-cols-12 flex-1">
+				<div className="flex">
 					<Sidebar sections={sections} />
-					<div className="col-span-10">
+					<div className="flex-1 w-full">
 						<h1 className="underline px-3 py-1 font-bold text-lg bg-primary text-white">
 							{projectName ? projectName : "Loading..."}
 						</h1>

@@ -40,8 +40,10 @@ const Members = () => {
 
 	return (
 		<div className="m-2 p-2">
-			<div className="mb-2 flex justify-between">
-				<h1 className="text-xl font-bold hover:underline">Members</h1>
+			<div className="flex gap-2 justify-between items-center mb-3">
+				<h1 className="text-xs sm:text-lg font-bold hover:underline">
+					Members
+				</h1>
 				<AddMember />
 			</div>
 			<DataTable

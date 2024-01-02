@@ -35,7 +35,7 @@ const Stages = () => {
 			name: "Option",
 			cell: (row) => {
 				return (
-					<div className="flex gap-2">
+					<div className="flex gap-2 items-center">
 						<StageContext.Provider
 							value={{
 								projectId,
@@ -54,8 +54,8 @@ const Stages = () => {
 
 	return (
 		<div className="m-2 p-2">
-			<div className="flex justify-between items-center">
-				<h2 className="text-xl font-bold hover:underline mb-3">
+			<div className="flex justify-between items-center mb-3">
+				<h2 className="text-xs sm:text-lg font-bold hover:underline">
 					Project Stages
 				</h2>
 				<StageContext.Provider value={{ projectId }}>

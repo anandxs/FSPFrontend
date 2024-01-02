@@ -12,7 +12,7 @@ const CreateTaskType = () => {
 	return (
 		<>
 			<button
-				className="bg-primary text-white px-3 py-0.5 text-sm rounded-sm"
+				className="bg-primary text-white p-1 text-xs sm:text-md font-semibold rounded-sm"
 				onClick={handleToggle}
 			>
 				Create A Task Type

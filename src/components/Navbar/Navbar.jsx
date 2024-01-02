@@ -28,9 +28,11 @@ const Navbar = () => {
 			});
 	};
 
-	return isLoading ? (
-		<p>Loading...</p>
-	) : (
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	return (
 		<nav className="bg-accent border-b-2 border-b-shadow">
 			<div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-2">
 				<Link

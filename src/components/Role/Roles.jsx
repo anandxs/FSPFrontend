@@ -36,7 +36,7 @@ const Roles = () => {
 			cell: (row) => {
 				return (
 					row?.name.toUpperCase() !== "ADMIN" && (
-						<div className="flex gap-2">
+						<div className="flex gap-2 items-center">
 							<RoleContext.Provider
 								value={{
 									projectId,
@@ -56,8 +56,8 @@ const Roles = () => {
 
 	return (
 		<div className="m-2 p-2">
-			<div className="flex justify-between items-center">
-				<h2 className="text-xl font-bold hover:underline mb-3">
+			<div className="flex justify-between items-center mb-3">
+				<h2 className="text-xs sm:text-lg font-bold hover:underline">
 					Project Roles
 				</h2>
 				<RoleContext.Provider value={{ projectId }}>
