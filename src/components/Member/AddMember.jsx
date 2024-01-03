@@ -13,7 +13,7 @@ const AddMember = () => {
 		<>
 			<button
 				type="button"
-				className="bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+				className="bg-primary text-white p-1 text-xs sm:text-md font-semibold rounded-sm"
 				onClick={handleCreateToggle}
 			>
 				Add Member

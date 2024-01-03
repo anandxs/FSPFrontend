@@ -29,24 +29,24 @@ const CreateTaskTypeModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 pt-1">Create Task Type</h1>
+			<h1 className="text-xl font-bold mb-2">Create Task Type</h1>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<input
 					type="text"
-					className="block w-full"
+					className="block w-full text-sm"
 					placeholder="Enter task type"
 					{...register("typeName", {
 						required: "Type name is required.",
 					})}
 				/>
-				<p className="text-red-600 text-xs my-1">{errors?.typeName?.message}</p>
-				<p className="text-red-600 text-xs my-1">{error?.data?.Message}</p>
+				<p className="text-red-600 text-xs mb-1">{errors?.typeName?.message}</p>
+				<p className="text-red-600 text-xs mb-1">{error?.data?.Message}</p>
 				<button
 					type="submit"
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded w-full disabled:opacity-50"
+					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full disabled:opacity-50"
 					disabled={isLoading}
 				>
 					Create

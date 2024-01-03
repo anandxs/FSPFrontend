@@ -19,15 +19,17 @@ const Comments = () => {
 	let comments;
 	if (isSuccess) {
 		if (data.length === 0) {
-			comments = <p>No comments</p>;
+			comments = <p className="text-xs">No comments</p>;
 		} else {
 			comments = data.map(({ commentId, comment, commenter }) => (
 				<div
 					key={commentId}
-					className="flex justify-between border border-black my-0.5 px-1"
+					className="border border-black text-sm mb-1 flex justify-between items-center"
 				>
 					<p>{comment}</p>
-					<p>- {`${commenter?.firstName} ${commenter?.lastName}`}</p>
+					<p className="text-right text-xs">
+						- {`${commenter?.firstName} ${commenter?.lastName}`}
+					</p>
 				</div>
 			));
 		}
@@ -50,11 +52,16 @@ const Comments = () => {
 			});
 	};
 
+	if (isLoading) {
+		return <p>Loading..</p>;
+	}
+
 	return (
-		<div className="col-span-12 mb-3">
-			<h2 className="text-xl font-bold hover:underline w-fit">Comments</h2>
+		<div className="">
+			<h2 className="text-md underline font-semibold mb-2">Comments</h2>
 			<div className="p-2 bg-blue-300 rounded flex flex-col">
-				{isLoading ? <p>Loading...</p> : comments}
+				{comments}
+				<p className="text-xs text-red-600">{errors?.comment?.message}</p>
 				<form
 					className="flex gap-1"
 					onSubmit={handleSubmit(onSubmit)}
@@ -62,7 +69,7 @@ const Comments = () => {
 				>
 					<input
 						type="text"
-						className="block w-full"
+						className="block w-full text-xs p-1"
 						placeholder="Add a comment..."
 						{...register("comment", {
 							required: "Cannot send empty comment.",
@@ -70,7 +77,7 @@ const Comments = () => {
 					/>
 					<button
 						type="submit"
-						className="block w-fit px-2 bg-primary text-white text-sm"
+						className="block w-fit bg-primary text-white text-xs p-1"
 					>
 						Submit
 					</button>

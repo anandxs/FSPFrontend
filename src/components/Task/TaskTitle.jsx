@@ -11,7 +11,9 @@ const TaskTitle = ({ title }) => {
 
 	return (
 		<>
-			<h1 className="text-2xl font-bold hover:underline w-fit">{title}</h1>
+			<h1 className="text-xl sm:text-2xl font-bold hover:underline w-fit">
+				{title}
+			</h1>
 			<button onClick={handleToggle} className="bg-primary text-white p-1">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

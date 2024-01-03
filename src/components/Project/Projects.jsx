@@ -32,14 +32,12 @@ const Projects = () => {
 
 	return (
 		<section>
-			<div className="w-full mt-3 pt-3 sm:pl-36 md:pl-48">
+			<div className="w-5/6 sm:w-3/4 mx-auto mt-5 mb-3">
 				<CreateProjectCard message={"Start New Project"} />
 			</div>
-			<div className="mt-10 pt-3 sm:px-36 md:px-48">
-				<h2 className="text-2xl font-bold mb-3">Your Projects</h2>
-				<div className="flex flex-wrap justify-center sm:justify-start gap-5">
-					{content}
-				</div>
+			<div className="w-5/6 sm:w-3/4 mx-auto mt-5">
+				<h2 className="text-md sm:text-xl font-bold mb-1">Your Projects</h2>
+				<div className="flex gap-2 flex-wrap">{content}</div>
 			</div>
 		</section>
 	);

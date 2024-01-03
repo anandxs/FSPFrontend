@@ -7,6 +7,8 @@ import {
 } from "../../../features/attachment/attachmentApiSlice";
 import { useParams } from "react-router-dom";
 import { saveAs } from "file-saver";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../../features/auth/authSlice";
 
 const AddAttachment = () => {
 	const { projectId, taskId } = useParams();
@@ -36,46 +38,7 @@ const AddAttachment = () => {
 			});
 	};
 
-	let temp;
-	if (isSuccess) {
-		if (attachments.length === 0) {
-			temp = <p>No attachments</p>;
-		} else {
-			temp = attachments.map(({ attachmentId, fileName, createdAt }) => (
-				<li key={attachmentId} className="flex gap-2">
-					<span
-						onClick={() => downloadAttachment({ attachmentId, fileName })}
-						className="underline"
-					>
-						{fileName}
-					</span>
-					{/* <span>{createdAt}</span> */}
-					<button
-						className="bg-orange-500 text-white text-sm rounded-sm px-1 py-0.5"
-						onClick={() => handleDelete(attachmentId)}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							stroke-width="1.5"
-							stroke="currentColor"
-							class="w-4 h-4"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-							/>
-						</svg>
-					</button>
-				</li>
-			));
-		}
-	} else if (isError) {
-		temp = <p>Something went wrong.</p>;
-		console.log(error);
-	}
+	const { accessToken } = useSelector(selectCurrentUser);
 
 	const downloadAttachment = ({ attachmentId, fileName }) => {
 		fetch(
@@ -85,6 +48,9 @@ const AddAttachment = () => {
 			{
 				method: "GET",
 				credentials: "include",
+				header: {
+					Authorization: `Bearer ${accessToken}`,
+				},
 			}
 		)
 			.then((response) => {
@@ -104,25 +70,78 @@ const AddAttachment = () => {
 		setToggle(!toggle);
 	};
 
-	return (
-		<div className="col-span-12 mb-3">
-			<div className="my-5">
-				<div className="flex gap-2">
-					<h2 className="text-xl font-bold">Attachments</h2>
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
 
-					<button
-						onClick={handleToggle}
-						className="bg-primary text-white text-sm px-2 py-1 rounded"
+	if (isError) {
+		console.log(error);
+		return <p>Something went wrong.</p>;
+	}
+
+	let temp;
+	if (isSuccess) {
+		if (attachments.length === 0) {
+			temp = <p className="text-xs sm:text-sm">No attachments</p>;
+		} else {
+			temp = attachments.map(({ attachmentId, fileName, createdAt }) => (
+				<li
+					key={attachmentId}
+					className="flex gap-2 justify-between items-center text-xs mb-1"
+				>
+					<span
+						onClick={() => downloadAttachment({ attachmentId, fileName })}
+						className="underline hover:cursor-pointer"
 					>
-						Add
+						{fileName}
+					</span>
+					<span>{createdAt}</span>
+					<button
+						className="bg-orange-500 text-white text-sm rounded-sm p-1"
+						onClick={() => handleDelete(attachmentId)}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="w-4 h-4"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+							/>
+						</svg>
 					</button>
-				</div>
+				</li>
+			));
+		}
+	}
 
-				<div>
-					{isLoading && <p>Loading...</p>}
-					{temp}
-				</div>
+	return (
+		<div className="mb-3">
+			<div className="flex gap-2 items-center">
+				<h2 className="underline font-semibold text-md mb-2">Attachments</h2>
+
+				<button onClick={handleToggle} className="bg-primary text-white p-1">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+						className="w-3 h-3"
+					>
+						<path
+							fillRule="evenodd"
+							d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+							clipRule="evenodd"
+						/>
+					</svg>
+				</button>
 			</div>
+
+			<div>{temp}</div>
 
 			{toggle && (
 				<Modal action={handleToggle}>

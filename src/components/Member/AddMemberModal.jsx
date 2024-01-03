@@ -57,44 +57,44 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Add Member</h1>
-			<p className="text-red-600">{error?.data?.Message}</p>
+			<h1 className="text-xl font-bold mb-2">Add Member</h1>
+			<p className="text-red-600 text-xs mb-1">{error?.data?.Message}</p>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="my-2">
+				<div className="mb-1">
 					<label htmlFor="email" className="font-semibold text-base block">
 						Email
 					</label>
 					<input
 						type="email"
 						id="email"
-						className="block w-full"
+						className="block w-full text-sm"
 						{...register("email", {
 							required: "Email is required.",
 						})}
 					/>
-					<p className="text-red-600">{errors?.email?.message}</p>
+					<p className="text-red-600 text-xs mb-1">{errors?.email?.message}</p>
 				</div>
-				<div className="my-2">
+				<div className="mb-1">
 					<label htmlFor="role" className="font-semibold text-base block">
 						Role
 					</label>
 					<select
 						id="role"
-						className="w-full"
+						className="block w-full text-sm"
 						{...register("roleId", {
 							required: "Role is a required field.",
 						})}
 					>
 						{roleOptions}
 					</select>
-					<p className="text-red-600">{errors?.roleId?.message}</p>
+					<p className="text-red-600 text-xs mb-1">{errors?.roleId?.message}</p>
 				</div>
 				<button
 					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-1 rounded w-full"
+					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full"
 				>
 					Invite
 				</button>

@@ -34,24 +34,24 @@ const CreateRoleModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-1 pt-1">Create Role</h1>
+			<h1 className="text-xl font-bold mb-2">Create Role</h1>
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
-				<p className="text-red-600 text-xs my-1">{error}</p>
 				<input
 					type="text"
-					className="block w-full"
+					className="block w-full text-sm"
 					placeholder="Enter role name"
 					{...register("role", {
 						required: "Role name is required.",
 					})}
 				/>
-				<p className="text-red-600 text-xs my-1">{errors?.role?.message}</p>
+				<p className="text-red-600 text-xs mb-1">{errors?.role?.message}</p>
+				<p className="text-red-600 text-xs mb-1">{error}</p>
 				<button
 					type="submit"
-					className="bg-primary text-white text-sm text-bold px-3 py-1 rounded w-full disabled:opacity-50"
+					className="bg-primary text-white text-sm font-semibold p-1 rounded-sm w-full disabled:opacity-50"
 					disabled={isLoading}
 				>
 					Create

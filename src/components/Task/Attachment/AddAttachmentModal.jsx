@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiSlice } from "../../../app/api/apiSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentUser } from "../../../features/auth/authSlice";
 
 const AddAttachmentModal = ({ handleToggle }) => {
 	const { projectId, taskId } = useParams();
-
 	const [file, setFile] = useState();
 	const [error, setError] = useState();
-
+	const { accessToken } = useSelector(selectCurrentUser);
 	const dispatch = useDispatch();
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -28,6 +29,9 @@ const AddAttachmentModal = ({ handleToggle }) => {
 				method: "POST",
 				body: formData,
 				credentials: "include",
+				headers: {
+					Authorization: `Bearer ${accessToken}`,
+				},
 			}
 		)
 			.then((response) => {
@@ -50,19 +54,16 @@ const AddAttachmentModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="bg-accent p-2 max-w-screen-sm"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Add Attachment</h1>
+			<h1 className="text-lg font-semibold mb-2">Add Attachment</h1>
 			<form onSubmit={handleSubmit} encType="multipart/form-data">
-				<div className="mb-3">
-					<input type="file" onChange={updateFile} />
-					<p className="text-red-600">{error && error}</p>
+				<div className="">
+					<input type="file" onChange={updateFile} className="text-xs" />
+					<p className="text-xs text-red-600">{error && error}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-0.5 rounded w-full"
-				>
+				<button type="submit" className="bg-primary text-white text-xs p-1">
 					Upload
 				</button>
 			</form>

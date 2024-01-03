@@ -14,7 +14,7 @@ const TaskDueDate = ({ dueDate }) => {
 		dueDate && new Date(dueDate).toLocaleDateString() === new Date(Date.now());
 
 	return (
-		<div className="col-span-5 flex justify-between items-center mb-3">
+		<div className="flex justify-between items-center mb-3">
 			<p>
 				<span className="font-semibold">Due Date : </span>
 				<span

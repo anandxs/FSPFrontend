@@ -27,9 +27,11 @@ const TasksPerStage = () => {
 		columnData = data;
 	}
 
-	return isLoading ? (
-		<p>Loading...</p>
-	) : isError ? (
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
+
+	return isError ? (
 		<p>Something went wrong</p>
 	) : (
 		<ChartComponent
