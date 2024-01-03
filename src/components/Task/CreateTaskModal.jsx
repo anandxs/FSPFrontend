@@ -26,7 +26,7 @@ const CreateTaskModal = ({ handleToggle }) => {
 	let typeOptions;
 	if (typesIsSuccess) {
 		typeOptions = types.map((type) => (
-			<option key={type?.typeId} value={type?.typeId}>
+			<option key={type?.typeId} value={type?.typeId} className="text-xs">
 				{type?.name}
 			</option>
 		));
@@ -44,7 +44,7 @@ const CreateTaskModal = ({ handleToggle }) => {
 	let stagesOptions;
 	if (stagesIsSuccess) {
 		stagesOptions = stages.map((stage) => (
-			<option key={stage?.stageId} value={stage?.stageId}>
+			<option key={stage?.stageId} value={stage?.stageId} className="text-xs">
 				{stage?.name}
 			</option>
 		));
@@ -75,13 +75,13 @@ const CreateTaskModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Create Task</h1>
+			<h1 className="text-xl font-bold">Create Task</h1>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="my-2">
-					<label htmlFor="title" className="font-semibold text-md block">
+				<div className="mb-3">
+					<label htmlFor="title" className="text-sm font-semibold">
 						Title
 					</label>
 					<input
@@ -95,65 +95,58 @@ const CreateTaskModal = ({ handleToggle }) => {
 					<p className="text-red-600">{errors?.title?.message}</p>
 				</div>
 				<div className="mb-3">
-					<label htmlFor="type" className="font-semibold text-md block">
+					<label htmlFor="type" className="text-sm font-semibold">
 						Type
 					</label>
 					<select
 						id="type"
-						className="block w-full text-xs p-1"
+						className="block w-full text-xs"
 						{...register("typeId", {
 							required: "Select a type",
 						})}
 					>
-						<option value="">Select a task type</option>
+						<option value="" className="text-xs">
+							Select a task type
+						</option>
 						{typesIsLoading && <option>Loading</option>}
 						{typeOptions}
 					</select>
-					<p className="text-red-600">{errors?.typeId?.message}</p>
+					<p className="">{errors?.typeId?.message}</p>
 				</div>
 				<div className="mb-3">
-					<label htmlFor="stage" className="font-semibold text-md block">
+					<label htmlFor="stage" className="text-sm font-semibold">
 						Stage
 					</label>
 					<select
 						id="stage"
-						className="block w-full text-xs p-1"
+						className="block w-full text-xs"
 						{...register("stageId", {
 							required: "Select a stage",
 						})}
 					>
-						<option value="">Select a stage</option>
+						<option value="" className="text-xs">
+							Select a stage
+						</option>
 						{stagesIsLoading && <option>Loading</option>}
 						{stagesOptions}
 					</select>
-					<p className="text-red-600">{errors?.stageId?.message}</p>
+					<p className="">{errors?.stageId?.message}</p>
 				</div>
 				<div className="mb-3">
-					<label htmlFor="description" className="font-semibold text-md block">
+					<label htmlFor="description" className="text-sm font-semibold">
 						Description
 					</label>
 					<textarea
 						id="description"
 						cols="30"
 						rows="3"
-						className="w-full"
+						className="block w-full text-sm"
 						{...register("description")}
 					></textarea>
 				</div>
-				<div className="mb-3">
-					<label htmlFor="due-date" className="font-semibold text-md block">
-						Due date (optional)
-					</label>
-					<input
-						type="date"
-						id="due-date"
-						className="text-sm"
-						{...register("dueDate")}
-					/>
-				</div>
 				<button
 					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-0.5 rounded w-full"
+					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full"
 				>
 					Create
 				</button>

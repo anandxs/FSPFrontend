@@ -1,15 +1,10 @@
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
-import { useEffect, useState } from "react";
 
 const Sidebar = ({ sections, close }) => {
-	const [divHeight, setDivHeight] = useState("h-screen");
-
-	useEffect(() => {}, []);
-
 	return (
 		<div
-			className={`fixed sm:static bg-blue-300 w-screen z-10 sidebar ${divHeight}`}
+			className={`fixed sm:static bg-blue-300 w-screen h-screen z-10 sidebar`}
 		>
 			<button
 				onClick={() => close((state) => !state)}
