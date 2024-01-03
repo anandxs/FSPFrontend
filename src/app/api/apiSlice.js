@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logIn, logOut } from "../../features/auth/authSlice";
+import { logOut, updateToken } from "../../features/auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_BASE_URL,
@@ -35,7 +35,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 			if (refreshResult?.data) {
 				api.dispatch(
-					logIn({
+					updateToken({
 						...state.auth,
 						accessToken: refreshResult.data.accessToken,
 						refreshToken: refreshResult.data.refreshToken,
@@ -43,10 +43,10 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 				);
 
 				result = await baseQuery(args, api, extraOptions);
+			} else {
+				api.dispatch(logOut());
+				console.log("refresh token expired/blacklisted");
 			}
-			// else { api.dispatch(logOut());
-			// 	console.log("refresh token expired/blacklisted");
-			// }
 		}
 	}
 
