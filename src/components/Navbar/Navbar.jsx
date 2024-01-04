@@ -45,7 +45,7 @@ const Navbar = () => {
 						alt="Logo"
 					/>
 					<span className="self-center text-xl font-semibold whitespace-nowrap text-black">
-						FSP
+						Sync
 					</span>
 				</Link>
 				<div className="flex items-center space-x-6 rtl:space-x-reverse">

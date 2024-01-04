@@ -1,3 +1,4 @@
+import { Suspense, lazy } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ALL_AUTHENTICATED, SUPERADMIN, USER } from "./utils/constants";
@@ -9,88 +10,98 @@ import Register from "./pages/Register";
 import ForgotPassword from "./pages/ForgotPassword";
 import EmailVerified from "./pages/EmailVerified";
 import ResetPassword from "./pages/ResetPassword";
-import Home from "./pages/Home";
-import Admin from "./pages/Admin";
 import AccessDenied from "./components/AccessDenied";
 import NotFound from "./components/NotFound";
-import Profile from "./pages/Profile";
-import UpdateProfile from "./components/Profile/UpdateProfile";
-import UpdatePassword from "./components/Profile/UpdatePassword";
-import Project from "./pages/Project";
-import Stages from "./components/Stage/Stages";
-import TaskTypes from "./components/Type/Types";
-import Roles from "./components/Role/Roles";
-import Members from "./components/Member/Members";
-import Member from "./components/Member/Member";
-import ProjectSettings from "./components/Project/ProjectSettings";
-import Tasks from "./components/Task/Tasks";
-import Task from "./components/Task/Task";
-import Dashboard from "./components/Dashboard/Dashboard";
 import ProjectAdminOnly from "./route/ProjectAdminOnly";
 import AcceptInvite from "./components/AcceptInvite";
-import Chat from "./components/Chat/Chat";
+const LazyHome = lazy(() => import("./pages/Home"));
+const LazyAdmin = lazy(() => import("./pages/Admin"));
+const LazyProfile = lazy(() => import("./pages/Profile"));
+const LazyUpdateProfile = lazy(() =>
+	import("./components/Profile/UpdateProfile")
+);
+const LazyUpdatePassword = lazy(() =>
+	import("./components/Profile/UpdatePassword")
+);
+const LazyProject = lazy(() => import("./pages/Project"));
+const LazyStages = lazy(() => import("./components/Stage/Stages"));
+const LazyTaskTypes = lazy(() => import("./components/Type/Types"));
+const LazyRoles = lazy(() => import("./components/Role/Roles"));
+const LazyMembers = lazy(() => import("./components/Member/Members"));
+const LazyMember = lazy(() => import("./components/Member/Member"));
+const LazyProjectSettings = lazy(() =>
+	import("./components/Project/ProjectSettings")
+);
+const LazyTasks = lazy(() => import("./components/Task/Tasks"));
+const LazyTask = lazy(() => import("./components/Task/Task"));
+const LazyDashboard = lazy(() => import("./components/Dashboard/Dashboard"));
+const LazyChat = lazy(() => import("./components/Chat/Chat"));
 
 const App = () => {
 	return (
 		<>
 			<ToastContainer theme="colored" />
 
-			<Routes>
-				<Route element={<UnAuthorizedOnly />}>
-					<Route path="/login" element={<Login />} />
-					<Route path="/register" element={<Register />} />
-					<Route path="/forgotpassword" element={<ForgotPassword />} />
-					<Route path="/verifyemail" element={<EmailVerified />} />
-					<Route path="/resetpassword" element={<ResetPassword />} />
-				</Route>
-
-				<Route element={<AuthorizedOnly allowedRoles={[USER]} />}>
-					<Route path="/" element={<Home />} />
-
-					<Route path="/acceptinvite" element={<AcceptInvite />} />
-
-					<Route path="/profile" element={<Profile />}>
-						<Route path="details" element={<UpdateProfile />} />
-						<Route path="passwordchange" element={<UpdatePassword />} />
+			<Suspense fallback="Loading...">
+				<Routes>
+					<Route element={<UnAuthorizedOnly />}>
+						<Route path="/login" element={<Login />} />
+						<Route path="/register" element={<Register />} />
+						<Route path="/forgotpassword" element={<ForgotPassword />} />
+						<Route path="/verifyemail" element={<EmailVerified />} />
+						<Route path="/resetpassword" element={<ResetPassword />} />
 					</Route>
 
-					<Route path="/projects">
-						<Route path=":projectId" element={<Project />}>
-							<Route path="tasks">
-								<Route index element={<Tasks />} />
-								<Route path=":taskId" element={<Task />} />
-							</Route>
-							<Route path="settings" element={<ProjectSettings />} />
-							<Route path="chat" element={<Chat />} />
+					<Route element={<AuthorizedOnly allowedRoles={[USER]} />}>
+						<Route path="/" element={<LazyHome />} />
 
-							<Route element={<ProjectAdminOnly />}>
-								<Route path="dashboard" element={<Dashboard />} />
-								<Route path="stages" element={<Stages />} />
-								<Route path="types" element={<TaskTypes />} />
-								<Route path="roles" element={<Roles />} />
-								<Route path="members">
-									<Route index element={<Members />} />
-									<Route path=":memberId" element={<Member />} />
-								</Route>
-							</Route>
+						<Route path="/acceptinvite" element={<AcceptInvite />} />
 
-							<Route path="*" element={<NotFound />} />
+						<Route path="/profile" element={<LazyProfile />}>
+							<Route path="details" element={<LazyUpdateProfile />} />
+							<Route path="passwordchange" element={<LazyUpdatePassword />} />
 						</Route>
 
-						<Route path="*" element={<Navigate to="/" />} />
+						<Route path="/projects">
+							<Route path=":projectId" element={<LazyProject />}>
+								<Route path="tasks">
+									<Route index element={<LazyTasks />} />
+									<Route path=":taskId" element={<LazyTask />} />
+								</Route>
+								<Route path="settings" element={<LazyProjectSettings />} />
+								<Route path="chat" element={<LazyChat />} />
+
+								<Route element={<ProjectAdminOnly />}>
+									<Route path="dashboard" element={<LazyDashboard />} />
+									<Route path="stages" element={<LazyStages />} />
+									<Route path="types" element={<LazyTaskTypes />} />
+									<Route path="roles" element={<LazyRoles />} />
+									<Route path="members">
+										<Route index element={<LazyMembers />} />
+										<Route path=":memberId" element={<LazyMember />} />
+									</Route>
+								</Route>
+
+								<Route path="*" element={<NotFound />} />
+							</Route>
+
+							<Route path="*" element={<Navigate to="/" />} />
+						</Route>
 					</Route>
-				</Route>
 
-				<Route element={<AuthorizedOnly allowedRoles={[SUPERADMIN]} />}>
-					<Route path="/admin" element={<Admin />} />
-				</Route>
+					<Route element={<AuthorizedOnly allowedRoles={[SUPERADMIN]} />}>
+						<Route path="/admin" element={<LazyAdmin />} />
+					</Route>
 
-				<Route element={<AuthorizedOnly allowedRoles={[ALL_AUTHENTICATED]} />}>
-					<Route path="/denied" element={<AccessDenied />} />
-				</Route>
+					<Route
+						element={<AuthorizedOnly allowedRoles={[ALL_AUTHENTICATED]} />}
+					>
+						<Route path="/denied" element={<AccessDenied />} />
+					</Route>
 
-				<Route path="/*" element={<NotFound />} />
-			</Routes>
+					<Route path="/*" element={<NotFound />} />
+				</Routes>
+			</Suspense>
 		</>
 	);
 };
