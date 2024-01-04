@@ -62,10 +62,11 @@ const Navbar = () => {
 					</Link>
 					<button
 						type="button"
-						className="bg-primary text-white font-semibold text-xs px-2 py-2 rounded-md"
+						className="bg-primary text-white font-semibold text-xs px-2 py-2 rounded-md disabled:opacity-50"
 						onClick={handleLogout}
+						disabled={isLoading}
 					>
-						Logout
+						{isLoading ? "Loading..." : "Logout"}
 					</button>
 				</div>
 			</div>

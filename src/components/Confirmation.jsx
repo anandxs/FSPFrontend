@@ -1,17 +1,20 @@
-const Confirmation = ({ success, cancel }) => {
+const Confirmation = ({ isLoading, success, cancel }) => {
 	return (
 		<div
 			className="bg-accent min-w-max w-1/3 p-3"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h2 className="text-center text-2xl font-bold py-1">Are you sure?</h2>
+			<h2 className="text-center text-2xl font-bold py-1 text-black">
+				Are you sure?
+			</h2>
 			<div className="flex justify-around">
 				<button
 					type="button"
-					className="w-2/5 bg-primary text-white text-sm text-bold px-3 py-1 rounded"
+					className="w-2/5 bg-primary text-white text-sm text-bold px-3 py-1 rounded disabled:opacity-50"
 					onClick={success}
+					disabled={isLoading}
 				>
-					Yes
+					{isLoading ? "Loading..." : "Yes"}
 				</button>
 				<button
 					type="button"

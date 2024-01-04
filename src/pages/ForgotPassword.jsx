@@ -5,23 +5,17 @@ import { useForgotPasswordMutation } from "../features/auth/authApiSlice";
 
 const ForgotPassword = () => {
 	const [success, setSuccess] = useState(false);
-
 	const form = useForm();
 	const { register, handleSubmit, formState } = form;
 	const { errors, isSubmitting } = formState;
-
 	const [forgotPassword] = useForgotPasswordMutation();
-
-	const onSubmit = ({ email }) => {
-		console.log(email);
-		forgotPassword(email)
-			.unwrap()
-			.then(() => {
-				setSuccess(true);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const onSubmit = async ({ email }) => {
+		try {
+			await forgotPassword(email).unwrap();
+			setSuccess(true);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return !success ? (
@@ -57,7 +51,7 @@ const ForgotPassword = () => {
 							className="bg-primary text-sm block w-full rounded-sm py-0.5 text-white disabled:opacity-50"
 							disabled={isSubmitting}
 						>
-							Login
+							{isSubmitting ? "Loading..." : "Login"}
 						</button>
 						<Link to="/register" className="block py-1 text-xs hover:underline">
 							Regiser a new account
@@ -67,6 +61,12 @@ const ForgotPassword = () => {
 			</div>
 		</section>
 	) : (
+		<ForgotPasswordRequestSuccess />
+	);
+};
+
+const ForgotPasswordRequestSuccess = () => {
+	return (
 		<section className="flex flex-col justify-center items-center h-full">
 			<p>
 				A link for resetting your password has been sent to your registered

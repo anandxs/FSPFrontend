@@ -14,57 +14,50 @@ const Login = () => {
 	const { register, handleSubmit, formState } = form;
 	const { errors, isSubmitting } = formState;
 
-	const [loginUser] = useLoginMutation();
+	const [loginUser, { isLoading: loginLoading }] = useLoginMutation();
 	const [getUser] = useLazyGetUserInfoQuery();
 	const dispatch = useDispatch();
 
-	const onSubmit = (data) => {
-		const { email, password } = data;
-		loginUser({ email, password })
-			.unwrap()
-			.then((authTokens) => {
-				const accessToken = authTokens.accessToken;
-				const refreshToken = authTokens.refreshToken;
-				// dispatch(
-				// 	logIn({
-				// 		accessToken,
-				// 		refreshToken,
-				// 	})
-				// );
-				getUser({ accessToken })
-					.unwrap()
-					.then(({ id, role, firstName, lastName, email }) => {
-						dispatch(
-							logIn({
-								id,
-								firstName,
-								lastName,
-								role,
-								email,
-								accessToken,
-								refreshToken,
-							})
-						);
+	const onSubmit = async (data) => {
+		try {
+			const authTokens = await loginUser({
+				email: data?.email,
+				password: data?.password,
+			}).unwrap();
+			const accessToken = authTokens.accessToken;
+			const refreshToken = authTokens.refreshToken;
 
-						if (role === "SUPERADMIN") {
-							navigate("/admin");
-						}
-					})
-					.catch((err) => {
-						console.log(err);
-					});
-			})
-			.catch((err) => {
-				if (err.status === 401) {
-					if (err?.data?.Message) {
-						setError(err?.data?.Message);
-					} else {
-						setError("Invalid credentials");
-					}
-				} else if (err.status === 403) setError("You have been blocked");
-				else if (err.status === 500) setError("Internal server error");
-				else setError("Network error");
-			});
+			const { id, role, firstName, lastName, email } = await getUser({
+				accessToken,
+			}).unwrap();
+			dispatch(
+				logIn({
+					id,
+					firstName,
+					lastName,
+					role,
+					email,
+					accessToken,
+					refreshToken,
+				})
+			);
+
+			if (role === "SUPERADMIN") {
+				navigate("/admin");
+			}
+		} catch (err) {
+			console.log(err);
+
+			if (err.status === 401) {
+				if (err?.data?.Message) {
+					setError(err?.data?.Message);
+				} else {
+					setError("Invalid credentials");
+				}
+			} else if (err.status === 403) setError("You have been blocked");
+			else if (err.status === 500) setError("Internal server error");
+			else setError("Network error");
+		}
 	};
 
 	return (
@@ -117,7 +110,7 @@ const Login = () => {
 							className="bg-primary text-sm block w-full rounded-sm py-0.5 text-white disabled:opacity-50"
 							disabled={isSubmitting}
 						>
-							Login
+							{isSubmitting || loginLoading ? "Loading..." : "Login"}
 						</button>
 						<Link
 							to="/forgotpassword"

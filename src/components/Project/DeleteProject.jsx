@@ -6,22 +6,17 @@ import Modal from "../Modal/Modal";
 
 const DeleteProject = () => {
 	const { projectId } = useParams();
-
 	const [deleteToggle, setDeleteToggle] = useState(false);
-
 	const navigate = useNavigate();
+	const [deleteProject, { isLoading }] = useDeleteProjectMutation();
 
-	const [deleteProject] = useDeleteProjectMutation();
-
-	const handleDelete = () => {
-		deleteProject({ projectId })
-			.unwrap()
-			.then(() => {
-				navigate("/");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const handleDelete = async () => {
+		try {
+			await deleteProject({ projectId }).unwrap();
+			navigate("/");
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const handleDeleteToggle = () => {
@@ -29,19 +24,21 @@ const DeleteProject = () => {
 	};
 
 	return (
-		<>
-			<button
-				className="bg-orange-500 text-white text-sm text-bold px-3 py-1 rounded w-32"
-				onClick={handleDeleteToggle}
-			>
-				Delete
-			</button>
+		<button
+			className="bg-orange-500 text-white text-sm text-bold px-3 py-1 rounded w-32"
+			onClick={handleDeleteToggle}
+		>
+			Delete
 			{deleteToggle && (
 				<Modal action={handleDeleteToggle}>
-					<Confirmation success={handleDelete} cancel={handleDeleteToggle} />
+					<Confirmation
+						isLoading={isLoading}
+						success={handleDelete}
+						cancel={handleDeleteToggle}
+					/>
 				</Modal>
 			)}
-		</>
+		</button>
 	);
 };
 
