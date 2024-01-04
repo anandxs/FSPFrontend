@@ -81,6 +81,7 @@ const Cards = () => {
 				customStyles={customStyles}
 				pagination
 				onRowClicked={goToTask}
+				pointerOnHover
 				columns={columns}
 				data={data}
 			/>
