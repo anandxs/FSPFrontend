@@ -35,13 +35,14 @@ const ChangeTaskAssigneeModal = ({ handleToggle }) => {
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
 	const onSubmit = ({ assigneeId }) => {
-		const { title, dueDate, description, stage, type } = task;
+		const { title, description, stage, type, hoursSpent, totalHours } = task;
 
 		const body = {
 			assigneeId: assigneeId === "" ? null : assigneeId,
 			title,
 			description,
-			dueDate,
+			totalHours,
+			hoursSpent,
 			stageId: stage?.stageId,
 			typeId: type?.typeId,
 		};

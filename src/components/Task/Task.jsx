@@ -19,6 +19,8 @@ export const TaskContext = createContext({
 	typeId: null,
 	assigneeId: null,
 	dueDate: null,
+	totalHours: null,
+	hoursSpent: null,
 });
 
 const Task = () => {
@@ -59,11 +61,35 @@ const Task = () => {
 					<TaskStage stage={task?.stage} />
 					<TaskType type={task?.type} />
 					<TaskAssignee assignee={task?.assignee} />
+					<TotalHours totalHours={task?.totalHours} />
+					<HoursSpent hoursSpent={task?.hoursSpent} />
 				</div>
 				<TaskDescription description={task?.description} />
 				<AddAttachment />
 				<Comments />
 			</TaskContext.Provider>
+		</div>
+	);
+};
+
+const TotalHours = ({ totalHours }) => {
+	return (
+		<div className="flex justify-between sm:justify-start sm:gap-2 items-center text-xs mb-3 col-span-12 sm:col-span-6">
+			<p>
+				<span className="font-semibold">Total Hours Allotted: </span>
+				<span>{totalHours}</span>
+			</p>
+		</div>
+	);
+};
+
+const HoursSpent = ({ hoursSpent }) => {
+	return (
+		<div className="flex justify-between sm:justify-start sm:gap-2 items-center text-xs mb-3 col-span-12 sm:col-span-6">
+			<p>
+				<span className="font-semibold">Total Hours Spent: </span>
+				<span>{hoursSpent}</span>
+			</p>
 		</div>
 	);
 };

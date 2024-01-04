@@ -127,7 +127,9 @@ const Project = () => {
 								{projectName ? projectName : "Loading..."}
 							</h1>
 						</div>
-						<Outlet />
+						<div className="mx-auto max-w-screen-xl p-2 pt-0">
+							<Outlet />
+						</div>
 					</div>
 				</div>
 			</div>

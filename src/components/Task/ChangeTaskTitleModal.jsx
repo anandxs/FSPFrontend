@@ -20,12 +20,13 @@ const ChangeTaskTitleModal = ({ handleToggle }) => {
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
 	const onSubmit = ({ title }) => {
-		const { dueDate, description, assignee, type, stage } = task;
+		const { description, assignee, type, stage, hoursSpent, totalHours } = task;
 
 		const body = {
 			title,
 			description,
-			dueDate,
+			totalHours,
+			hoursSpent,
 			stageId: stage?.stageId,
 			typeId: type?.typeId,
 			assigneeId: assignee?.id,

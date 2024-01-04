@@ -3,6 +3,8 @@ import { customStyles } from "../../utils/tableStyle";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProjectTasksQuery } from "../../features/task/taskApiSlice";
 import CreateTask from "./CreateTask";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Cards = () => {
 	const { projectId } = useParams();
@@ -45,24 +47,12 @@ const Cards = () => {
 			sortable: true,
 		},
 		{
-			name: "Due Date",
-			selector: (row) => row.dueDate,
-			sortable: true,
-			cell: (row) => {
-				const date =
-					row.dueDate !== null ? new Date(row.dueDate).toDateString() : "- -";
-				return (
-					<p
-						className={`${
-							row.dueDate !== null && new Date(row.dueDate) < Date.now()
-								? "bg-red-600 px-2 py-1 text-white rounded"
-								: ""
-						}`}
-					>
-						{date}
-					</p>
-				);
-			},
+			name: "Total Hours Required",
+			selector: (row) => row.totalHours,
+		},
+		{
+			name: "Hours Spent",
+			selector: (row) => row.hoursSpent,
 		},
 	];
 
@@ -74,15 +64,18 @@ const Cards = () => {
 			type: task.type,
 			stage: task.stage,
 			assignee: task.assignee,
-			dueDate: task.dueDate,
+			totalHours: task.totalHours,
+			hoursSpent: task.hoursSpent,
 		}));
 	}
+
+	const { role } = useSelector(selectCurrentProjectRole);
 
 	return (
 		<div className="m-2 p-2">
 			<div className="flex justify-between mb-3">
 				<h1 className="text-xl font-bold hover:underline">Tasks</h1>
-				<CreateTask />
+				{role?.name === "ADMIN" && <CreateTask />}
 			</div>
 			<DataTable
 				customStyles={customStyles}

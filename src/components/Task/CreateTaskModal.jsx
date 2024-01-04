@@ -54,13 +54,21 @@ const CreateTaskModal = ({ handleToggle }) => {
 
 	const [createTaskAsync] = useCreateTaskMutation();
 
-	const onSubmit = ({ title, description, dueDate, stageId, typeId }) => {
+	const onSubmit = ({
+		title,
+		description,
+		dueDate,
+		stageId,
+		typeId,
+		totalHours,
+	}) => {
 		const body = {
 			title,
 			description,
 			dueDate,
 			stageId,
 			typeId,
+			totalHours,
 		};
 
 		createTaskAsync({ projectId, body })
@@ -92,7 +100,7 @@ const CreateTaskModal = ({ handleToggle }) => {
 							required: "Title is required.",
 						})}
 					/>
-					<p className="text-red-600">{errors?.title?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.title?.message}</p>
 				</div>
 				<div className="mb-3">
 					<label htmlFor="type" className="text-sm font-semibold">
@@ -111,7 +119,7 @@ const CreateTaskModal = ({ handleToggle }) => {
 						{typesIsLoading && <option>Loading</option>}
 						{typeOptions}
 					</select>
-					<p className="">{errors?.typeId?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.typeId?.message}</p>
 				</div>
 				<div className="mb-3">
 					<label htmlFor="stage" className="text-sm font-semibold">
@@ -130,7 +138,7 @@ const CreateTaskModal = ({ handleToggle }) => {
 						{stagesIsLoading && <option>Loading</option>}
 						{stagesOptions}
 					</select>
-					<p className="">{errors?.stageId?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.stageId?.message}</p>
 				</div>
 				<div className="mb-3">
 					<label htmlFor="description" className="text-sm font-semibold">
@@ -144,6 +152,26 @@ const CreateTaskModal = ({ handleToggle }) => {
 						{...register("description")}
 					></textarea>
 				</div>
+				<div className="mb-3">
+					<label htmlFor="total-hours" className="text-sm font-semibold">
+						Total Hours Required
+					</label>
+					<input
+						type="number"
+						{...register("totalHours", {
+							required: "Total hours is required",
+							valueAsNumber: true,
+							validate: (val) => {
+								return (
+									validateDecimalPlaces(val) ||
+									"Cannot have more than 2 decimal places."
+								);
+							},
+						})}
+						className="block w-full text-sm"
+					/>
+					<p className="text-red-600 text-xs">{errors?.totalHours?.message}</p>
+				</div>
 				<button
 					type="submit"
 					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full"
@@ -154,5 +182,8 @@ const CreateTaskModal = ({ handleToggle }) => {
 		</div>
 	);
 };
+
+const validateDecimalPlaces = (number) =>
+	(number.toString().split(".")[1] || "").length < 3;
 
 export default CreateTaskModal;

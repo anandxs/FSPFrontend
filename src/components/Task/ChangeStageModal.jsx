@@ -35,13 +35,14 @@ const ChangeStageModal = ({ handleToggle }) => {
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
 	const onSubmit = ({ stageId }) => {
-		const { title, dueDate, description, assignee, type } = task;
+		const { title, description, assignee, type, hoursSpent, totalHours } = task;
 
 		const body = {
 			stageId,
 			title,
 			description,
-			dueDate,
+			totalHours,
+			hoursSpent,
 			typeId: type?.typeId,
 			assigneeId: assignee?.id,
 		};
