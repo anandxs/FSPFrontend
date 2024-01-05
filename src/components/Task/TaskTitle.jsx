@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../Modal/Modal";
 import ChangeTaskTimeModal from "./ChangeTaskTitleModal";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import { TaskContext } from "./Task";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const TaskTitle = ({ title }) => {
 	const [toggle, setToggle] = useState(false);
+	const { id } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentProjectRole);
+	const { assignee } = useContext(TaskContext);
 
 	const handleToggle = () => {
 		setToggle(!toggle);
@@ -14,7 +21,12 @@ const TaskTitle = ({ title }) => {
 			<h1 className="text-xl sm:text-2xl font-bold hover:underline w-fit">
 				{title}
 			</h1>
-			<button onClick={handleToggle} className="bg-primary text-white p-1">
+			<button
+				onClick={handleToggle}
+				className={`bg-primary text-white p-1 ${
+					id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
+				}`}
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"

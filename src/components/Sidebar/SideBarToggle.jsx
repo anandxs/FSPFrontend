@@ -4,7 +4,7 @@ const SideBarToggle = ({ setToggle }) => {
 			xmlns="http://www.w3.org/2000/svg"
 			viewBox="0 0 24 24"
 			fill="currentColor"
-			className="w-4 h-4 sm:w-5 sm:h-5 text-white font-semibold border-2 border-white"
+			className="w-4 h-4 sm:w-5 sm:h-5 text-white font-semibold border-2 border-white hover:cursor-pointer"
 			onClick={() => setToggle((state) => !state)}
 		>
 			<path

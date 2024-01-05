@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import Confirmation from "../Confirmation";
 import { useDeleteTaskMutation } from "../../features/task/taskApiSlice";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import { TaskContext } from "./Task";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const DeleteTask = () => {
 	const { projectId, taskId } = useParams();
+	const { id } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentProjectRole);
+	const { assignee } = useContext(TaskContext);
 
 	const [toggleDelete, setToggleDelete] = useState(false);
 
@@ -29,7 +36,10 @@ const DeleteTask = () => {
 	return (
 		<>
 			<button
-				className="bg-orange-500 text-white p-1 text-md rounded-sm"
+				className={`bg-orange-500 text-white p-1 text-md rounded-sm ${
+					// id === assignee?.id ||
+					role?.name === "ADMIN" ? "" : "hidden"
+				}`}
 				onClick={handleToggle}
 			>
 				<svg

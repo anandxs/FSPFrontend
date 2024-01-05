@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Modal from "../Modal/Modal";
 import ChangeDescriptionModal from "./ChangeDescriptionModal";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import { TaskContext } from "./Task";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const TaskDescription = ({ description }) => {
 	const [toggle, setToggle] = useState(false);
+	const { id } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentProjectRole);
+	const { assignee } = useContext(TaskContext);
 
 	const handleToggle = () => {
 		setToggle(!toggle);
@@ -16,7 +23,9 @@ const TaskDescription = ({ description }) => {
 			) : (
 				<button
 					onClick={handleToggle}
-					className="bg-primary text-white text-sm px-2 py-1 rounded"
+					className={`bg-primary text-white text-sm px-2 py-1 rounded ${
+						id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
+					}`}
 				>
 					Add Description
 				</button>
@@ -31,11 +40,20 @@ const TaskDescription = ({ description }) => {
 };
 
 const Description = ({ handleToggle, description }) => {
+	const { id } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentProjectRole);
+	const { assignee } = useContext(TaskContext);
+
 	return (
 		<div>
 			<div className="flex gap-2 items-center">
 				<h2 className="underline font-semibold text-md">Description</h2>
-				<button onClick={handleToggle} className="bg-primary text-white p-1">
+				<button
+					onClick={handleToggle}
+					className={`bg-primary text-white p-1 ${
+						id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
+					}`}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"

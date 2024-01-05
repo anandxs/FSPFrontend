@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Modal from "../../Modal/Modal";
 import AddAttachmentModal from "./AddAttachmentModal";
 import {
@@ -10,10 +10,15 @@ import { saveAs } from "file-saver";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../features/auth/authSlice";
 import { toast } from "react-toastify";
+import { TaskContext } from "../Task";
+import { selectCurrentProjectRole } from "../../../features/user/userSlice";
 
 const AddAttachment = () => {
 	const { projectId, taskId } = useParams();
 	const [toggle, setToggle] = useState(false);
+	const { id } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentProjectRole);
+	const { assignee } = useContext(TaskContext);
 
 	const {
 		data: attachments,
@@ -100,7 +105,9 @@ const AddAttachment = () => {
 					<div className="flex gap-2 items-center">
 						<span>{new Date(createdAt).toLocaleString()}</span>
 						<button
-							className="bg-orange-500 text-white text-sm rounded-sm p-1 disabled:opacity-50"
+							className={`bg-orange-500 text-white text-sm rounded-sm p-1 disabled:opacity-50 ${
+								id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
+							}`}
 							disabled={isDeleting}
 							onClick={() => handleDelete(attachmentId)}
 						>
@@ -130,7 +137,12 @@ const AddAttachment = () => {
 			<div className="flex gap-2 items-center">
 				<h2 className="underline font-semibold text-md mb-2">Attachments</h2>
 
-				<button onClick={handleToggle} className="bg-primary text-white p-1">
+				<button
+					onClick={handleToggle}
+					className={`bg-primary text-white p-1 ${
+						id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
+					}`}
+				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox="0 0 24 24"

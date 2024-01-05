@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Modal from "../Modal/Modal";
 import ChangeTaskAssigneeModal from "./ChangeTaskAssigneeModal";
 import { useSelector } from "react-redux";
@@ -6,12 +6,11 @@ import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const TaskAssignee = ({ assignee }) => {
 	const [toggle, setToggle] = useState(false);
+	const { role } = useSelector(selectCurrentProjectRole);
 
 	const handleToggle = () => {
 		setToggle(!toggle);
 	};
-
-	const { role } = useSelector(selectCurrentProjectRole);
 
 	return (
 		<div className="flex justify-between sm:justify-start sm:gap-2 items-center text-xs mb-3 col-span-12 sm:col-span-6">

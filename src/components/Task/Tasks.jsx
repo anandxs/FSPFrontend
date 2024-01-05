@@ -8,6 +8,7 @@ import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Cards = () => {
 	const { projectId } = useParams();
+	const { role } = useSelector(selectCurrentProjectRole);
 
 	const navigate = useNavigate();
 
@@ -68,8 +69,6 @@ const Cards = () => {
 			hoursSpent: task.hoursSpent,
 		}));
 	}
-
-	const { role } = useSelector(selectCurrentProjectRole);
 
 	return (
 		<div className="m-2 p-2">

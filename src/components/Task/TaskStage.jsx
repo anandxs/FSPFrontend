@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Modal from "../Modal/Modal";
 import ChangeStageModal from "./ChangeStageModal";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
+import { TaskContext } from "./Task";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const TaskStage = ({ stage }) => {
 	const [toggle, setToggle] = useState(false);
+	const { id } = useSelector(selectCurrentUser);
+	const { role } = useSelector(selectCurrentProjectRole);
+	const { assignee } = useContext(TaskContext);
 
 	const handleToggle = () => {
 		setToggle(!toggle);
@@ -16,7 +23,9 @@ const TaskStage = ({ stage }) => {
 			</p>
 			<button
 				onClick={handleToggle}
-				className="bg-primary text-white sm:text-sm px-2 py-1 rounded"
+				className={`bg-primary text-white sm:text-sm px-2 py-1 rounded ${
+					id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
+				}`}
 			>
 				Change
 			</button>
