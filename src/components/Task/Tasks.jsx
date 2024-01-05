@@ -58,13 +58,13 @@ const Tasks = () => {
 			sortable: true,
 		},
 		{
-			name: "Total Hours Required",
+			name: "Total Hours Alloted",
 			selector: (row) => row.totalHours,
 		},
-		{
-			name: "Hours Spent",
-			selector: (row) => row.hoursSpent,
-		},
+		// {
+		// 	name: "Hours Spent",
+		// 	selector: (row) => row.hoursSpent,
+		// },
 	];
 
 	const filters = useSelector(selectCurrentFilters);

@@ -65,9 +65,9 @@ const Task = () => {
 					<TaskType type={task?.type} />
 					<TaskAssignee assignee={task?.assignee} />
 					<TotalHours totalHours={task?.totalHours} />
-					<HoursSpent hoursSpent={task?.hoursSpent} />
+					{/* <HoursSpent hoursSpent={task?.hoursSpent} /> */}
 				</div>
-				{id === task?.assignee?.id && <LogHours />}
+				{/* {id === task?.assignee?.id && <LogHours />} */}
 				<TaskDescription description={task?.description} />
 				<AddAttachment />
 				<Comments />
