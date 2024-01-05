@@ -6,14 +6,12 @@ import { toast } from "react-toastify";
 
 const Register = () => {
 	const [success, setSuccess] = useState(false);
-
 	const form = useForm();
 	const { register, formState, handleSubmit, watch } = form;
 	const { errors, isSubmitting } = formState;
-
 	const [signup] = useRegisterMutation();
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
 		const { firstName, lastName, email, password } = data;
 		const body = {
 			firstName,
@@ -21,22 +19,21 @@ const Register = () => {
 			email,
 			password,
 		};
-		signup({ ...body })
-			.unwrap()
-			.then(() => {
-				toast.success("Account created successfully");
-				setSuccess(true);
-			})
-			.catch((err) => {
-				if (err?.status === 400) {
-					const message = err?.data["DuplicateEmail"][0];
-					toast.error(message);
-				} else if (err?.status === 500) {
-					toast.error("Internal server error");
-				} else {
-					toast.error("Network error");
-				}
-			});
+
+		try {
+			await signup({ ...body }).unwrap();
+			toast.success("Account created successfully");
+			setSuccess(true);
+		} catch (err) {
+			if (err?.status === 400) {
+				const message = err?.data["DuplicateEmail"][0];
+				toast.error(message);
+			} else if (err?.status === 500) {
+				toast.error("Internal server error");
+			} else {
+				toast.error("Network error");
+			}
+		}
 	};
 
 	return !success ? (
@@ -162,7 +159,7 @@ const Register = () => {
 							className="bg-primary text-xs block w-full rounded-sm py-0.5 text-white disabled:opacity-50"
 							disabled={isSubmitting}
 						>
-							Register
+							{isSubmitting ? "Loading..." : "Register"}
 						</button>
 						<Link to="/login" className="text-xs hover:underline">
 							Login with existing account
@@ -172,12 +169,16 @@ const Register = () => {
 			</div>
 		</section>
 	) : (
-		<section className="h-full flex flex-col justify-center items-center">
-			<p>Thank you for registering!</p>
-			<p>Verification mail has been sent to your email address.</p>
-			<p>Login after verifying your account.</p>
-		</section>
+		<RegistrationSuccess />
 	);
 };
+
+const RegistrationSuccess = () => (
+	<section className="h-full flex flex-col justify-center items-center">
+		<p>Thank you for registering!</p>
+		<p>Verification mail has been sent to your email address.</p>
+		<p>Login after verifying your account.</p>
+	</section>
+);
 
 export default Register;

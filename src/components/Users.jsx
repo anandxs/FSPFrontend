@@ -35,7 +35,7 @@ const Users = () => {
 		{
 			name: "Block/Unblock",
 			button: true,
-			cell: (row, index, column, id) => {
+			cell: (row) => {
 				return (
 					<button
 						onClick={() => handleToggleBlock(row.id)}
@@ -90,33 +90,31 @@ const Users = () => {
 	};
 
 	return (
-		<div className="col-span-10 p-4">
-			<div className="flex justify-between items-center mb-2">
-				<h1 className="text-2xl font-semibold hover:underline">
-					User Management
-				</h1>
-				<ul className="flex p-0 text-xs">
+		<div className="m-2 p-2">
+			<div className="flex flex-wrap items-center justify-between mb-3">
+				<h1 className="text-lg font-bold hover:underline">User Management</h1>
+				<ul className="flex">
 					<li
 						onClick={setQueryToActive}
-						className={`border border-black py-1.5 px-1 w-20 text-center ${
+						className={`border border-black text-center text-xs w-16 sm:text-sm sm:w-20 ${
 							filter === "active" ? "bg-primary text-white" : "text-black"
-						} font-bold`}
+						}`}
 					>
 						Active
 					</li>
 					<li
 						onClick={setQueryToBlocked}
-						className={`border border-black py-1.5 px-1 w-20 text-center ${
+						className={`border border-black text-center text-xs w-16 sm:text-sm sm:w-20 ${
 							filter === "blocked" ? "bg-primary text-white" : "text-black"
-						} font-bold`}
+						}`}
 					>
 						Blocked
 					</li>
 					<li
 						onClick={clearQuery}
-						className={`border border-black py-1.5 px-1 w-20 text-center ${
-							filter === "" ? "bg-primary text-white" : "text-black"
-						} font-bold`}
+						className={`border border-black text-center text-xs w-16 sm:text-sm sm:w-20 ${
+							filter === "" ? "bg-primary text-white text-xs" : "text-black"
+						}`}
 					>
 						All
 					</li>

@@ -8,6 +8,7 @@ import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Cards = () => {
 	const { projectId } = useParams();
+	const { role } = useSelector(selectCurrentProjectRole);
 
 	const navigate = useNavigate();
 
@@ -69,8 +70,6 @@ const Cards = () => {
 		}));
 	}
 
-	const { role } = useSelector(selectCurrentProjectRole);
-
 	return (
 		<div className="m-2 p-2">
 			<div className="flex justify-between mb-3">
@@ -81,6 +80,7 @@ const Cards = () => {
 				customStyles={customStyles}
 				pagination
 				onRowClicked={goToTask}
+				pointerOnHover
 				columns={columns}
 				data={data}
 			/>

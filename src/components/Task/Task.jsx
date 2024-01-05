@@ -10,6 +10,8 @@ import TaskAssignee from "./TaskAssignee";
 import TaskDescription from "./TaskDescription";
 import Comments from "./Comments";
 import AddAttachment from "./Attachment/Attachments";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../features/auth/authSlice";
 
 export const TaskContext = createContext({
 	taskId: null,
@@ -25,6 +27,7 @@ export const TaskContext = createContext({
 
 const Task = () => {
 	const { projectId, taskId } = useParams();
+	const { id } = useSelector(selectCurrentUser);
 
 	const {
 		data: task,
@@ -64,12 +67,17 @@ const Task = () => {
 					<TotalHours totalHours={task?.totalHours} />
 					<HoursSpent hoursSpent={task?.hoursSpent} />
 				</div>
+				{id === task?.assignee?.id && <LogHours />}
 				<TaskDescription description={task?.description} />
 				<AddAttachment />
 				<Comments />
 			</TaskContext.Provider>
 		</div>
 	);
+};
+
+const LogHours = () => {
+	return <h1>hi</h1>;
 };
 
 const TotalHours = ({ totalHours }) => {

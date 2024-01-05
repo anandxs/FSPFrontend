@@ -66,7 +66,7 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 					type="submit"
 					disabled={isLoading}
 				>
-					Create
+					{isLoading ? "Loading..." : "Create"}
 				</button>
 			</form>
 		</div>

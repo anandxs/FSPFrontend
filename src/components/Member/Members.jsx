@@ -49,6 +49,7 @@ const Members = () => {
 			<DataTable
 				customStyles={customStyles}
 				onRowClicked={goToMember}
+				pointerOnHover
 				pagination
 				columns={columns}
 				data={members}

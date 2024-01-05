@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { apiSlice } from "../../../app/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 const AddAttachmentModal = ({ handleToggle }) => {
 	const { projectId, taskId } = useParams();
@@ -10,9 +11,11 @@ const AddAttachmentModal = ({ handleToggle }) => {
 	const [error, setError] = useState();
 	const { accessToken } = useSelector(selectCurrentUser);
 	const dispatch = useDispatch();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		if (!file) {
 			setError("File is requried.");
@@ -37,6 +40,7 @@ const AddAttachmentModal = ({ handleToggle }) => {
 			.then((response) => {
 				if (response.status == 204) {
 					handleToggle();
+					toast.success("Successfully uploaded file.");
 					dispatch(apiSlice.util.invalidateTags(["Attachments"]));
 				} else if (response.status == 400) {
 					setError("Duplicate name. Rename and try again.");
@@ -44,6 +48,9 @@ const AddAttachmentModal = ({ handleToggle }) => {
 			})
 			.catch((err) => {
 				console.log(err);
+			})
+			.finally(() => {
+				setIsLoading(false);
 			});
 	};
 
@@ -60,11 +67,20 @@ const AddAttachmentModal = ({ handleToggle }) => {
 			<h1 className="text-lg font-semibold mb-2">Add Attachment</h1>
 			<form onSubmit={handleSubmit} encType="multipart/form-data">
 				<div className="">
-					<input type="file" onChange={updateFile} className="text-xs" />
+					<input
+						type="file"
+						onChange={updateFile}
+						className="text-xs"
+						disabled={isLoading}
+					/>
 					<p className="text-xs text-red-600">{error && error}</p>
 				</div>
-				<button type="submit" className="bg-primary text-white text-xs p-1">
-					Upload
+				<button
+					type="submit"
+					disabled={isLoading}
+					className="bg-primary text-white text-xs p-1 disabled:opacity-50"
+				>
+					{isLoading ? "Uploading..." : "Upload"}
 				</button>
 			</form>
 		</div>
