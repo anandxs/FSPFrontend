@@ -1,27 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-	groups: [],
+	stages: [],
+	types: [],
 };
 
 const filterSlice = createSlice({
 	name: "filter",
 	initialState,
 	reducers: {
-		toggleFilter: (state, action) => {
+		toggleStagesFilter: (state, action) => {
 			const id = action.payload;
-			if (state.groups.includes(id)) {
-				state.groups = state.groups.filter((f) => f !== id);
+			if (state.stages.includes(id)) {
+				state.stages = state.stages.filter((f) => f !== id);
 			} else {
-				state.groups.push(id);
+				state.stages.push(id);
 			}
 		},
 		resetFilters: (state) => {
-			state.groups = [];
+			state.stages = [];
+			state.types = [];
 		},
 	},
 });
 
 export default filterSlice.reducer;
-export const { toggleFilter, resetFilters } = filterSlice.actions;
+export const { toggleStagesFilter, resetFilters } = filterSlice.actions;
 export const selectCurrentFilters = (state) => state.filter;
