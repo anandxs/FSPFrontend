@@ -9,18 +9,17 @@ const DeleteTask = () => {
 
 	const [toggleDelete, setToggleDelete] = useState(false);
 
-	const [deleteTaskAsync] = useDeleteTaskMutation();
+	const [deleteTaskAsync, { isLoading }] = useDeleteTaskMutation();
 
 	const navigate = useNavigate();
-	const handleDelete = () => {
-		deleteTaskAsync({ projectId, taskId })
-			.unwrap()
-			.then(() => {
-				navigate(`/projects/${projectId}/tasks`);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const handleDelete = async () => {
+		try {
+			await deleteTaskAsync({ projectId, taskId }).unwrap();
+
+			navigate(`/projects/${projectId}/tasks`);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const handleToggle = () => {
@@ -50,7 +49,11 @@ const DeleteTask = () => {
 			</button>
 			{toggleDelete && (
 				<Modal action={handleToggle}>
-					<Confirmation success={handleDelete} cancel={handleToggle} />
+					<Confirmation
+						isLoading={isLoading}
+						success={handleDelete}
+						cancel={handleToggle}
+					/>
 				</Modal>
 			)}
 		</>

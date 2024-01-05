@@ -13,8 +13,7 @@ const CreateTaskModal = ({ handleToggle }) => {
 	});
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
-
-	const { projectId, taskId } = useParams();
+	const { projectId } = useParams();
 
 	const {
 		data: types,
@@ -23,6 +22,7 @@ const CreateTaskModal = ({ handleToggle }) => {
 		isError: typesIsErrors,
 		error: typesError,
 	} = useGetProjectTaskTypesQuery({ projectId });
+
 	let typeOptions;
 	if (typesIsSuccess) {
 		typeOptions = types.map((type) => (
@@ -52,9 +52,9 @@ const CreateTaskModal = ({ handleToggle }) => {
 		console.log(stagesError);
 	}
 
-	const [createTaskAsync] = useCreateTaskMutation();
+	const [createTaskAsync, { isLoading }] = useCreateTaskMutation();
 
-	const onSubmit = ({
+	const onSubmit = async ({
 		title,
 		description,
 		dueDate,
@@ -71,14 +71,12 @@ const CreateTaskModal = ({ handleToggle }) => {
 			totalHours,
 		};
 
-		createTaskAsync({ projectId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await createTaskAsync({ projectId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -174,9 +172,10 @@ const CreateTaskModal = ({ handleToggle }) => {
 				</div>
 				<button
 					type="submit"
-					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full"
+					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full disabled:opacity-50"
+					disabled={isLoading}
 				>
-					Create
+					{isLoading ? "Uploading..." : "Create"}
 				</button>
 			</form>
 		</div>
