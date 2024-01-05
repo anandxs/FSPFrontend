@@ -17,6 +17,14 @@ const filterSlice = createSlice({
 				state.stages.push(id);
 			}
 		},
+		toggleTypesFilter: (state, action) => {
+			const id = action.payload;
+			if (state.types.includes(id)) {
+				state.types = state.types.filter((f) => f !== id);
+			} else {
+				state.types.push(id);
+			}
+		},
 		resetFilters: (state) => {
 			state.stages = [];
 			state.types = [];
@@ -25,5 +33,6 @@ const filterSlice = createSlice({
 });
 
 export default filterSlice.reducer;
-export const { toggleStagesFilter, resetFilters } = filterSlice.actions;
+export const { toggleStagesFilter, toggleTypesFilter, resetFilters } =
+	filterSlice.actions;
 export const selectCurrentFilters = (state) => state.filter;

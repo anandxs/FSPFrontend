@@ -13,6 +13,7 @@ import {
 	resetFilters,
 	selectCurrentFilters,
 	toggleStagesFilter,
+	toggleTypesFilter,
 } from "../../features/filter/filterSlice";
 
 const Tasks = () => {
@@ -77,6 +78,7 @@ const Tasks = () => {
 			})
 			.filter((x) => {
 				if (filters.types.length === 0) return true;
+				if (filters.types.includes(x?.type?.typeId)) return x;
 			})
 			.map((task) => ({
 				taskId: task.taskId,
@@ -147,21 +149,41 @@ const FilterModal = () => {
 					Reset
 				</button>
 			</div>
-			<div className="flex justify-between gap-2">
-				<ul>
-					{stages?.map((stage) => (
-						<li key={stage.stageId}>
-							<label className="text-xs">
-								<input
-									type="checkbox"
-									checked={filters.stages.includes(stage.stageId)}
-									onChange={() => dispatch(toggleStagesFilter(stage.stageId))}
-								/>{" "}
-								{stage.name}
-							</label>
-						</li>
-					))}
-				</ul>
+			<div className="flex gap-3">
+				<div className="">
+					<h3 className="font-semibold">Stages</h3>
+					<ul>
+						{stages?.map((stage) => (
+							<li key={stage.stageId}>
+								<label className="text-xs">
+									<input
+										type="checkbox"
+										checked={filters.stages.includes(stage.stageId)}
+										onChange={() => dispatch(toggleStagesFilter(stage.stageId))}
+									/>{" "}
+									{stage.name}
+								</label>
+							</li>
+						))}
+					</ul>
+				</div>
+				<div className="">
+					<h3 className="font-semibold">Task Types</h3>
+					<ul>
+						{types?.map((type) => (
+							<li key={type.typeId}>
+								<label className="text-xs">
+									<input
+										type="checkbox"
+										checked={filters.types.includes(type.typeId)}
+										onChange={() => dispatch(toggleTypesFilter(type.typeId))}
+									/>{" "}
+									{type.name}
+								</label>
+							</li>
+						))}
+					</ul>
+				</div>
 			</div>
 		</div>
 	);
