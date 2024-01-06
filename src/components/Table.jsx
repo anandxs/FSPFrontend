@@ -1,5 +1,3 @@
-import EditRole from "./DefaultRole/EditRole";
-
 const Table = ({ data, columns, deleteAction, editAction }) => {
 	return (
 		<table className="table-fixed w-10/12 mt-3 border border-black">

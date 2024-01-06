@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useToggleProjectArchiveStatusMutation } from "../../features/project/projectApiSlice";
+import { useParams } from "react-router-dom";
 import Modal from "../Modal/Modal";
 import Confirmation from "../Confirmation";
-import { useParams } from "react-router-dom";
 
 const ArchiveProject = ({ data }) => {
 	const { projectId } = useParams();
-
 	const [toggleArchive, setToggleArchive] = useState(false);
 
 	const [toggleProjectArchiveStatus] = useToggleProjectArchiveStatusMutation();
@@ -15,17 +14,15 @@ const ArchiveProject = ({ data }) => {
 		setToggleArchive(!toggleArchive);
 	};
 
-	const handleArchive = () => {
-		toggleProjectArchiveStatus({
-			projectId,
-		})
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const handleArchive = async () => {
+		try {
+			await toggleProjectArchiveStatus({
+				projectId,
+			}).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

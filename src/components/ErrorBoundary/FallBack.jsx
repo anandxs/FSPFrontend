@@ -1,4 +1,12 @@
+import { useEffect } from "react";
+
 const FallBack = ({ error }) => {
+	useEffect(() => {
+		console.log(error);
+
+		return () => {};
+	}, []);
+
 	return (
 		<div className="h-full w-full flex flex-col justify-center items-center">
 			<p>Something went wrong. Application crashed.</p>

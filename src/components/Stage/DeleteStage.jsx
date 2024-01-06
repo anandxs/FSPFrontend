@@ -6,23 +6,18 @@ import { StageContext } from "./Stages";
 
 const DeleteStage = () => {
 	const [toggleDelete, setToggleDelete] = useState(false);
-
 	const { projectId, stageId } = useContext(StageContext);
 
 	const [deleteStageAsync] = useDeleteStageMutation();
-
-	const handleDelete = () => {
-		deleteStageAsync({
-			projectId,
-			stageId,
-		})
-			.unwrap()
-			.then(() => {
-				// success logic
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const handleDelete = async () => {
+		try {
+			await deleteStageAsync({
+				projectId,
+				stageId,
+			}).unwrap();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const handleToggle = () => {

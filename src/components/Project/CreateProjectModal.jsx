@@ -18,27 +18,25 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 		setError(null);
 	}, [watch("projectName")]);
 
-	const onSubmit = ({ projectName }) => {
+	const onSubmit = async ({ projectName }) => {
 		const body = {
 			name: projectName,
 		};
-		createProject({ body })
-			.unwrap()
-			.then(({ projectId }) => {
-				handleProjectToggle();
-				navigate(`/projects/${projectId}/tasks`);
-			})
-			.catch((err) => {
-				if (err.status === 404) {
-					setError(err.data.Message);
-				} else if (err.state === 422) {
-					setError("Enter valid data.");
-				} else if (err.status === 500) {
-					setError("Internal server error.");
-				} else {
-					setError("Network error");
-				}
-			});
+		try {
+			const { projectId } = await createProject({ body }).unwrap();
+			handleProjectToggle();
+			navigate(`/projects/${projectId}/tasks`);
+		} catch (err) {
+			if (err.status === 404) {
+				setError(err.data.Message);
+			} else if (err.state === 422) {
+				setError("Enter valid data.");
+			} else if (err.status === 500) {
+				setError("Internal server error.");
+			} else {
+				setError("Network error");
+			}
+		}
 	};
 
 	return (

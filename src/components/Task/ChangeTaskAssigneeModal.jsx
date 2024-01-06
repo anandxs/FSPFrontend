@@ -29,12 +29,10 @@ const ChangeTaskAssigneeModal = ({ handleToggle }) => {
 				{`${member?.user?.firstName} ${member?.user?.lastName} -- ${member?.role?.name}`}
 			</option>
 		));
-	} else if (isError) {
-		console.log(error);
-	}
+	} else if (isError) console.log(error);
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
-	const onSubmit = ({ assigneeId }) => {
+	const onSubmit = async ({ assigneeId }) => {
 		const { title, description, stage, type, hoursSpent, totalHours } = task;
 
 		const body = {
@@ -47,14 +45,12 @@ const ChangeTaskAssigneeModal = ({ handleToggle }) => {
 			typeId: type?.typeId,
 		};
 
-		updateTaskAsync({ projectId, taskId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await updateTaskAsync({ projectId, taskId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

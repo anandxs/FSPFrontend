@@ -17,19 +17,17 @@ const CreateRoleModal = ({ handleToggle }) => {
 		setError();
 	}, [watch("role")]);
 
-	const onSubmit = ({ role }) => {
+	const onSubmit = async ({ role }) => {
 		const body = {
 			name: role,
 		};
-		createRoleAsync({ projectId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-				setError(err?.data?.Message);
-			});
+		try {
+			await createRoleAsync({ projectId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+			setError(err?.data?.Message);
+		}
 	};
 
 	return (

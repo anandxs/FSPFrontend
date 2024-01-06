@@ -18,43 +18,53 @@ const TasksPerStage = () => {
 		title: "Task Count",
 		interval: 1,
 	};
-
 	const { projectId } = useParams();
-	const { data, isLoading, isSuccess, isError, error } =
-		useGetTasksPerStageDataQuery({ projectId });
-	let columnData = [];
-	if (isSuccess) {
-		columnData = data;
-	}
+	const { data, isLoading, isSuccess, isError } = useGetTasksPerStageDataQuery({
+		projectId,
+	});
 
 	if (isLoading) {
-		return <p>Loading...</p>;
+		return (
+			<div className="flex justify-center items-center h-full">
+				<p>Loading..</p>
+			</div>
+		);
 	}
 
-	return isError ? (
-		<p>Something went wrong</p>
-	) : (
-		<ChartComponent
-			id="tasksperstagechart"
-			primaryXAxis={primaryxAxis}
-			primaryYAxis={primaryyAxis}
-			title="Tasks Per Stage"
-		>
-			<Inject services={[ColumnSeries, Legend, Tooltip, DataLabel, Category]} />
-			<SeriesCollectionDirective>
-				<SeriesDirective
-					dataSource={columnData}
-					xName="stage"
-					yName="count"
-					name="Task Count"
-					type="Column"
-					columnSpacing={0.25}
-					columnWidth={0.5}
-					fill="green"
-				></SeriesDirective>
-			</SeriesCollectionDirective>
-		</ChartComponent>
-	);
+	if (isError) {
+		return (
+			<div className="flex justify-center items-center h-full">
+				<p>Something went wrong</p>
+			</div>
+		);
+	}
+
+	if (isSuccess) {
+		return (
+			<ChartComponent
+				id="tasksperstagechart"
+				primaryXAxis={primaryxAxis}
+				primaryYAxis={primaryyAxis}
+				title="Tasks Per Stage"
+			>
+				<Inject
+					services={[ColumnSeries, Legend, Tooltip, DataLabel, Category]}
+				/>
+				<SeriesCollectionDirective>
+					<SeriesDirective
+						dataSource={data}
+						xName="stage"
+						yName="count"
+						name="Task Count"
+						type="Column"
+						columnSpacing={0.25}
+						columnWidth={0.5}
+						fill="green"
+					></SeriesDirective>
+				</SeriesCollectionDirective>
+			</ChartComponent>
+		);
+	}
 };
 
 export default TasksPerStage;

@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice";
+import { customStyles } from "../../utils/tableStyle";
 import AddMember from "./AddMember";
 import DataTable from "react-data-table-component";
-import { customStyles } from "../../utils/tableStyle";
 
 const Members = () => {
 	const { projectId } = useParams();
@@ -28,34 +28,30 @@ const Members = () => {
 		},
 	];
 
-	let members;
-	if (isSuccess) {
-		members = data.map((m) => m);
-	}
-
 	const navigate = useNavigate();
 	const goToMember = (member) => {
 		navigate(`${member.user.id}`);
 	};
 
-	return (
-		<div className="m-2 p-2">
-			<div className="flex gap-2 justify-between items-center mb-3">
-				<h1 className="text-xs sm:text-lg font-bold hover:underline">
-					Members
-				</h1>
-				<AddMember />
+	if (isSuccess)
+		return (
+			<div className="m-2 p-2">
+				<div className="flex gap-2 justify-between items-center mb-3">
+					<h1 className="text-xs sm:text-lg font-bold hover:underline">
+						Members
+					</h1>
+					<AddMember />
+				</div>
+				<DataTable
+					customStyles={customStyles}
+					onRowClicked={goToMember}
+					pointerOnHover
+					pagination
+					columns={columns}
+					data={data}
+				/>
 			</div>
-			<DataTable
-				customStyles={customStyles}
-				onRowClicked={goToMember}
-				pointerOnHover
-				pagination
-				columns={columns}
-				data={members}
-			/>
-		</div>
-	);
+		);
 };
 
 export default Members;

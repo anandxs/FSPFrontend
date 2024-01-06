@@ -1,52 +1,46 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetMemberByIdQuery } from "../../features/member/memberApiSlice";
+import { toast } from "react-toastify";
 import RemoveMember from "./RemoveMember";
 import UpdateMemberRole from "./UpdateMemberRole";
-import { toast } from "react-toastify";
 
 const Member = () => {
+	const navigate = useNavigate();
 	const { projectId, memberId } = useParams();
 	const { data, isLoading, isSuccess, isError, error } = useGetMemberByIdQuery({
 		projectId,
 		memberId,
 	});
 
-	const navigate = useNavigate();
-
-	let member;
-	if (isLoading) {
-	} else if (isSuccess) {
-		member = data;
-	} else if (isError) {
+	if (isError) {
 		console.log(error);
-		let message = "Something went wrong.";
 		if (error?.status == 404) {
 			navigate(-1);
-			message = "Not a member.";
-		}
-		toast.error(message);
+			toast.error("Not a member.");
+		} else toast.error("Something went wrong.");
 	}
 
-	return isLoading ? (
-		<p>Loading...</p>
-	) : (
-		<div className="col-span-10 p-2 mt-3 ml-3">
-			<h1 className="text-xl font-bold mb-2 py-1 hover:underline">
-				Member Details
-			</h1>
-			<div className="flex flex-col gap-2 mb-3">
-				<p>First Name: {member?.user?.firstName}</p>
-				<p>Last Name: {member?.user?.lastName}</p>
-				<p>Email: {member?.user?.email}</p>
-				<p>Role: {member?.role?.name}</p>
-			</div>
+	if (isLoading) return <p>Loading...</p>;
 
-			<div className="flex gap-2">
-				<UpdateMemberRole />
-				<RemoveMember />
+	if (isSuccess)
+		return (
+			<div className="col-span-10 p-2 mt-3 ml-3">
+				<h1 className="text-xl font-bold mb-2 py-1 hover:underline">
+					Member Details
+				</h1>
+				<div className="flex flex-col gap-2 mb-3">
+					<p>First Name: {data?.user?.firstName}</p>
+					<p>Last Name: {data?.user?.lastName}</p>
+					<p>Email: {data?.user?.email}</p>
+					<p>Role: {data?.role?.name}</p>
+				</div>
+
+				<div className="flex gap-2">
+					<UpdateMemberRole />
+					<RemoveMember />
+				</div>
 			</div>
-		</div>
-	);
+		);
 };
 
 export default Member;

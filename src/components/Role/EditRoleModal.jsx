@@ -16,23 +16,21 @@ const EditRoleModal = ({ handleToggle }) => {
 		setValue("role", init);
 	}, []);
 
-	const onSubmit = ({ role }) => {
+	const onSubmit = async ({ role }) => {
 		const body = {
 			name: role,
 		};
 
-		udpateRoleAsync({
-			projectId,
-			roleId,
-			body,
-		})
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await udpateRoleAsync({
+				projectId,
+				roleId,
+				body,
+			}).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

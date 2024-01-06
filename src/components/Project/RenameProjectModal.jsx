@@ -11,7 +11,6 @@ import {
 
 const RenameProjectModal = ({ handleToggle }) => {
 	const { name } = useContext(ProjectContext);
-
 	const form = useForm({
 		defaultValues: {
 			name,
@@ -24,19 +23,18 @@ const RenameProjectModal = ({ handleToggle }) => {
 	const { projectId } = useParams();
 	const dispatch = useDispatch();
 	const userRole = useSelector(selectCurrentProjectRole);
-	const onSubmit = ({ name }) => {
+
+	const onSubmit = async ({ name }) => {
 		const body = {
 			name,
 		};
-		renameProjectAsync({ projectId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-				dispatch(setRole({ ...userRole, projectName: name }));
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await renameProjectAsync({ projectId, body }).unwrap();
+			handleToggle();
+			dispatch(setRole({ ...userRole, projectName: name }));
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

@@ -19,7 +19,7 @@ const ChangeDueDateModal = ({ handleToggle }) => {
 	const { projectId, taskId } = useParams();
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
-	const onSubmit = ({ dueDate }) => {
+	const onSubmit = async ({ dueDate }) => {
 		const { title, stage, description, assignee, type } = task;
 
 		const body = {
@@ -31,16 +31,12 @@ const ChangeDueDateModal = ({ handleToggle }) => {
 			assigneeId: assignee?.id,
 		};
 
-		console.log(body);
-
-		updateTaskAsync({ projectId, taskId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await updateTaskAsync({ projectId, taskId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

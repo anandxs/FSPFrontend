@@ -8,52 +8,23 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 	const form = useForm();
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
-
 	const { projectId } = useParams();
 
 	const [addMember, { error }] = useInviteMemberMutation();
-
-	const onSubmit = ({ email, roleId }) => {
+	const onSubmit = async ({ email, roleId }) => {
 		const body = {
 			email,
 			roleId,
 		};
-		addMember({ projectId, body })
-			.unwrap()
-			.then((response) => {
-				console.log(response);
-				toast.success(response?.message);
-				handleCreateToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	};
 
-	const {
-		data: roles,
-		isSuccess,
-		isLoading,
-		isError,
-		error: roleError,
-	} = useGetProjectRolesQuery({ projectId });
-	let roleOptions;
-	if (isLoading) {
-		roleOptions = <option>Loading...</option>;
-	} else if (isSuccess) {
-		if (roles?.length === 0) {
-			roleOptions = <option>No Roles</option>;
-		} else {
-			roleOptions = roles.map((role) => (
-				<option key={role?.roleId} value={role?.roleId}>
-					{role?.name}
-				</option>
-			));
+		try {
+			const response = await addMember({ projectId, body }).unwrap();
+			toast.success(response?.message);
+			handleCreateToggle();
+		} catch (err) {
+			console.log(err);
 		}
-	} else if (isError) {
-		console.log(roleError);
-		roleOptions = <option>Something went wrong!</option>;
-	}
+	};
 
 	return (
 		<div
@@ -88,7 +59,7 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 							required: "Role is a required field.",
 						})}
 					>
-						{roleOptions}
+						<GetRoles projectId={projectId} />
 					</select>
 					<p className="text-red-600 text-xs mb-1">{errors?.roleId?.message}</p>
 				</div>
@@ -101,6 +72,24 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 			</form>
 		</div>
 	);
+};
+
+const GetRoles = ({ projectId }) => {
+	const {
+		data: roles,
+		isSuccess,
+		isLoading,
+		isError,
+	} = useGetProjectRolesQuery({ projectId });
+
+	if (isLoading) return <option>Loading...</option>;
+	else if (isSuccess)
+		return roles.map((role) => (
+			<option key={role?.roleId} value={role?.roleId}>
+				{role?.name}
+			</option>
+		));
+	else if (isError) return <option>Something went wrong!</option>;
 };
 
 export default AddMemberModal;
