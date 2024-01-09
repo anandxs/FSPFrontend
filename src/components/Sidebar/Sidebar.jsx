@@ -7,7 +7,7 @@ const Sidebar = ({ sections, close }) => {
 			className={`fixed sm:static bg-blue-300 w-screen h-screen z-10 sidebar`}
 		>
 			<button
-				onClick={() => close((state) => !state)}
+				onClick={close}
 				className="font-semibold w-full text-right pr-3 pt-2"
 			>
 				X
