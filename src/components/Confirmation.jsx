@@ -1,12 +1,13 @@
-const Confirmation = ({ isLoading, success, cancel }) => {
+const Confirmation = ({ message, isLoading, success, cancel }) => {
 	return (
 		<div
-			className="bg-accent min-w-max w-1/3 p-3"
+			className="bg-accent p-3 w-screen sm:w-1/3"
 			onClick={(e) => e.stopPropagation()}
 		>
 			<h2 className="text-center text-2xl font-bold py-1 text-black">
 				Are you sure?
 			</h2>
+			<p className="text-sm m-3 mt-2">{message}</p>
 			<div className="flex justify-around">
 				<button
 					type="button"
