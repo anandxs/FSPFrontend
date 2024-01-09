@@ -25,7 +25,7 @@ export const stageApiSlice = apiSlice.injectEndpoints({
 				method: "PUT",
 				body,
 			}),
-			invalidatesTags: ["Stages", "Stage", "TasksPerStage"],
+			invalidatesTags: ["Stages", "Stage", "TasksPerStage", "Tasks"],
 		}),
 		deleteStage: builder.mutation({
 			query: ({ projectId, stageId }) => ({

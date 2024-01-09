@@ -3,6 +3,7 @@ import { useDeleteStageMutation } from "../../features/stage/stageApiSlice";
 import Modal from "../Modal/Modal";
 import Confirmation from "../Confirmation";
 import { StageContext } from "./Stages";
+import { toast } from "react-toastify";
 
 const DeleteStage = () => {
 	const [toggleDelete, setToggleDelete] = useState(false);
@@ -15,8 +16,11 @@ const DeleteStage = () => {
 				projectId,
 				stageId,
 			}).unwrap();
+			toast.success("Successfully deleted stage.");
 		} catch (err) {
 			console.log(err);
+			toast.error(err?.data?.Message);
+			handleToggle();
 		}
 	};
 
@@ -48,7 +52,13 @@ const DeleteStage = () => {
 			</button>
 			{toggleDelete && (
 				<Modal action={handleToggle}>
-					<Confirmation success={handleDelete} cancel={handleToggle} />
+					<Confirmation
+						message={
+							"The stage cannot be deleted if there are tasks within the stage."
+						}
+						success={handleDelete}
+						cancel={handleToggle}
+					/>
 				</Modal>
 			)}
 		</>
