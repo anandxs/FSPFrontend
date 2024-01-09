@@ -3,17 +3,23 @@ import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice"
 import { customStyles } from "../../utils/tableStyle";
 import AddMember from "./AddMember";
 import DataTable from "react-data-table-component";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Members = () => {
 	const { projectId } = useParams();
 	const { data, isSuccess } = useGetProjectMembersQuery({
 		projectId,
 	});
+	const { ownerId } = useSelector(selectCurrentProjectRole);
 
 	const columns = [
 		{
 			name: "Name",
-			selector: (row) => `${row.user.firstName} ${row.user.lastName}`,
+			selector: (row) =>
+				`${row?.user?.firstName} ${row?.user?.lastName} ${
+					ownerId === row?.user?.id ? "(Project Owner)" : ""
+				}`,
 			sortable: true,
 		},
 		{
@@ -30,7 +36,9 @@ const Members = () => {
 
 	const navigate = useNavigate();
 	const goToMember = (member) => {
-		navigate(`${member.user.id}`);
+		if (ownerId !== member?.user?.id) {
+			navigate(`${member.user.id}`);
+		}
 	};
 
 	if (isSuccess)

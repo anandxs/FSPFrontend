@@ -3,6 +3,8 @@ import { useGetMemberByIdQuery } from "../../features/member/memberApiSlice";
 import { toast } from "react-toastify";
 import RemoveMember from "./RemoveMember";
 import UpdateMemberRole from "./UpdateMemberRole";
+import { useSelector } from "react-redux";
+import { selectCurrentProjectRole } from "../../features/user/userSlice";
 
 const Member = () => {
 	const navigate = useNavigate();
@@ -11,6 +13,7 @@ const Member = () => {
 		projectId,
 		memberId,
 	});
+	const { ownerId } = useSelector(selectCurrentProjectRole);
 
 	if (isError) {
 		console.log(error);
@@ -29,16 +32,19 @@ const Member = () => {
 					Member Details
 				</h1>
 				<div className="flex flex-col gap-2 mb-3">
+					<p>Title: {memberId === ownerId ? "Project Owner" : "Member"}</p>
 					<p>First Name: {data?.user?.firstName}</p>
 					<p>Last Name: {data?.user?.lastName}</p>
 					<p>Email: {data?.user?.email}</p>
 					<p>Role: {data?.role?.name}</p>
 				</div>
 
-				<div className="flex gap-2">
-					<UpdateMemberRole />
-					<RemoveMember />
-				</div>
+				{true && (
+					<div className="flex gap-2">
+						<UpdateMemberRole />
+						<RemoveMember />
+					</div>
+				)}
 			</div>
 		);
 };
