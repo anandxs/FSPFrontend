@@ -7,18 +7,16 @@ import { useParams } from "react-router-dom";
 const ChangeDescriptionModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
 	const { description } = task;
-
 	const form = useForm({
 		defaultValues: {
 			description,
 		},
 	});
-	const { register, handleSubmit, formState } = form;
+	const { register, handleSubmit, formState, setValue } = form;
 	const { errors } = formState;
-
 	const { projectId, taskId } = useParams();
-
 	const [updateTaskAsync] = useUpdateTaskMutation();
+
 	const onSubmit = async ({ description }) => {
 		const { totalHours, hoursSpent, title, assignee, type, stage } = task;
 
@@ -40,12 +38,24 @@ const ChangeDescriptionModal = ({ handleToggle }) => {
 		}
 	};
 
+	const clearInput = () => {
+		setValue("description", null);
+	};
+
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="bg-accent p-3 w-screen sm:w-1/3"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Update Description</h1>
+			<div className="flex justify-between items-center mb-2">
+				<h1 className="text-xl font-semibold mb-2">Update Description</h1>
+				<button
+					onClick={clearInput}
+					className="bg-primary text-white text-sm font-semibold p-1 rounded-sm"
+				>
+					Clear
+				</button>
+			</div>
 			<form onSubmit={handleSubmit(onSubmit)} noValidate>
 				<div className="mb-3">
 					<textarea

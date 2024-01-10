@@ -1,6 +1,4 @@
 import { useState, useContext } from "react";
-import Modal from "../../Modal/Modal";
-import AddAttachmentModal from "./AddAttachmentModal";
 import {
 	useDeleteAttachmentMutation,
 	useGetTaskAttachmentsQuery,
@@ -12,6 +10,8 @@ import { selectCurrentUser } from "../../../features/auth/authSlice";
 import { toast } from "react-toastify";
 import { TaskContext } from "../Task";
 import { selectCurrentProjectRole } from "../../../features/user/userSlice";
+import Modal from "../../Modal/Modal";
+import AddAttachmentModal from "./AddAttachmentModal";
 
 const AddAttachment = () => {
 	const { projectId, taskId } = useParams();
@@ -19,6 +19,7 @@ const AddAttachment = () => {
 	const { id } = useSelector(selectCurrentUser);
 	const { role } = useSelector(selectCurrentProjectRole);
 	const { assignee } = useContext(TaskContext);
+	const { accessToken } = useSelector(selectCurrentUser);
 
 	const {
 		data: attachments,
@@ -44,8 +45,6 @@ const AddAttachment = () => {
 			toast.success(err?.data?.message);
 		}
 	};
-
-	const { accessToken } = useSelector(selectCurrentUser);
 
 	const downloadAttachment = ({ attachmentId, fileName }) => {
 		fetch(
@@ -96,12 +95,15 @@ const AddAttachment = () => {
 					key={attachmentId}
 					className="flex gap-2 justify-between items-center text-xs mb-1"
 				>
-					<span
-						onClick={() => downloadAttachment({ attachmentId, fileName })}
-						className="underline hover:cursor-pointer"
-					>
-						{fileName}
-					</span>
+					<div>
+						<span className="font-semibold">File Name: </span>
+						<span
+							onClick={() => downloadAttachment({ attachmentId, fileName })}
+							className="underline hover:cursor-pointer"
+						>
+							{fileName}
+						</span>
+					</div>
 					<div className="flex gap-2 items-center">
 						<span>{new Date(createdAt).toLocaleString()}</span>
 						<button

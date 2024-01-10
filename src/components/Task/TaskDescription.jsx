@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
-import Modal from "../Modal/Modal";
-import ChangeDescriptionModal from "./ChangeDescriptionModal";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
 import { TaskContext } from "./Task";
 import { selectCurrentProjectRole } from "../../features/user/userSlice";
+import Modal from "../Modal/Modal";
+import ChangeDescriptionModal from "./ChangeDescriptionModal";
 
 const TaskDescription = ({ description }) => {
 	const [toggle, setToggle] = useState(false);
