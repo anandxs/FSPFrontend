@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { TaskContext } from "./Task";
 import { useUpdateTaskMutation } from "../../features/task/taskApiSlice";
 import { useParams } from "react-router-dom";
+import LoadingButton from "../LoadingButton";
 
 const ChangeDescriptionModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
@@ -15,7 +16,8 @@ const ChangeDescriptionModal = ({ handleToggle }) => {
 	const { register, handleSubmit, formState, setValue } = form;
 	const { errors } = formState;
 	const { projectId, taskId } = useParams();
-	const [updateTaskAsync] = useUpdateTaskMutation();
+	const [updateTaskAsync, { isLoading, isSubmitting }] =
+		useUpdateTaskMutation();
 
 	const onSubmit = async ({ description }) => {
 		const { totalHours, hoursSpent, title, assignee, type, stage } = task;
@@ -44,34 +46,39 @@ const ChangeDescriptionModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-screen sm:w-1/3"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<div className="flex justify-between items-center mb-2">
-				<h1 className="text-xl font-semibold mb-2">Update Description</h1>
+			<div className="flex justify-between items-center">
+				<h1 className="text-2xl font-bold text-left">Update Description</h1>
 				<button
 					onClick={clearInput}
-					className="bg-primary text-white text-sm font-semibold p-1 rounded-sm"
+					className="block px-3 py-1 text-center rounded-sm text-gray-50 bg-indigo-950"
 				>
 					Clear
 				</button>
 			</div>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="mb-3">
+			<form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+				<div className="space-y-1 text-sm">
 					<textarea
 						type="text"
 						id="description"
-						className="block w-full"
+						placeholder="Add description..."
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("description")}
 					></textarea>
-					<p className="text-red-600">{errors?.description?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.description?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-0.5 rounded w-full"
-				>
-					Update
-				</button>
+				{isSubmitting || isLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+					>
+						Update
+					</button>
+				)}
 			</form>
 		</div>
 	);

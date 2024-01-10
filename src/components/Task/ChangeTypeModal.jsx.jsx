@@ -4,6 +4,7 @@ import { useGetProjectTaskTypesQuery } from "../../features/taskType/taskTypeApi
 import { useUpdateTaskMutation } from "../../features/task/taskApiSlice";
 import { useContext } from "react";
 import { TaskContext } from "./Task";
+import LoadingButton from "../LoadingButton";
 
 const ChangeTypeModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
@@ -31,7 +32,10 @@ const ChangeTypeModal = ({ handleToggle }) => {
 		));
 	} else if (isError) console.log(error);
 
-	const [updateTaskAsync] = useUpdateTaskMutation();
+	const [
+		updateTaskAsync,
+		{ isLoading: updateLoading, isSubmitting, error: updateError },
+	] = useUpdateTaskMutation();
 	const onSubmit = async ({ typeId }) => {
 		const { title, description, assignee, stage, hoursSpent, totalHours } =
 			task;
@@ -47,7 +51,7 @@ const ChangeTypeModal = ({ handleToggle }) => {
 		};
 
 		try {
-			updateTaskAsync({ projectId, taskId, body }).unwrap();
+			await updateTaskAsync({ projectId, taskId, body }).unwrap();
 			handleToggle();
 		} catch (err) {
 			console.log(err);
@@ -56,18 +60,16 @@ const ChangeTypeModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Update Task Type</h1>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="mb-3">
-					<label htmlFor="type" className="font-semibold text-md block">
-						Task Type
-					</label>
+			<h1 className="text-2xl font-bold text-left">Update Task Type</h1>
+			<p className="text-red-600 text-xs">{""}</p>
+			<form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+				<div className="space-y-1 text-sm">
 					<select
 						id="type"
-						className="block w-full text-xs p-1"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("typeId", {
 							required: "Select a type",
 						})}
@@ -76,14 +78,18 @@ const ChangeTypeModal = ({ handleToggle }) => {
 						{isLoading && <option>Loading</option>}
 						{typeOptions}
 					</select>
-					<p className="text-red-600">{errors?.typeId?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.typeId?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-0.5 rounded w-full"
-				>
-					Update
-				</button>
+				{isSubmitting || updateLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+					>
+						Update
+					</button>
+				)}
 			</form>
 		</div>
 	);

@@ -56,10 +56,10 @@ const Comments = () => {
 
 	return (
 		<div className="">
-			<h2 className="text-md underline font-semibold mb-2">Comments</h2>
-			<div className="p-2 bg-blue-300 rounded flex flex-col">
+			<h2 className="text-md hover:underline font-semibold mb-2">Comments</h2>
+			<div className="p-2 bg-indigo-300 rounded flex flex-col">
 				{comments}
-				<p className="text-xs text-red-600">{errors?.comment?.message}</p>
+				<p className="text-red-600 text-xs">{errors?.comment?.message}</p>
 				<form
 					className="flex gap-1"
 					onSubmit={handleSubmit(onSubmit)}
@@ -75,7 +75,7 @@ const Comments = () => {
 					/>
 					<button
 						type="submit"
-						className="block w-fit bg-primary text-white text-xs p-1"
+						className="block w-fit bg-indigo-950 text-gray-50 text-xs p-1"
 					>
 						Submit
 					</button>

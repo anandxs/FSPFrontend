@@ -24,7 +24,7 @@ const TaskType = ({ type }) => {
 			</p>
 			<button
 				onClick={handleToggle}
-				className={`bg-primary text-white sm:text-sm px-2 py-1 rounded ${
+				className={`bg-indigo-950 text-gray-50 sm:text-sm px-2 py-1 rounded ${
 					// id === assignee ||
 					role?.name === "ADMIN" ? "" : "hidden"
 				}`}

@@ -23,7 +23,7 @@ const TaskTitle = ({ title }) => {
 			</h1>
 			<button
 				onClick={handleToggle}
-				className={`bg-primary text-white p-1 ${
+				className={`bg-indigo-950 text-gray-50 rounded-sm p-1 ${
 					id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
 				}`}
 			>

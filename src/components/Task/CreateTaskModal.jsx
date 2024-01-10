@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useGetProjectTaskTypesQuery } from "../../features/taskType/taskTypeApiSlice";
 import { useGetProjectStagesQuery } from "../../features/stage/stageApiSlice";
 import { useCreateTaskMutation } from "../../features/task/taskApiSlice";
+import LoadingButton from "../LoadingButton";
 
 const CreateTaskModal = ({ handleToggle }) => {
 	const form = useForm({
@@ -52,7 +53,8 @@ const CreateTaskModal = ({ handleToggle }) => {
 		console.log(stagesError);
 	}
 
-	const [createTaskAsync, { isLoading }] = useCreateTaskMutation();
+	const [createTaskAsync, { isLoading, isSubmitting }] =
+		useCreateTaskMutation();
 
 	const onSubmit = async ({
 		title,
@@ -81,32 +83,33 @@ const CreateTaskModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-xl font-bold">Create Task</h1>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="mb-3">
-					<label htmlFor="title" className="text-sm font-semibold">
+			<h1 className="text-2xl font-bold text-left">Create Task</h1>
+			<form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+				<div className="space-y-1 text-sm">
+					{/* <label htmlFor="title" className="text-sm font-semibold">
 						Title
-					</label>
+					</label> */}
 					<input
 						type="text"
 						id="title"
-						className="block w-full"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
+						placeholder="Title"
 						{...register("title", {
 							required: "Title is required.",
 						})}
 					/>
 					<p className="text-red-600 text-xs">{errors?.title?.message}</p>
 				</div>
-				<div className="mb-3">
-					<label htmlFor="type" className="text-sm font-semibold">
+				<div className="space-y-1 text-sm">
+					{/* <label htmlFor="type" className="text-sm font-semibold">
 						Type
-					</label>
+					</label> */}
 					<select
 						id="type"
-						className="block w-full text-xs"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("typeId", {
 							required: "Select a type",
 						})}
@@ -119,13 +122,13 @@ const CreateTaskModal = ({ handleToggle }) => {
 					</select>
 					<p className="text-red-600 text-xs">{errors?.typeId?.message}</p>
 				</div>
-				<div className="mb-3">
-					<label htmlFor="stage" className="text-sm font-semibold">
+				<div className="space-y-1 text-sm">
+					{/* <label htmlFor="stage" className="text-sm font-semibold">
 						Stage
-					</label>
+					</label> */}
 					<select
 						id="stage"
-						className="block w-full text-xs"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("stageId", {
 							required: "Select a stage",
 						})}
@@ -138,24 +141,26 @@ const CreateTaskModal = ({ handleToggle }) => {
 					</select>
 					<p className="text-red-600 text-xs">{errors?.stageId?.message}</p>
 				</div>
-				<div className="mb-3">
-					<label htmlFor="description" className="text-sm font-semibold">
+				<div className="space-y-1 text-sm">
+					{/* <label htmlFor="description" className="text-sm font-semibold">
 						Description
-					</label>
+					</label> */}
 					<textarea
 						id="description"
 						cols="30"
 						rows="3"
-						className="block w-full text-sm"
+						placeholder="Task description..."
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("description")}
 					></textarea>
 				</div>
-				<div className="mb-3">
+				<div className="space-y-1 text-sm">
 					<label htmlFor="total-hours" className="text-sm font-semibold">
 						Total Hours Required
 					</label>
 					<input
 						type="number"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("totalHours", {
 							required: "Total hours is required",
 							valueAsNumber: true,
@@ -166,17 +171,19 @@ const CreateTaskModal = ({ handleToggle }) => {
 								);
 							},
 						})}
-						className="block w-full text-sm"
 					/>
 					<p className="text-red-600 text-xs">{errors?.totalHours?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full disabled:opacity-50"
-					disabled={isLoading}
-				>
-					{isLoading ? "Uploading..." : "Create"}
-				</button>
+				{isSubmitting || isLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+					>
+						Submit
+					</button>
+				)}
 			</form>
 		</div>
 	);

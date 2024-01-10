@@ -3,14 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #CFE1FC;
-  --accent: #0D5ACE;
-  --primary: #0E61DD;
-  --secondary: #AECCFA;
+  --background: #c0c5ff;
 }
 
 #root {
-  height: 100vh;
+  height: 90vh;
 }
 
 body {

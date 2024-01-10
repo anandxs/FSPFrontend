@@ -4,6 +4,7 @@ import { apiSlice } from "../../../app/api/apiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../features/auth/authSlice";
 import { toast } from "react-toastify";
+import LoadingButton from "../../LoadingButton";
 
 const AddAttachmentModal = ({ handleToggle }) => {
 	const { projectId, taskId } = useParams();
@@ -19,6 +20,7 @@ const AddAttachmentModal = ({ handleToggle }) => {
 
 		if (!file) {
 			setError("File is requried.");
+			setIsLoading(false);
 			return;
 		}
 
@@ -61,27 +63,34 @@ const AddAttachmentModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-2 max-w-screen-sm"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-lg font-semibold mb-2">Add Attachment</h1>
-			<form onSubmit={handleSubmit} encType="multipart/form-data">
-				<div className="">
+			<h1 className="text-2xl font-bold text-left">Add Attachment</h1>
+			<form
+				onSubmit={handleSubmit}
+				encType="multipart/form-data"
+				className="space-y-4"
+			>
+				<div className="space-y-1 text-sm">
 					<input
 						type="file"
 						onChange={updateFile}
-						className="text-xs"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						disabled={isLoading}
 					/>
-					<p className="text-xs text-red-600">{error && error}</p>
+					<p className="text-red-600 text-xs">{error && error}</p>
 				</div>
-				<button
-					type="submit"
-					disabled={isLoading}
-					className="bg-primary text-white text-xs p-1 disabled:opacity-50"
-				>
-					{isLoading ? "Uploading..." : "Upload"}
-				</button>
+				{isLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+					>
+						Upload
+					</button>
+				)}
 			</form>
 		</div>
 	);

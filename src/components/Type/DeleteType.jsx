@@ -30,7 +30,7 @@ const DeleteType = () => {
 	return (
 		<>
 			<button
-				className="bg-orange-500 text-white p-1 text-sm rounded-sm"
+				className="inline-block rounded bg-red-600 px-3 py-1 text-xs font-medium text-gray-50 transition hover:shadow-xl focus:outline-none focus:ring active:bg-red-600 disabled:opacity-50"
 				onClick={handleToggle}
 			>
 				<span className="hidden sm:block text-xs p-0.5 font-semibold">

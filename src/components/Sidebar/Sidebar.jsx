@@ -1,26 +1,20 @@
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = ({ sections, close }) => {
+const Sidebar = ({ sections }) => {
 	return (
 		<div
-			className={`fixed sm:static bg-blue-300 w-screen h-screen z-10 sidebar`}
+			className={`fixed top-24 bg-indigo-900 w-screen z-10 sidebar rounded-e-lg`}
 		>
-			<button
-				onClick={close}
-				className="font-semibold w-full text-right pr-3 pt-2"
-			>
-				X
-			</button>
 			<ul className="w-full">
 				{sections?.map(({ header, link }) => (
-					<li
-						key={link}
-						className="text-center font-semibold text-sm p-2 hover:black"
-					>
-						<span className="m-1">
-							<NavLink to={link}>{header}</NavLink>
-						</span>
+					<li key={link} className="hover:bg-indigo-400">
+						<NavLink
+							to={link}
+							className="w-full block py-2 pl-3 text-sm rounded font-semibold text-gray-50"
+						>
+							{header}
+						</NavLink>
 					</li>
 				))}
 			</ul>
