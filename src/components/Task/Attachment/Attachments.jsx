@@ -93,7 +93,7 @@ const AddAttachment = () => {
 			temp = attachments.map(({ attachmentId, fileName, createdAt }) => (
 				<li
 					key={attachmentId}
-					className="flex gap-2 justify-between items-center text-xs mb-1"
+					className="border border-black flex gap-2 justify-between items-center text-xs mb-1 p-1"
 				>
 					<div>
 						<span className="font-semibold">File Name: </span>
@@ -138,7 +138,6 @@ const AddAttachment = () => {
 		<div className="mb-3">
 			<div className="flex gap-2 items-center">
 				<h2 className="underline font-semibold text-md mb-2">Attachments</h2>
-
 				<button
 					onClick={handleToggle}
 					className={`bg-primary text-white p-1 ${
