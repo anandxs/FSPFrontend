@@ -16,23 +16,21 @@ const EditGroupModal = ({ handleToggle }) => {
 		setValue("stageName", init);
 	}, []);
 
-	const onSubmit = ({ stageName }) => {
+	const onSubmit = async ({ stageName }) => {
 		const body = {
 			name: stageName,
 		};
 
-		updateStageAsync({
-			projectId,
-			stageId,
-			body,
-		})
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await updateStageAsync({
+				projectId,
+				stageId,
+				body,
+			}).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

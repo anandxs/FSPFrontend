@@ -12,28 +12,26 @@ const UpdateProfile = () => {
 	const [updateInfo] = useUpdateUserInfoMutation();
 	const dispatch = useDispatch();
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
 		const { firstName, lastName } = data;
-		updateInfo({
-			firstName,
-			lastName,
-		})
-			.unwrap()
-			.then(() => {
-				dispatch(
-					updateName({
-						firstName,
-						lastName,
-					})
-				);
-				toast.success("Profile name updated successfully");
-				setValue("firstName", "");
-				setValue("lastName", "");
-			})
-			.catch((err) => {
-				console.log(err);
-				toast.error(err?.data?.Message);
-			});
+		try {
+			await updateInfo({
+				firstName,
+				lastName,
+			}).unwrap();
+			dispatch(
+				updateName({
+					firstName,
+					lastName,
+				})
+			);
+			toast.success("Profile name updated successfully");
+			setValue("firstName", "");
+			setValue("lastName", "");
+		} catch (err) {
+			console.log(err);
+			toast.error(err?.data?.Message);
+		}
 	};
 
 	return (

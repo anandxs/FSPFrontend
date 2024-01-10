@@ -11,19 +11,17 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 	const { projectId, memberId } = useParams();
 	const [updateMemberRole] = useUpdateMemberMutation();
 
-	const onSubmit = ({ roleId }) => {
+	const onSubmit = async ({ roleId }) => {
 		const body = {
 			memberId,
 			roleId,
 		};
-		updateMemberRole({ projectId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await updateMemberRole({ projectId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const {

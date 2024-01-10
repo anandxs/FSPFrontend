@@ -9,15 +9,13 @@ const ExitProject = () => {
 	const [exitProject] = useExitProjectMutation();
 
 	const navigate = useNavigate();
-	const handleExit = () => {
-		exitProject({ projectId })
-			.unwrap()
-			.then(() => {
-				navigate("/");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const handleExit = async () => {
+		try {
+			await exitProject({ projectId });
+			navigate("/");
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const [showModal, setShowModal] = useState(false);

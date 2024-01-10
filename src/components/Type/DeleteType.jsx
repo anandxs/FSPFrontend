@@ -3,26 +3,24 @@ import { useDeleteTaskTypeMutation } from "../../features/taskType/taskTypeApiSl
 import Modal from "../Modal/Modal";
 import Confirmation from "../Confirmation";
 import { TypeContext } from "./Types";
+import { toast } from "react-toastify";
 
 const DeleteType = () => {
 	const [toggleDelete, setToggleDelete] = useState(false);
-
 	const { projectId, typeId } = useContext(TypeContext);
 
-	const [deleteTaskTypeAsync] = useDeleteTaskTypeMutation();
+	const [deleteTaskTypeAsync, { isLoading }] = useDeleteTaskTypeMutation();
 
-	const handleDelete = () => {
-		deleteTaskTypeAsync({
-			projectId,
-			typeId,
-		})
-			.unwrap()
-			.then(() => {
-				// success logic
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const handleDelete = async () => {
+		try {
+			await deleteTaskTypeAsync({
+				projectId,
+				typeId,
+			}).unwrap();
+			toast.success("Successfully removed task type.");
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const handleToggle = () => {
@@ -53,7 +51,14 @@ const DeleteType = () => {
 			</button>
 			{toggleDelete && (
 				<Modal action={handleToggle}>
-					<Confirmation success={handleDelete} cancel={handleToggle} />
+					<Confirmation
+						message={
+							"The selected type and all of the tasks of that particular type will be deleted."
+						}
+						isLoading={isLoading}
+						success={handleDelete}
+						cancel={handleToggle}
+					/>
 				</Modal>
 			)}
 		</>

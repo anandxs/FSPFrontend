@@ -22,37 +22,49 @@ const TasksPerType = () => {
 	const { projectId } = useParams();
 	const { data, isLoading, isSuccess, isError, error } =
 		useGetTasksPerTypeDataQuery({ projectId });
-	let columnData = [];
-	if (isSuccess) {
-		columnData = data;
+
+	if (isLoading) {
+		return (
+			<div className="flex justify-center items-center h-full">
+				<p>Loading..</p>
+			</div>
+		);
 	}
 
-	return isLoading ? (
-		<p>Loading...</p>
-	) : isError ? (
-		<p>Something went wrong</p>
-	) : (
-		<ChartComponent
-			id="taskspertypechart"
-			primaryXAxis={primaryxAxis}
-			primaryYAxis={primaryyAxis}
-			title="Tasks Per Type"
-		>
-			<Inject services={[ColumnSeries, Legend, Tooltip, DataLabel, Category]} />
-			<SeriesCollectionDirective>
-				<SeriesDirective
-					dataSource={columnData}
-					xName="type"
-					yName="count"
-					name="Task Count"
-					type="Column"
-					columnSpacing={0.25}
-					columnWidth={0.5}
-					fill="orange"
-				></SeriesDirective>
-			</SeriesCollectionDirective>
-		</ChartComponent>
-	);
+	if (isError) {
+		return (
+			<div className="flex justify-center items-center h-full">
+				<p>Something went wrong</p>
+			</div>
+		);
+	}
+
+	if (isSuccess) {
+		return (
+			<ChartComponent
+				id="taskspertypechart"
+				primaryXAxis={primaryxAxis}
+				primaryYAxis={primaryyAxis}
+				title="Tasks Per Type"
+			>
+				<Inject
+					services={[ColumnSeries, Legend, Tooltip, DataLabel, Category]}
+				/>
+				<SeriesCollectionDirective>
+					<SeriesDirective
+						dataSource={data}
+						xName="type"
+						yName="count"
+						name="Task Count"
+						type="Column"
+						columnSpacing={0.25}
+						columnWidth={0.5}
+						fill="orange"
+					></SeriesDirective>
+				</SeriesCollectionDirective>
+			</ChartComponent>
+		);
+	}
 };
 
 export default TasksPerType;

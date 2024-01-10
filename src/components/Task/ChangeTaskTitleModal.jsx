@@ -19,7 +19,7 @@ const ChangeTaskTitleModal = ({ handleToggle }) => {
 	const { projectId, taskId } = useParams();
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
-	const onSubmit = ({ title }) => {
+	const onSubmit = async ({ title }) => {
 		const { description, assignee, type, stage, hoursSpent, totalHours } = task;
 
 		const body = {
@@ -32,14 +32,12 @@ const ChangeTaskTitleModal = ({ handleToggle }) => {
 			assigneeId: assignee?.id,
 		};
 
-		updateTaskAsync({ projectId, taskId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await updateTaskAsync({ projectId, taskId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

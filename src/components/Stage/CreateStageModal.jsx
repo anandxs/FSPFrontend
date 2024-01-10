@@ -12,18 +12,16 @@ const CreateStageModal = ({ handleToggle }) => {
 
 	const [createStageAsync, { isLoading, error }] = useCreateStageMutation();
 
-	const handleStage = ({ stageName }) => {
+	const handleStage = async ({ stageName }) => {
 		const body = {
 			name: stageName,
 		};
-		createStageAsync({ projectId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			await createStageAsync({ projectId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

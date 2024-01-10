@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
 import { Link } from "react-router-dom";
 import { useLogOutMutation } from "../../features/auth/authApiSlice";
-import ProfilePicAlternative from "../Profile/ProfilePicAlternative";
 import { apiSlice } from "../../app/api/apiSlice";
+import ProfilePicAlternative from "../Profile/ProfilePicAlternative";
 
 const Navbar = () => {
 	const [logOutUser, { isLoading }] = useLogOutMutation();
@@ -17,15 +17,13 @@ const Navbar = () => {
 			accessToken,
 			refreshToken,
 		};
-		logOutUser({ body })
-			.unwrap()
-			.then(() => {
-				dispatch(logOut());
-				dispatch(apiSlice.util.resetApiState());
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			logOutUser({ body }).unwrap();
+			dispatch(logOut());
+			dispatch(apiSlice.util.resetApiState());
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

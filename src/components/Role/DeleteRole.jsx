@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
 import { useDeleteRoleMutation } from "../../features/role/roleApiSlice";
+import { RoleContext } from "./Roles";
 import Modal from "../Modal/Modal";
 import Confirmation from "../Confirmation";
-import { RoleContext } from "./Roles";
+import { toast } from "react-toastify";
 
 const DeleteStage = () => {
 	const [toggleDelete, setToggleDelete] = useState(false);
@@ -11,18 +12,17 @@ const DeleteStage = () => {
 
 	const [deleteRoleAsync] = useDeleteRoleMutation();
 
-	const handleDelete = () => {
-		deleteRoleAsync({
-			projectId,
-			roleId,
-		})
-			.unwrap()
-			.then(() => {
-				// success logic
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+	const handleDelete = async () => {
+		try {
+			await deleteRoleAsync({
+				projectId,
+				roleId,
+			}).unwrap();
+		} catch (err) {
+			console.log(err);
+			toast.error(err?.data?.Message);
+			handleToggle();
+		}
 	};
 
 	const handleToggle = () => {

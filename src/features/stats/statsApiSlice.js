@@ -10,8 +10,15 @@ export const statsApiSlice = apiSlice.injectEndpoints({
 			query: ({ projectId }) => `/api/projects/${projectId}/taskspertype`,
 			providesTags: ["TasksPerStage"],
 		}),
+		getTotalHoursRequiredForProject: builder.query({
+			query: ({ projectId }) => `/api/projects/${projectId}/tasks/totalHours`,
+			providesTags: ["TotalHours"],
+		}),
 	}),
 });
 
-export const { useGetTasksPerStageDataQuery, useGetTasksPerTypeDataQuery } =
-	statsApiSlice;
+export const {
+	useGetTasksPerStageDataQuery,
+	useGetTasksPerTypeDataQuery,
+	useGetTotalHoursRequiredForProjectQuery,
+} = statsApiSlice;

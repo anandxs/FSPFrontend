@@ -32,7 +32,7 @@ export const taskTypeApiSlice = apiSlice.injectEndpoints({
 				url: `/api/projects/${projectId}/types/${typeId}`,
 				method: "DELETE",
 			}),
-			invalidatesTags: ["Types", "Type", "TasksPerStage"],
+			invalidatesTags: ["Types", "Type", "TasksPerStage", "Tasks"],
 		}),
 		toggleTaskTypeArchiveStatus: builder.mutation({
 			query: ({ projectId, typeId }) => ({

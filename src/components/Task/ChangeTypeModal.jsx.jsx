@@ -29,12 +29,10 @@ const ChangeTypeModal = ({ handleToggle }) => {
 				{type?.name}
 			</option>
 		));
-	} else if (isError) {
-		console.log(error);
-	}
+	} else if (isError) console.log(error);
 
 	const [updateTaskAsync] = useUpdateTaskMutation();
-	const onSubmit = ({ typeId }) => {
+	const onSubmit = async ({ typeId }) => {
 		const { title, description, assignee, stage, hoursSpent, totalHours } =
 			task;
 
@@ -48,14 +46,12 @@ const ChangeTypeModal = ({ handleToggle }) => {
 			assigneeId: assignee?.id,
 		};
 
-		updateTaskAsync({ projectId, taskId, body })
-			.unwrap()
-			.then(() => {
-				handleToggle();
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		try {
+			updateTaskAsync({ projectId, taskId, body }).unwrap();
+			handleToggle();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (

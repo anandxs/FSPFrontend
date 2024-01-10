@@ -107,7 +107,17 @@ const Project = () => {
 		];
 	}
 
-	const [toggle, setToggle] = useState(false);
+	const [toggle, setToggle] = useState(localStorage.getItem("sidebar"));
+	const handleToggle = () => {
+		setToggle((toggle) => {
+			if (!toggle) {
+				localStorage.setItem("sidebar", true);
+			} else {
+				localStorage.removeItem("sidebar");
+			}
+			return !toggle;
+		});
+	};
 
 	return (
 		<ProjectContext.Provider value={{ ...data }}>
@@ -118,12 +128,10 @@ const Project = () => {
 			>
 				<Navbar />
 				<div className="flex">
-					{toggle && <Sidebar sections={sections} close={setToggle} />}
+					{toggle && <Sidebar sections={sections} close={handleToggle} />}
 					<div className="flex-1 w-full">
 						<div className="bg-primary flex gap-5 items-center p-1 pl-2">
-							{!toggle && (
-								<SideBarToggle toggle={toggle} setToggle={setToggle} />
-							)}
+							{!toggle && <SideBarToggle handleToggle={handleToggle} />}
 							<h1 className="font-semibold text-lg text-white">
 								{projectName ? projectName : "Loading..."}
 							</h1>

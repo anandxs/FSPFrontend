@@ -13,7 +13,6 @@ const AcceptInvite = () => {
 		promise
 			.unwrap()
 			.then((response) => {
-				console.log(response);
 				navigate(`/projects/${projectId}/tasks`);
 			})
 			.catch((err) => {

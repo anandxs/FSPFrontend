@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { HttpTransportType, HubConnectionBuilder } from "@microsoft/signalr";
+import { useEffect, useState } from "react";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
@@ -10,9 +10,6 @@ const Chat = () => {
 	const [message, setMessage] = useState("");
 	const { projectId } = useParams();
 	const roomId = projectId.toUpperCase();
-
-	const divRef = useRef(null);
-
 	const { accessToken } = useSelector(selectCurrentUser);
 
 	useEffect(() => {

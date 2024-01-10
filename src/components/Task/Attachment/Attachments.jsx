@@ -1,6 +1,4 @@
 import { useState, useContext } from "react";
-import Modal from "../../Modal/Modal";
-import AddAttachmentModal from "./AddAttachmentModal";
 import {
 	useDeleteAttachmentMutation,
 	useGetTaskAttachmentsQuery,
@@ -12,6 +10,8 @@ import { selectCurrentUser } from "../../../features/auth/authSlice";
 import { toast } from "react-toastify";
 import { TaskContext } from "../Task";
 import { selectCurrentProjectRole } from "../../../features/user/userSlice";
+import Modal from "../../Modal/Modal";
+import AddAttachmentModal from "./AddAttachmentModal";
 
 const AddAttachment = () => {
 	const { projectId, taskId } = useParams();
@@ -19,6 +19,7 @@ const AddAttachment = () => {
 	const { id } = useSelector(selectCurrentUser);
 	const { role } = useSelector(selectCurrentProjectRole);
 	const { assignee } = useContext(TaskContext);
+	const { accessToken } = useSelector(selectCurrentUser);
 
 	const {
 		data: attachments,
@@ -44,8 +45,6 @@ const AddAttachment = () => {
 			toast.success(err?.data?.message);
 		}
 	};
-
-	const { accessToken } = useSelector(selectCurrentUser);
 
 	const downloadAttachment = ({ attachmentId, fileName }) => {
 		fetch(
@@ -94,14 +93,17 @@ const AddAttachment = () => {
 			temp = attachments.map(({ attachmentId, fileName, createdAt }) => (
 				<li
 					key={attachmentId}
-					className="flex gap-2 justify-between items-center text-xs mb-1"
+					className="border border-black flex gap-2 justify-between items-center text-xs mb-1 p-1"
 				>
-					<span
-						onClick={() => downloadAttachment({ attachmentId, fileName })}
-						className="underline hover:cursor-pointer"
-					>
-						{fileName}
-					</span>
+					<div>
+						<span className="font-semibold">File Name: </span>
+						<span
+							onClick={() => downloadAttachment({ attachmentId, fileName })}
+							className="underline hover:cursor-pointer"
+						>
+							{fileName}
+						</span>
+					</div>
 					<div className="flex gap-2 items-center">
 						<span>{new Date(createdAt).toLocaleString()}</span>
 						<button
@@ -136,7 +138,6 @@ const AddAttachment = () => {
 		<div className="mb-3">
 			<div className="flex gap-2 items-center">
 				<h2 className="underline font-semibold text-md mb-2">Attachments</h2>
-
 				<button
 					onClick={handleToggle}
 					className={`bg-primary text-white p-1 ${

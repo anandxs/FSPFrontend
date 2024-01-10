@@ -37,19 +37,17 @@ const Comments = () => {
 
 	const [addCommentAsync] = useAddCommentToTaskMutation();
 
-	const onSubmit = ({ comment }) => {
+	const onSubmit = async ({ comment }) => {
 		const body = {
 			comment,
 		};
-		addCommentAsync({ projectId, taskId, body })
-			.unwrap()
-			.then(() => {
-				setValue("comment", "");
-			})
-			.catch((err) => {
-				console.log(err);
-				toast.error("Could not sent comment.");
-			});
+		try {
+			await addCommentAsync({ projectId, taskId, body }).unwrap();
+			setValue("comment", "");
+		} catch (err) {
+			console.log(err);
+			toast.error("Could not sent comment.");
+		}
 	};
 
 	if (isLoading) {

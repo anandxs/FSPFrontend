@@ -9,21 +9,19 @@ const UpdatePassword = () => {
 
 	const [updatePassword] = useUpdatePasswordMutation();
 
-	const onSubmit = ({ currentPassword, newPassword }) => {
-		updatePassword({ currentPassword, newPassword })
-			.unwrap()
-			.then(() => {
-				toast.success("Password updated successfully!");
-				setValue("currentPassword", "");
-				setValue("confirmPassword", "");
-				setValue("newPassword", "");
-				setError("");
-			})
-			.catch((err) => {
-				if (err?.status === 400) {
-					toast.error("Incorrect password.");
-				}
-			});
+	const onSubmit = async ({ currentPassword, newPassword }) => {
+		try {
+			await updatePassword({ currentPassword, newPassword }).unwrap();
+			toast.success("Password updated successfully!");
+			setValue("currentPassword", "");
+			setValue("confirmPassword", "");
+			setValue("newPassword", "");
+			setError("");
+		} catch (err) {
+			if (err?.status === 400) {
+				toast.error("Incorrect password.");
+			}
+		}
 	};
 
 	return (
