@@ -8,6 +8,7 @@ import {
 	selectCurrentProjectRole,
 	setRole,
 } from "../../features/user/userSlice";
+import LoadingButton from "../LoadingButton";
 
 const RenameProjectModal = ({ handleToggle }) => {
 	const { name } = useContext(ProjectContext);
@@ -19,7 +20,8 @@ const RenameProjectModal = ({ handleToggle }) => {
 	const { register, handleSubmit, formState } = form;
 	const { errors } = formState;
 
-	const [renameProjectAsync, { error }] = useUpdateProjectMutation();
+	const [renameProjectAsync, { error, isLoading, isSubmitting }] =
+		useUpdateProjectMutation();
 	const { projectId } = useParams();
 	const dispatch = useDispatch();
 	const userRole = useSelector(selectCurrentProjectRole);
@@ -39,33 +41,34 @@ const RenameProjectModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Rename Project</h1>
-			<p className="text-red-600">{error?.data?.Message}</p>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="my-2">
-					<label htmlFor="name" className="font-semibold text-base block">
-						New Name
-					</label>
+			<h1 className="text-2xl font-bold text-center">Rename Project</h1>
+			<p className="text-red-600 text-xs">{error?.data?.Message}</p>
+			<form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
+				<div className="space-y-1 text-sm">
 					<input
 						type="text"
 						id="name"
-						className="block w-full"
 						placeholder="Enter project name"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("name", {
 							required: "Project name is required.",
 						})}
 					/>
-					<p className="text-red-600">{errors?.name?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.name?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-1 rounded w-full"
-				>
-					Submit
-				</button>
+				{isSubmitting || isLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+					>
+						Login
+					</button>
+				)}
 			</form>
 		</div>
 	);
