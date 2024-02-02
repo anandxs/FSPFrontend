@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { StageContext } from "./Stages";
 import { useUpdateStageMutation } from "../../features/stage/stageApiSlice";
+import LoadingButton from "../LoadingButton";
 
 const EditGroupModal = ({ handleToggle }) => {
 	const form = useForm();
@@ -10,7 +11,8 @@ const EditGroupModal = ({ handleToggle }) => {
 
 	const { projectId, stageId, init } = useContext(StageContext);
 
-	const [updateStageAsync, { error }] = useUpdateStageMutation();
+	const [updateStageAsync, { error, isLoading, isSubmitting }] =
+		useUpdateStageMutation();
 
 	useEffect(() => {
 		setValue("stageName", init);
@@ -35,34 +37,36 @@ const EditGroupModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-1 pt-1">Edit Stage</h1>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<p className="text-red-600 text-xs my-1">{error?.data?.Message}</p>
-				<div className="mb-2">
+			<h1 className="text-2xl font-bold text-left">Edit Stage</h1>
+			<form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+				<p className="text-red-600 text-xs">{error?.data?.Message}</p>
+				<div className="space-y-1 text-sm">
 					<input
 						type="text"
-						className="w-full"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("stageName", {
 							required: "Stage name is required.",
 						})}
 					/>
-					<p className="text-red-600 text-xs pt-1">
-						{errors?.stageName?.message}
-					</p>
+					<p className="text-red-600 text-xs">{errors?.stageName?.message}</p>
 				</div>
-				<div className="flex justify-between">
+				<div className="flex gap-2 justify-between">
+					{isSubmitting || isLoading ? (
+						<LoadingButton />
+					) : (
+						<button
+							type="submit"
+							className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+						>
+							Update
+						</button>
+					)}
 					<button
 						type="submit"
-						className="bg-primary text-white px-3 py-0.5 text-sm rounded-sm w-2/5"
-					>
-						Update
-					</button>
-					<button
-						type="submit"
-						className="bg-orange-600 text-white px-3 py-0.5 text-sm rounded-sm w-2/5"
+						className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-orange-600"
 						onClick={handleToggle}
 					>
 						Cancel
