@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateProjectMutation } from "../../features/project/projectApiSlice";
 import { useNavigate } from "react-router-dom";
+import LoadingButton from "../LoadingButton";
 
 const CreateProjectModal = ({ handleProjectToggle }) => {
 	const [error, setError] = useState();
@@ -10,7 +11,8 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 	const { register, handleSubmit, formState, watch } = form;
 	const { errors } = formState;
 
-	const [createProject, { isLoading }] = useCreateProjectMutation();
+	const [createProject, { isLoading, isSubmitting }] =
+		useCreateProjectMutation();
 
 	const navigate = useNavigate();
 
@@ -41,7 +43,8 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 
 	return (
 		<div
-			className="bg-secondary p-3 w-1/3 min-w-max"
+			// className="bg-secondary p-3 w-1/3 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
 			<h1 className="text-2xl font-bold mb-2 py-1">Create Project</h1>
@@ -59,13 +62,16 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 						required: "Project name is required.",
 					})}
 				/>
-				<button
-					className="bg-primary text-white font-semibold p-1 rounded w-full disabled:opacity-50"
-					type="submit"
-					disabled={isLoading}
-				>
-					{isLoading ? "Loading..." : "Create"}
-				</button>
+				{isSubmitting || isLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+					>
+						Create
+					</button>
+				)}
 			</form>
 		</div>
 	);
