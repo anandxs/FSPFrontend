@@ -4,6 +4,7 @@ import { useGetProjectStagesQuery } from "../../features/stage/stageApiSlice";
 import { useUpdateTaskMutation } from "../../features/task/taskApiSlice";
 import { useContext } from "react";
 import { TaskContext } from "./Task";
+import LoadingButton from "../LoadingButton";
 
 const ChangeStageModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
@@ -31,7 +32,8 @@ const ChangeStageModal = ({ handleToggle }) => {
 		));
 	} else if (isError) console.log(error);
 
-	const [updateTaskAsync] = useUpdateTaskMutation();
+	const [updateTaskAsync, { isLoading: updateLoading, isSubmitting }] =
+		useUpdateTaskMutation();
 	const onSubmit = async ({ stageId }) => {
 		const { title, description, assignee, type, hoursSpent, totalHours } = task;
 
@@ -55,18 +57,16 @@ const ChangeStageModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Update Task Stage</h1>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="mb-3">
-					<label htmlFor="stage" className="font-semibold text-md block">
-						Stage
-					</label>
+			<h1 className="text-2xl font-bold text-left">Update Task Stage</h1>
+			<p className="text-red-600 text-xs">{""}</p>
+			<form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+				<div className="space-y-1 text-sm">
 					<select
 						id="stage"
-						className="block w-full text-xs p-1"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("stageId", {
 							required: "Select a stage",
 						})}
@@ -75,14 +75,18 @@ const ChangeStageModal = ({ handleToggle }) => {
 						{isLoading && <option>Loading</option>}
 						{stagesOptions}
 					</select>
-					<p className="text-red-600">{errors?.stageId?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.stageId?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-0.5 rounded w-full"
-				>
-					Update
-				</button>
+				{isSubmitting || updateLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+					>
+						Update
+					</button>
+				)}
 			</form>
 		</div>
 	);

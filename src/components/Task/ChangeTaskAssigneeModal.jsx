@@ -4,6 +4,7 @@ import { useGetProjectMembersQuery } from "../../features/member/memberApiSlice"
 import { useUpdateTaskMutation } from "../../features/task/taskApiSlice";
 import { useContext } from "react";
 import { TaskContext } from "./Task";
+import LoadingButton from "../LoadingButton";
 
 const ChangeTaskAssigneeModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
@@ -31,7 +32,8 @@ const ChangeTaskAssigneeModal = ({ handleToggle }) => {
 		));
 	} else if (isError) console.log(error);
 
-	const [updateTaskAsync] = useUpdateTaskMutation();
+	const [updateTaskAsync, { isLoading: updateLoading, isSubmitting }] =
+		useUpdateTaskMutation();
 	const onSubmit = async ({ assigneeId }) => {
 		const { title, description, stage, type, hoursSpent, totalHours } = task;
 
@@ -55,32 +57,33 @@ const ChangeTaskAssigneeModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Change Assignee</h1>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="mb-3">
-					<label htmlFor="assignee" className="font-semibold text-md block">
-						Member
-					</label>
+			<h1 className="text-2xl font-bold text-left">Change Assignee</h1>
+			<form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+				<div className="space-y-1 text-sm">
 					<select
 						id="assignee"
-						className="block w-full text-xs p-1"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("assigneeId")}
 					>
 						<option value={""}>Unassign</option>
 						{isLoading && <option>Loading</option>}
 						{memberOptions}
 					</select>
-					<p className="text-red-600">{errors?.assigneeId?.message}</p>
+					<p className="text-red-600 text-sm">{errors?.assigneeId?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-0.5 rounded w-full"
-				>
-					Update
-				</button>
+				{isSubmitting || updateLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+					>
+						Update
+					</button>
+				)}
 			</form>
 		</div>
 	);
