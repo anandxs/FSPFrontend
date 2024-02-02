@@ -1,17 +1,15 @@
 const Confirmation = ({ message, isLoading, success, cancel }) => {
 	return (
 		<div
-			className="bg-accent p-3 w-screen sm:w-1/3"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h2 className="text-center text-2xl font-bold py-1 text-black">
-				Are you sure?
-			</h2>
+			<h2 className="text-2xl font-bold text-center">Are you sure?</h2>
 			<p className="text-sm m-3 mt-2">{message}</p>
-			<div className="flex justify-around">
+			<div className="flex justify-around gap-2">
 				<button
 					type="button"
-					className="w-2/5 bg-primary text-white text-sm text-bold px-3 py-1 rounded disabled:opacity-50"
+					className="disabled:opacity-50 block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
 					onClick={success}
 					disabled={isLoading}
 				>
@@ -19,7 +17,7 @@ const Confirmation = ({ message, isLoading, success, cancel }) => {
 				</button>
 				<button
 					type="button"
-					className="w-2/5 bg-orange-600 text-white text-sm text-bold px-3 py-1 rounded"
+					className="block w-full p-3 text-center rounded-sm text-gray-50 bg-orange-600"
 					onClick={cancel}
 				>
 					Cancel
