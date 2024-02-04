@@ -60,7 +60,7 @@ const Navbar = () => {
 					</Link>
 					<button
 						type="button"
-						className="bg-primary text-white font-semibold text-xs px-2 py-2 rounded-md disabled:opacity-50"
+						className="inline-block rounded bg-blue-600 px-5 py-2 text-xs font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500 disabled:opacity-50"
 						onClick={handleLogout}
 						disabled={isLoading}
 					>

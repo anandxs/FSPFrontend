@@ -64,8 +64,12 @@ const Task = () => {
 					<TaskStage stage={task?.stage} />
 					<TaskType type={task?.type} />
 					<TaskAssignee assignee={task?.assignee} />
-					<TotalHours totalHours={task?.totalHours} />
-					<HoursSpent hoursSpent={task?.hoursSpent} />
+					{false && (
+						<>
+							<TotalHours totalHours={task?.totalHours} />
+							<HoursSpent hoursSpent={task?.hoursSpent} />
+						</>
+					)}
 				</div>
 				{id === task?.assignee?.id && <LogHours />}
 				<TaskDescription description={task?.description} />

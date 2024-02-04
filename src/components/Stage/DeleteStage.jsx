@@ -31,7 +31,7 @@ const DeleteStage = () => {
 	return (
 		<>
 			<button
-				className="bg-orange-500 text-white p-1 text-sm rounded-sm"
+				className="inline-block rounded bg-orange-600 px-3 py-1 text-xs font-medium text-white transition hover:shadow-xl focus:outline-none focus:ring active:bg-orange-500 disabled:opacity-50"
 				onClick={handleToggle}
 			>
 				<span className="hidden sm:block text-xs p-0.5 font-semibold">
