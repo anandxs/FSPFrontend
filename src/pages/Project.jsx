@@ -107,7 +107,8 @@ const Project = () => {
 		];
 	}
 
-	const [toggle, setToggle] = useState(localStorage.getItem("sidebar"));
+	const [toggle, setToggle] = useState(true);
+	// const [toggle, setToggle] = useState(localStorage.getItem("sidebar"));
 	const handleToggle = () => {
 		setToggle((toggle) => {
 			if (!toggle) {
@@ -122,23 +123,21 @@ const Project = () => {
 	return (
 		<ProjectContext.Provider value={{ ...data }}>
 			<div
-				className={`flex flex-col h-screen ${
-					toggle ? "overflow-hidden sm:overflow-auto" : ""
+				className={`flex flex-col h-screen${
+					toggle ? " overflow-hidden sm:overflow-auto" : ""
 				}`}
 			>
 				<Navbar />
-				<div className="flex">
+				<div className="bg-blue-600 flex items-center gap-3 px-2 py-1">
+					<SideBarToggle handleToggle={handleToggle} />
+					<h1 className="font-semibold text-lg text-white">
+						{projectName ? projectName : "Loading..."}
+					</h1>
+				</div>
+				<div className="flex flex-1">
 					{toggle && <Sidebar sections={sections} close={handleToggle} />}
-					<div className="flex-1 w-full">
-						<div className="bg-primary flex gap-5 items-center p-1 pl-2">
-							{!toggle && <SideBarToggle handleToggle={handleToggle} />}
-							<h1 className="font-semibold text-lg text-white">
-								{projectName ? projectName : "Loading..."}
-							</h1>
-						</div>
-						<div className="mx-auto max-w-screen-xl p-2 pt-0">
-							<Outlet />
-						</div>
+					<div className="mx-auto max-w-screen-xl p-2 pt-0 flex-1">
+						<Outlet />
 					</div>
 				</div>
 			</div>
