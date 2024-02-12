@@ -14,13 +14,13 @@ const Sidebar = ({ sections, close }) => {
 			</button>
 			<ul className="w-full">
 				{sections?.map(({ header, link }) => (
-					<li
-						key={link}
-						className="text-center font-semibold text-sm p-2 hover:black"
-					>
-						<span className="m-1">
-							<NavLink to={link}>{header}</NavLink>
-						</span>
+					<li key={link} className="hover:bg-blue-400">
+						<NavLink
+							to={link}
+							className="w-full block py-2 pl-3 text-sm rounded font-semibold"
+						>
+							{header}
+						</NavLink>
 					</li>
 				))}
 			</ul>
