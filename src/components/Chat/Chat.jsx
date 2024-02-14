@@ -3,6 +3,7 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
+import "./Chat.css";
 
 const Chat = () => {
 	const [connection, setConnection] = useState(null);
@@ -84,55 +85,58 @@ const Chat = () => {
 	};
 
 	return (
-		<section className="grid-row-12">
-			<div className="row-span-10 h-[79vh] p-4 overflow-auto">
-				<ul id="messages" className="flex flex-col">
-					{messages?.map(({ id, message, sender, sentAt }, index) => (
-						<li
-							key={id}
-							className={`border-2 border-accent mb-0.5 p-1 text-sm w-fit ${
-								currId === sender?.id ? "self-end" : ""
-							}`}
-						>
-							<p className="font-semibold">{`${sender?.firstName} ${sender?.lastName}`}</p>
-							<p>{message}</p>
-							<p className="text-[12px]">
-								Sent at {new Date(sentAt).toLocaleString()}
-							</p>
-						</li>
-					))}
-				</ul>
-			</div>
-			<div className="row-span-2 border border-primary bg-accent flex items-stretch p-1 h-8">
-				<input
-					type="text"
-					id="message"
-					placeholder="Write a message..."
-					className="p-0.5 w-full"
-					onChange={(e) => setMessage(e.target.value)}
-					value={message}
-				/>
-				<button
-					type="submit"
-					className="bg-primary p-1 w-12 flex justify-center items-center"
-					onClick={sendMessage}
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						strokeWidth={1.5}
-						stroke="currentColor"
-						className="w-4 h-4"
+		<section className="">
+			<ul
+				id="messages"
+				className="h-[440px] sm:h-[500px] overflow-auto flex flex-col justify-start gap-2 sbar"
+			>
+				{messages?.map(({ id, message, sender, sentAt }) => (
+					<li
+						key={id}
+						className={`border-2 border-accent mb-0.5 p-1 text-sm w-fit ${
+							currId === sender?.id ? "self-end" : ""
+						}`}
 					>
-						<path
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-						/>
-					</svg>
-				</button>
-			</div>
+						<p className="font-semibold">{`${sender?.firstName} ${sender?.lastName}`}</p>
+						<p>{message}</p>
+						<p className="text-[12px]">
+							Sent at {new Date(sentAt).toLocaleString()}
+						</p>
+					</li>
+				))}
+			</ul>
+			<form onSubmit={(e) => e.preventDefault()}>
+				<div className="w-full md:w-10/12 fixed bottom-0 backdrop-blur-md flex gap-2 border-t-2 border-blue-500 p-2">
+					<input
+						type="text"
+						id="message"
+						placeholder="Write a message..."
+						className="p-0.5 w-full"
+						onChange={(e) => setMessage(e.target.value)}
+						value={message}
+					/>
+					<button
+						type="submit"
+						className="block px-3 py-1 text-center rounded-sm text-gray-50 bg-blue-600"
+						onClick={sendMessage}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							strokeWidth={1.5}
+							stroke="currentColor"
+							className="w-4 h-4"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+							/>
+						</svg>
+					</button>
+				</div>
+			</form>
 		</section>
 	);
 };
