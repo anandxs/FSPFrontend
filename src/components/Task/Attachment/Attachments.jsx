@@ -137,10 +137,12 @@ const AddAttachment = () => {
 	return (
 		<div className="mb-3">
 			<div className="flex gap-2 items-center">
-				<h2 className="underline font-semibold text-md mb-2">Attachments</h2>
+				<h2 className="hover:underline font-semibold text-md mb-2">
+					Attachments
+				</h2>
 				<button
 					onClick={handleToggle}
-					className={`bg-primary text-white p-1 ${
+					className={`bg-blue-600 text-white p-1 ${
 						id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
 					}`}
 				>

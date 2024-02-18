@@ -54,8 +54,8 @@ const Task = () => {
 	}
 
 	return (
-		<div className="p-2">
-			<TaskContext.Provider value={{ ...task }}>
+		<TaskContext.Provider value={{ ...task }}>
+			<div className="p-2">
 				<div className="flex items-center gap-2 mb-3">
 					<TaskTitle title={task?.title} />
 					<DeleteTask />
@@ -71,17 +71,12 @@ const Task = () => {
 						</>
 					)}
 				</div>
-				{id === task?.assignee?.id && <LogHours />}
 				<TaskDescription description={task?.description} />
 				<AddAttachment />
 				<Comments />
-			</TaskContext.Provider>
-		</div>
+			</div>
+		</TaskContext.Provider>
 	);
-};
-
-const LogHours = () => {
-	return <h1>hi</h1>;
 };
 
 const TotalHours = ({ totalHours }) => {

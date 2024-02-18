@@ -43,7 +43,6 @@ const CreateProjectModal = ({ handleProjectToggle }) => {
 
 	return (
 		<div
-			// className="bg-secondary p-3 w-1/3 min-w-max"
 			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>

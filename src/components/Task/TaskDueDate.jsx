@@ -32,7 +32,7 @@ const TaskDueDate = ({ dueDate }) => {
 			</p>
 			<button
 				onClick={handleToggle}
-				className="bg-primary text-white text-sm px-2 py-1 rounded"
+				className="bg-blue-600 text-white text-sm px-2 py-1 rounded"
 			>
 				Change
 			</button>

@@ -93,7 +93,7 @@ const Chat = () => {
 				{messages?.map(({ id, message, sender, sentAt }) => (
 					<li
 						key={id}
-						className={`border-2 border-accent mb-0.5 p-1 text-sm w-fit ${
+						className={`border-2 mb-0.5 p-1 text-sm w-fit ${
 							currId === sender?.id ? "self-end" : ""
 						}`}
 					>

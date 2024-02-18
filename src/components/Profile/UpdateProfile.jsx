@@ -67,7 +67,7 @@ const UpdateProfile = () => {
 				</div>
 				<button
 					type="submit"
-					className="bg-primary text-white font-semibold px-3 py-0.5 rounded text-sm"
+					className="bg-blue-600 text-white font-semibold px-3 py-0.5 rounded text-sm"
 				>
 					Update
 				</button>

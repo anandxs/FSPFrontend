@@ -27,7 +27,7 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-accent border-b-2 border-b-shadow">
+		<nav className="bg-blue-300 border-b-2 border-b-blue-600">
 			<div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-2">
 				<Link
 					to={auth?.role === "USER" ? "/" : "/admin"}

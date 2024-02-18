@@ -34,7 +34,7 @@ const ResetPassword = () => {
 
 	return (
 		<section className="flex justify-center items-center h-full">
-			<div className="bg-secondary w-60 p-3 rounded">
+			<div className="bg-blue-300 w-60 p-3 rounded">
 				<form onSubmit={handleSubmit(onSubmit)} noValidate>
 					<h2 className="text-text font-bold text-2xl text-center mb-2">
 						Reset Password
@@ -99,7 +99,7 @@ const ResetPassword = () => {
 					<div className="mb-3">
 						<button
 							type="submit"
-							className="bg-primary text-sm block w-full rounded-sm py-0.5 text-white disabled:opacity-50"
+							className="bg-blue-600 text-sm block w-full rounded-sm py-0.5 text-white disabled:opacity-50"
 							disabled={isSubmitting}
 						>
 							Reset

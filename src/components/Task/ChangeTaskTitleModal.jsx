@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { TaskContext } from "./Task";
 import { useUpdateTaskMutation } from "../../features/task/taskApiSlice";
 import { useParams } from "react-router-dom";
+import LoadingButton from "../LoadingButton";
 
 const ChangeTaskTitleModal = ({ handleToggle }) => {
 	const task = useContext(TaskContext);
@@ -18,7 +19,8 @@ const ChangeTaskTitleModal = ({ handleToggle }) => {
 
 	const { projectId, taskId } = useParams();
 
-	const [updateTaskAsync] = useUpdateTaskMutation();
+	const [updateTaskAsync, { isLoading, isSubmitting }] =
+		useUpdateTaskMutation();
 	const onSubmit = async ({ title }) => {
 		const { description, assignee, type, stage, hoursSpent, totalHours } = task;
 
@@ -42,31 +44,41 @@ const ChangeTaskTitleModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/3 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-2xl font-bold mb-2 py-1">Update Task Title</h1>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="mb-3">
-					<label htmlFor="title" className="font-semibold text-md block">
-						Title
-					</label>
+			<h1 className="text-2xl font-bold text-left">Edit Title</h1>
+			<form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+				<div className="space-y-1 text-sm">
 					<input
 						type="text"
 						id="title"
-						className="block w-full"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("title", {
 							required: "Title is required.",
 						})}
 					/>
-					<p className="text-red-600">{errors?.title?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.title?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-md font-bold px-3 py-0.5 rounded w-full"
-				>
-					Update
-				</button>
+				<div className="flex gap-2 justify-between">
+					{isSubmitting || isLoading ? (
+						<LoadingButton />
+					) : (
+						<button
+							type="submit"
+							className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+						>
+							Update
+						</button>
+					)}
+					<button
+						type="submit"
+						className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-orange-600"
+						onClick={handleToggle}
+					>
+						Cancel
+					</button>
+				</div>
 			</form>
 		</div>
 	);
