@@ -59,7 +59,7 @@ const TasksPerStage = () => {
 						type="Column"
 						columnSpacing={0.25}
 						columnWidth={0.5}
-						fill="green"
+						fill="purple"
 					></SeriesDirective>
 				</SeriesCollectionDirective>
 			</ChartComponent>

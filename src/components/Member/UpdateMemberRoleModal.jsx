@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useUpdateMemberMutation } from "../../features/member/memberApiSlice";
 import { useGetProjectRolesQuery } from "../../features/role/roleApiSlice";
+import LoadingButton from "../LoadingButton";
 
 const UpdateMemberRoleModal = ({ handleToggle }) => {
 	const form = useForm();
@@ -9,7 +10,8 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 	const { errors } = formState;
 
 	const { projectId, memberId } = useParams();
-	const [updateMemberRole] = useUpdateMemberMutation();
+	const [updateMemberRole, { isLoading: updateLoading, isSubmitting }] =
+		useUpdateMemberMutation();
 
 	const onSubmit = async ({ roleId }) => {
 		const body = {
@@ -51,32 +53,38 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-1/4 min-w-max"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-xl font-bold mb-2 py-1">Edit Member Role</h1>
-			<form noValidate onSubmit={handleSubmit(onSubmit)}>
-				<p className="text-sm text-red-600">{errors?.roleId?.message}</p>
-				<select
-					id="roleId"
-					className="mb-3"
-					{...register("roleId", {
-						required: "Role is a required field.",
-					})}
-				>
-					{roleOptions}
-				</select>
-				<div className="flex justify-between">
-					<button
-						className="bg-primary text-white px-3 py-0.5 text-sm rounded-sm"
-						type="submit"
+			<h1 className="text-2xl font-bold text-left">Edit Member Role</h1>
+			<form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+				<p className="text-red-600 text-xs">{errors?.roleId?.message}</p>
+				<div className="space-y-1 text-sm">
+					<select
+						id="roleId"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
+						{...register("roleId", {
+							required: "Role is a required field.",
+						})}
 					>
-						Update
-					</button>
+						{roleOptions}
+					</select>
+				</div>
+				<div className="flex gap-2 justify-between">
+					{isSubmitting || isLoading ? (
+						<LoadingButton />
+					) : (
+						<button
+							type="submit"
+							className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+						>
+							Update
+						</button>
+					)}
 					<button
+						type="submit"
+						className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-red-600"
 						onClick={handleToggle}
-						className="bg-orange-600 text-white px-3 py-0.5 text-sm rounded-sm w-2/5"
-						type="button"
 					>
 						Cancel
 					</button>

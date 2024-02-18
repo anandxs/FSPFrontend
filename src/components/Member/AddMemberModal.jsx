@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useInviteMemberMutation } from "../../features/member/memberApiSlice";
 import { useGetProjectRolesQuery } from "../../features/role/roleApiSlice";
 import { toast } from "react-toastify";
+import LoadingButton from "../LoadingButton";
 
 const AddMemberModal = ({ handleCreateToggle }) => {
 	const form = useForm();
@@ -10,7 +11,8 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 	const { errors } = formState;
 	const { projectId } = useParams();
 
-	const [addMember, { error }] = useInviteMemberMutation();
+	const [addMember, { error, isLoading, isSubmitting }] =
+		useInviteMemberMutation();
 	const onSubmit = async ({ email, roleId }) => {
 		const body = {
 			email,
@@ -28,47 +30,50 @@ const AddMemberModal = ({ handleCreateToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-xl font-bold mb-2">Add Member</h1>
-			<p className="text-red-600 text-xs mb-1">{error?.data?.Message}</p>
-			<form onSubmit={handleSubmit(onSubmit)} noValidate>
-				<div className="mb-1">
-					<label htmlFor="email" className="font-semibold text-base block">
-						Email
-					</label>
+			<h1 className="text-2xl font-bold text-left">Add Member</h1>
+			<p className="text-red-600 text-xs">{error?.data?.Message}</p>
+			<form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
+				<div className="space-y-1 text-sm">
 					<input
 						type="email"
 						id="email"
-						className="block w-full text-sm"
+						placeholder="Email"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("email", {
 							required: "Email is required.",
+							pattern: {
+								value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+								message: "Enter a valid email address",
+							},
 						})}
 					/>
-					<p className="text-red-600 text-xs mb-1">{errors?.email?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.email?.message}</p>
 				</div>
-				<div className="mb-1">
-					<label htmlFor="role" className="font-semibold text-base block">
-						Role
-					</label>
+				<div className="space-y-1 text-sm">
 					<select
 						id="role"
-						className="block w-full text-sm"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
 						{...register("roleId", {
 							required: "Role is a required field.",
 						})}
 					>
 						<GetRoles projectId={projectId} />
 					</select>
-					<p className="text-red-600 text-xs mb-1">{errors?.roleId?.message}</p>
+					<p className="text-red-600 text-xs">{errors?.roleId?.message}</p>
 				</div>
-				<button
-					type="submit"
-					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full"
-				>
-					Invite
-				</button>
+				{isSubmitting || isLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+					>
+						Invite
+					</button>
+				)}
 			</form>
 		</div>
 	);

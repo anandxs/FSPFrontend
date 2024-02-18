@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useCreateStageMutation } from "../../features/stage/stageApiSlice";
 import { useContext } from "react";
 import { StageContext } from "./Stages";
+import LoadingButton from "../LoadingButton";
 
 const CreateStageModal = ({ handleToggle }) => {
 	const form = useForm();
@@ -10,7 +11,8 @@ const CreateStageModal = ({ handleToggle }) => {
 
 	const { projectId } = useContext(StageContext);
 
-	const [createStageAsync, { isLoading, error }] = useCreateStageMutation();
+	const [createStageAsync, { isLoading, isSubmitting, error }] =
+		useCreateStageMutation();
 
 	const handleStage = async ({ stageName }) => {
 		const body = {
@@ -26,30 +28,37 @@ const CreateStageModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
-			<h1 className="text-xl font-bold mb-2">Create Stage</h1>
-			<form noValidate onSubmit={handleSubmit(handleStage)}>
-				<input
-					type="text"
-					className="block w-full text-sm"
-					placeholder="Enter stage name"
-					{...register("stageName", {
-						required: "Stage name is required.",
-					})}
-				/>
-				<p className="text-red-600 text-xs mb-1">
-					{errors?.stageName?.message}
-				</p>
-				<p className="text-red-600 text-xs mb-1">{error?.data?.Message}</p>
-				<button
-					type="submit"
-					className="bg-primary text-white text-sm p-1 font-semibold rounded-sm w-full"
-					disabled={isLoading}
-				>
-					Create
-				</button>
+			<h1 className="text-2xl font-bold text-left">Create Stage</h1>
+			<p className="text-red-600 text-xs">{error?.data?.Message}</p>
+			<form
+				className="space-y-4"
+				noValidate
+				onSubmit={handleSubmit(handleStage)}
+			>
+				<div className="space-y-1 text-sm">
+					<input
+						type="text"
+						className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
+						placeholder="Enter stage name"
+						{...register("stageName", {
+							required: "Stage name is required.",
+						})}
+					/>
+					<p className="text-red-600 text-xs">{errors?.stageName?.message}</p>
+				</div>
+				{isSubmitting || isLoading ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+					>
+						Submit
+					</button>
+				)}
 			</form>
 		</div>
 	);

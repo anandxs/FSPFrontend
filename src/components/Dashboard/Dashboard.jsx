@@ -36,7 +36,7 @@ const TotalHoursStat = () => {
 
 	if (isSuccess)
 		return (
-			<div className={`bg-yellow-500 w-52 rounded font-bold text-white p-2`}>
+			<div className={`bg-blue-500 w-52 rounded font-bold text-gray-50 p-2`}>
 				<p className="text-md">Total Hours Required</p>
 				<p className="text-2xl">{data}</p>
 			</div>

@@ -1,0 +1,12 @@
+.sbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sbar::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+}
+
+.sbar::-webkit-scrollbar-thumb {
+  background-color: rgb(99, 102, 249);
+  outline: 1px solid rgb(99, 102, 249);
+}

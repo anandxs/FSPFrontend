@@ -1,41 +1,52 @@
 export const customStyles = {
 	table: {
-		style: {
-			border: "1px solid",
-			borderBottom: "0px solid",
-		},
+		style: {},
 	},
 	header: {
 		style: {
 			fontSize: "22px",
 			minHeight: "56px",
 			paddingLeft: "16px",
-			paddingRight: "8px",
+			paddingRight: "32px",
+		},
+	},
+	headRow: {
+		style: {
+			borderRadius: "10px 10px 0px 0px",
 		},
 	},
 	headCells: {
 		style: {
-			color: "#fff",
-			backgroundColor: "#0E61DD",
-			fontSize: "0.7rem",
+			color: "#f9fafb",
+			backgroundColor: "#312e81",
+			fontSize: "0.9rem",
 			fontWeight: "700",
 		},
 	},
 	cells: {
 		style: {
-			backgroundColor: "#CFE1FC",
-			borderBottom: "1px solid",
+			backgroundColor: "#a5b4fc",
 		},
 	},
 	pagination: {
 		style: {
-			color: "#000",
-			border: "1px solid",
-			borderTop: "0px solid",
-			backgroundColor: "#CFE1FC",
+			color: "#fff",
+			backgroundColor: "#4f46e5",
+			borderRadius: "0px 0px 10px 10px",
 		},
 		pageButtonsStyle: {
-			color: "#000",
+			color: "#fff",
+			fill: "#fff",
+			cursor: "pointer",
+			transition: "0.4s",
+		},
+	},
+	noData: {
+		style: {
+			display: "flex",
+			alignItems: "center",
+			justifyContent: "center",
+			backgroundColor: "#c0c5ff",
 		},
 	},
 };

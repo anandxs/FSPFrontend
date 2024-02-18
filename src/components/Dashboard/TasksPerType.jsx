@@ -59,7 +59,7 @@ const TasksPerType = () => {
 						type="Column"
 						columnSpacing={0.25}
 						columnWidth={0.5}
-						fill="orange"
+						fill="darkviolet"
 					></SeriesDirective>
 				</SeriesCollectionDirective>
 			</ChartComponent>

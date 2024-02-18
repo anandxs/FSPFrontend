@@ -28,7 +28,7 @@ const ArchiveProject = ({ data }) => {
 	return (
 		<>
 			<button
-				className="bg-orange-500 text-white text-sm text-bold px-3 py-1 rounded w-32"
+				className="bg-red-600 text-gray-50 text-sm text-bold px-3 py-1 rounded w-32"
 				onClick={handleToggle}
 			>
 				{data?.isActive ? "Archive" : "Unarchive"}

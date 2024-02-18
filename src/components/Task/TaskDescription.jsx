@@ -23,7 +23,7 @@ const TaskDescription = ({ description }) => {
 			) : (
 				<button
 					onClick={handleToggle}
-					className={`bg-primary text-white text-sm px-2 py-1 rounded ${
+					className={`bg-indigo-950 text-gray-50 text-sm px-2 py-1 rounded ${
 						id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
 					}`}
 				>
@@ -47,10 +47,10 @@ const Description = ({ handleToggle, description }) => {
 	return (
 		<div>
 			<div className="flex gap-2 items-center">
-				<h2 className="underline font-semibold text-md">Description</h2>
+				<h2 className="hover:underline font-semibold text-md">Description</h2>
 				<button
 					onClick={handleToggle}
-					className={`bg-primary text-white p-1 ${
+					className={`bg-indigo-950 text-gray-50 p-1 ${
 						id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
 					}`}
 				>
