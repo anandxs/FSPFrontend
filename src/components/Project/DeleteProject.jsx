@@ -25,7 +25,7 @@ const DeleteProject = () => {
 
 	return (
 		<button
-			className="inline-block rounded bg-orange-600 px-5 py-2 text-xs font-medium text-white transition hover:shadow-xl focus:outline-none focus:ring active:bg-orange-500 disabled:opacity-50"
+			className="inline-block rounded bg-orange-600 px-5 py-2 text-xs font-medium text-gray-50 transition hover:shadow-xl focus:outline-none focus:ring active:bg-orange-500 disabled:opacity-50"
 			onClick={handleDeleteToggle}
 		>
 			Delete

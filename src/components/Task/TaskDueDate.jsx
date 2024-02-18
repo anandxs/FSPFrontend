@@ -20,9 +20,9 @@ const TaskDueDate = ({ dueDate }) => {
 				<span
 					className={
 						overdueFlag
-							? "px-1 py-0.5 bg-red-600 text-sm text-white rounded"
+							? "px-1 py-0.5 bg-red-600 text-sm text-gray-50 rounded"
 							: dueTodayFlag
-							? "px-1 py-0.5 bg-green-500 text-sm text-white rounded"
+							? "px-1 py-0.5 bg-green-500 text-sm text-gray-50 rounded"
 							: ""
 					}
 				>
@@ -32,7 +32,7 @@ const TaskDueDate = ({ dueDate }) => {
 			</p>
 			<button
 				onClick={handleToggle}
-				className="bg-blue-600 text-white text-sm px-2 py-1 rounded"
+				className="bg-blue-600 text-gray-50 text-sm px-2 py-1 rounded"
 			>
 				Change
 			</button>

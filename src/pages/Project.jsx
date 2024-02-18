@@ -107,8 +107,7 @@ const Project = () => {
 		];
 	}
 
-	const [toggle, setToggle] = useState(true);
-	// const [toggle, setToggle] = useState(localStorage.getItem("sidebar"));
+	const [toggle, setToggle] = useState(localStorage.getItem("sidebar"));
 	const handleToggle = () => {
 		setToggle((toggle) => {
 			if (!toggle) {
@@ -128,9 +127,9 @@ const Project = () => {
 				}`}
 			>
 				<Navbar />
-				<div className="bg-blue-600 flex items-center gap-3 px-2 py-1">
+				<div className="bg-indigo-700 flex items-center gap-3 px-2 py-1">
 					<SideBarToggle toggle={toggle} handleToggle={handleToggle} />
-					<h1 className="font-semibold text-lg text-white">
+					<h1 className="font-semibold text-lg text-gray-50">
 						{projectName ? projectName : "Loading..."}
 					</h1>
 				</div>

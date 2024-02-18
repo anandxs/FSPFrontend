@@ -75,7 +75,7 @@ const Comments = () => {
 					/>
 					<button
 						type="submit"
-						className="block w-fit bg-blue-600 text-white text-xs p-1"
+						className="block w-fit bg-blue-600 text-gray-50 text-xs p-1"
 					>
 						Submit
 					</button>

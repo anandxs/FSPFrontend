@@ -3,7 +3,6 @@ import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
 import { Link } from "react-router-dom";
 import { useLogOutMutation } from "../../features/auth/authApiSlice";
 import { apiSlice } from "../../app/api/apiSlice";
-import { getColor } from "../../utils/colors";
 import ProfilePicAlternative from "../Profile/ProfilePicAlternative";
 
 const Navbar = () => {
@@ -26,6 +25,9 @@ const Navbar = () => {
 			console.log(err);
 		}
 	};
+
+	const { color } = useSelector(selectCurrentUser);
+	console.log(color);
 
 	return (
 		<nav className="bg-indigo-950 drop-shadow-2xl">
@@ -54,16 +56,16 @@ const Navbar = () => {
 				<div className="flex items-center space-x-6 rtl:space-x-reverse">
 					<Link to="/profile/details">
 						<div
-							className={`bg-${getColor()}-600 py-2 px-2 rounded-full transition hover:scale-110 hover:drop-shadow-2xl`}
+							className={`bg-${color}-600 py-2 px-2 rounded-full transition hover:scale-110 hover:drop-shadow-2xl`}
 						>
-							<div className="text-white font-bold text-xs">
+							<div className="text-gray-50 font-bold text-xs">
 								<ProfilePicAlternative />
 							</div>
 						</div>
 					</Link>
 					<button
 						type="button"
-						className="inline-block rounded bg-rose-600 px-5 py-2 text-xs font-medium text-white transition hover:scale-110 hover:drop-shadow-2xl focus:outline-none focus:ring active:bg-blue-500 disabled:opacity-50"
+						className="inline-block rounded bg-rose-600 px-5 py-2 text-xs font-medium text-gray-50 transition hover:scale-110 hover:drop-shadow-2xl focus:outline-none focus:ring active:bg-blue-500 disabled:opacity-50"
 						onClick={handleLogout}
 						disabled={isLoading}
 					>

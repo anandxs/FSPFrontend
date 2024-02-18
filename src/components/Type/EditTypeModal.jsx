@@ -58,13 +58,13 @@ const EditTypeModal = ({ handleToggle }) => {
 				{/* <div className="flex justify-between">
 					<button
 						type="submit"
-						className="bg-blue-600 text-white px-3 py-0.5 text-sm rounded-sm w-2/5"
+						className="bg-blue-600 text-gray-50 px-3 py-0.5 text-sm rounded-sm w-2/5"
 					>
 						Update
 					</button>
 					<button
 						type="submit"
-						className="bg-orange-600 text-white px-3 py-0.5 text-sm rounded-sm w-2/5"
+						className="bg-orange-600 text-gray-50 px-3 py-0.5 text-sm rounded-sm w-2/5"
 						onClick={handleToggle}
 					>
 						Cancel

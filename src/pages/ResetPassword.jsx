@@ -99,7 +99,7 @@ const ResetPassword = () => {
 					<div className="mb-3">
 						<button
 							type="submit"
-							className="bg-blue-600 text-sm block w-full rounded-sm py-0.5 text-white disabled:opacity-50"
+							className="bg-blue-600 text-sm block w-full rounded-sm py-0.5 text-gray-50 disabled:opacity-50"
 							disabled={isSubmitting}
 						>
 							Reset

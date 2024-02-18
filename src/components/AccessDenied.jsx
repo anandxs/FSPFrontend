@@ -28,7 +28,7 @@ const AccessDenied = () => {
 			<button
 				type="button"
 				onClick={goBack}
-				className="bg-blue-700 px-2 py-1 rounded text-white font-semibold mt-1"
+				className="bg-blue-700 px-2 py-1 rounded text-gray-50 font-semibold mt-1"
 			>
 				Go Back
 			</button>

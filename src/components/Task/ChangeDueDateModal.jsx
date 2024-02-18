@@ -55,7 +55,7 @@ const ChangeDueDateModal = ({ handleToggle }) => {
 				</div>
 				<button
 					type="submit"
-					className="bg-blue-600 text-white text-md font-bold px-3 py-0.5 rounded w-full"
+					className="bg-blue-600 text-gray-50 text-md font-bold px-3 py-0.5 rounded w-full"
 				>
 					Update
 				</button>

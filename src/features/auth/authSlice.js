@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getColor } from "../../utils/colors";
 
 const localAuth = localStorage.getItem("auth");
 const initialState = localAuth
@@ -10,6 +11,7 @@ const initialState = localAuth
 			email: null,
 			accessToken: null,
 			refreshToken: null,
+			color: null,
 	  };
 
 const authSlice = createSlice({
@@ -32,6 +34,7 @@ const authSlice = createSlice({
 			state.email = email;
 			state.accessToken = accessToken;
 			state.refreshToken = refreshToken;
+			state.color = getColor();
 			localStorage.setItem("auth", JSON.stringify(state));
 		},
 		logOut: (state) => {
@@ -41,6 +44,7 @@ const authSlice = createSlice({
 			state.role = null;
 			state.accessToken = null;
 			state.refreshToken = null;
+			state.color = null;
 			localStorage.removeItem("auth");
 		},
 		updateName: (state, action) => {

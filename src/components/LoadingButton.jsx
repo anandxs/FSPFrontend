@@ -3,7 +3,7 @@ const LoadingButton = () => {
 		<button
 			type="button"
 			disabled
-			className="p-3 flex justify-center items-center opacity-70 bg-blue-600  focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-sm "
+			className="p-3 flex justify-center items-center opacity-70 bg-blue-600  focus:ring-offset-blue-200 text-gray-50 w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-sm "
 		>
 			<svg
 				width="20"

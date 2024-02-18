@@ -39,7 +39,7 @@ const Users = () => {
 				return (
 					<button
 						onClick={() => handleToggleBlock(row.id)}
-						className="bg-orange-600 text-white px-2 py-1"
+						className="bg-orange-600 text-gray-50 px-2 py-1"
 					>
 						Toggle
 					</button>
@@ -97,7 +97,7 @@ const Users = () => {
 					<li
 						onClick={setQueryToActive}
 						className={`border border-black text-center text-xs w-16 sm:text-sm sm:w-20 ${
-							filter === "active" ? "bg- text-white" : "text-black"
+							filter === "active" ? "bg- text-gray-50" : "text-black"
 						}`}
 					>
 						Active
@@ -105,7 +105,7 @@ const Users = () => {
 					<li
 						onClick={setQueryToBlocked}
 						className={`border border-black text-center text-xs w-16 sm:text-sm sm:w-20 ${
-							filter === "blocked" ? "bg- text-white" : "text-black"
+							filter === "blocked" ? "bg- text-gray-50" : "text-black"
 						}`}
 					>
 						Blocked
@@ -113,7 +113,7 @@ const Users = () => {
 					<li
 						onClick={clearQuery}
 						className={`border border-black text-center text-xs w-16 sm:text-sm sm:w-20 ${
-							filter === "" ? "bg- text-white text-xs" : "text-black"
+							filter === "" ? "bg- text-gray-50 text-xs" : "text-black"
 						}`}
 					>
 						All

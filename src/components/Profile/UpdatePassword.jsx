@@ -99,7 +99,7 @@ const UpdatePassword = () => {
 				</div>
 				<button
 					type="submit"
-					className="bg- text-white font-semibold px-3 py-0.5 rounded text-sm"
+					className="bg-blue-600 text-gray-50 font-semibold px-3 py-0.5 rounded text-sm"
 				>
 					Update Password
 				</button>
