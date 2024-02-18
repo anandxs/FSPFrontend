@@ -129,7 +129,7 @@ const Project = () => {
 			>
 				<Navbar />
 				<div className="bg-blue-600 flex items-center gap-3 px-2 py-1">
-					<SideBarToggle handleToggle={handleToggle} />
+					<SideBarToggle toggle={toggle} handleToggle={handleToggle} />
 					<h1 className="font-semibold text-lg text-white">
 						{projectName ? projectName : "Loading..."}
 					</h1>
