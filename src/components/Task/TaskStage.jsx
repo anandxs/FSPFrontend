@@ -23,7 +23,7 @@ const TaskStage = ({ stage }) => {
 			</p>
 			<button
 				onClick={handleToggle}
-				className={`bg-blue-600 text-gray-50 sm:text-sm px-2 py-1 rounded ${
+				className={`bg-indigo-950 text-gray-50 sm:text-sm px-2 py-1 rounded ${
 					id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
 				}`}
 			>

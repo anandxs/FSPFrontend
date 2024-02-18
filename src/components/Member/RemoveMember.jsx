@@ -31,7 +31,7 @@ const RemoveMember = () => {
 		<>
 			<button
 				onClick={handleDeleteToggle}
-				className="inline-block rounded bg-orange-600 px-5 py-1 text-xs font-medium text-gray-50 transition hover:shadow-xl focus:outline-none focus:ring active:bg-orange-500 disabled:opacity-50"
+				className="inline-block rounded bg-red-600 px-5 py-1 text-xs font-medium text-gray-50 transition hover:shadow-xl focus:outline-none focus:ring active:bg-red-600 disabled:opacity-50"
 			>
 				Remove
 			</button>

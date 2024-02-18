@@ -76,14 +76,14 @@ const UpdateMemberRoleModal = ({ handleToggle }) => {
 					) : (
 						<button
 							type="submit"
-							className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+							className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
 						>
 							Update
 						</button>
 					)}
 					<button
 						type="submit"
-						className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-orange-600"
+						className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-red-600"
 						onClick={handleToggle}
 					>
 						Cancel

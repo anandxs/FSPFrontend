@@ -107,7 +107,7 @@ const AddAttachment = () => {
 					<div className="flex gap-2 items-center">
 						<span>{new Date(createdAt).toLocaleString()}</span>
 						<button
-							className={`bg-orange-500 text-gray-50 text-sm rounded-sm p-1 disabled:opacity-50 ${
+							className={`bg-red-600 text-gray-50 text-sm rounded-sm p-1 disabled:opacity-50 ${
 								id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
 							}`}
 							disabled={isDeleting}
@@ -142,7 +142,7 @@ const AddAttachment = () => {
 				</h2>
 				<button
 					onClick={handleToggle}
-					className={`bg-blue-600 text-gray-50 p-1 ${
+					className={`bg-indigo-950 text-gray-50 p-1 ${
 						id === assignee?.id || role?.name === "ADMIN" ? "" : "hidden"
 					}`}
 				>

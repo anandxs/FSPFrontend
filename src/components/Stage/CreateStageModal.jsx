@@ -54,7 +54,7 @@ const CreateStageModal = ({ handleToggle }) => {
 				) : (
 					<button
 						type="submit"
-						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
 					>
 						Submit
 					</button>

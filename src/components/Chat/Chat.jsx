@@ -88,12 +88,12 @@ const Chat = () => {
 		<section className="">
 			<ul
 				id="messages"
-				className="h-[440px] sm:h-[500px] overflow-auto flex flex-col justify-start gap-2 sbar"
+				className="h-[440px] sm:h-[550px] overflow-auto flex flex-col pr-3 justify-start gap-2 sbar"
 			>
 				{messages?.map(({ id, message, sender, sentAt }) => (
 					<li
 						key={id}
-						className={`border-2 mb-0.5 p-1 text-sm w-fit ${
+						className={`border-2 my-1 p-1 text-sm w-fit ${
 							currId === sender?.id ? "self-end" : ""
 						}`}
 					>
@@ -106,18 +106,18 @@ const Chat = () => {
 				))}
 			</ul>
 			<form onSubmit={(e) => e.preventDefault()}>
-				<div className="w-full md:w-10/12 fixed bottom-0 backdrop-blur-md flex gap-2 border-t-2 border-blue-500 p-2">
+				<div className="w-full md:w-10/12 fixed bottom-0 backdrop-blur-md flex gap-2 border-t-2 border-indigo-500 p-2">
 					<input
 						type="text"
 						id="message"
 						placeholder="Write a message..."
-						className="p-0.5 w-full"
+						className="p-1 w-full"
 						onChange={(e) => setMessage(e.target.value)}
 						value={message}
 					/>
 					<button
 						type="submit"
-						className="block px-3 py-1 text-center rounded-sm text-gray-50 bg-blue-600"
+						className="block px-3 py-1 text-center rounded-sm text-gray-50 bg-indigo-950"
 						onClick={sendMessage}
 					>
 						<svg

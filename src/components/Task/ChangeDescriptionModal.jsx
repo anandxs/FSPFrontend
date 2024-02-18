@@ -53,7 +53,7 @@ const ChangeDescriptionModal = ({ handleToggle }) => {
 				<h1 className="text-2xl font-bold text-left">Update Description</h1>
 				<button
 					onClick={clearInput}
-					className="block px-3 py-1 text-center rounded-sm text-gray-50 bg-blue-600"
+					className="block px-3 py-1 text-center rounded-sm text-gray-50 bg-indigo-950"
 				>
 					Clear
 				</button>
@@ -74,7 +74,7 @@ const ChangeDescriptionModal = ({ handleToggle }) => {
 				) : (
 					<button
 						type="submit"
-						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+						className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
 					>
 						Update
 					</button>

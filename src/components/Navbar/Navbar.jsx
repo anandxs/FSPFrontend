@@ -27,7 +27,6 @@ const Navbar = () => {
 	};
 
 	const { color } = useSelector(selectCurrentUser);
-	console.log(color);
 
 	return (
 		<nav className="bg-indigo-950 drop-shadow-2xl">
@@ -65,7 +64,7 @@ const Navbar = () => {
 					</Link>
 					<button
 						type="button"
-						className="inline-block rounded bg-rose-600 px-5 py-2 text-xs font-medium text-gray-50 transition hover:scale-110 hover:drop-shadow-2xl focus:outline-none focus:ring active:bg-blue-500 disabled:opacity-50"
+						className="inline-block rounded bg-rose-600 px-5 py-2 text-xs font-medium text-gray-50 transition hover:scale-110 hover:drop-shadow-2xl focus:outline-none focus:ring active:bg-indigo-500 disabled:opacity-50"
 						onClick={handleLogout}
 						disabled={isLoading}
 					>

@@ -36,7 +36,7 @@ const DeleteTask = () => {
 	return (
 		<>
 			<button
-				className={`bg-orange-500 text-gray-50 p-1 text-md rounded-sm ${
+				className={`bg-red-600 text-gray-50 p-1 text-md rounded-sm ${
 					role?.name === "ADMIN" ? "" : "hidden"
 				}`}
 				onClick={handleToggle}

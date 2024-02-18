@@ -9,7 +9,7 @@ const Confirmation = ({ message, isLoading, success, cancel }) => {
 			<div className="flex justify-around gap-2">
 				<button
 					type="button"
-					className="disabled:opacity-50 block w-full p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+					className="disabled:opacity-50 block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
 					onClick={success}
 					disabled={isLoading}
 				>
@@ -17,7 +17,7 @@ const Confirmation = ({ message, isLoading, success, cancel }) => {
 				</button>
 				<button
 					type="button"
-					className="block w-full p-3 text-center rounded-sm text-gray-50 bg-orange-600"
+					className="block w-full p-3 text-center rounded-sm text-gray-50 bg-red-600"
 					onClick={cancel}
 				>
 					Cancel

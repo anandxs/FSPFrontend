@@ -27,7 +27,7 @@ const ExitProject = () => {
 		<>
 			<button
 				onClick={handleToggle}
-				className="bg-orange-500 text-gray-50 text-sm text-bold px-3 py-1 rounded w-32"
+				className="bg-red-600 text-gray-50 text-sm text-bold px-3 py-1 rounded w-32"
 			>
 				Exit
 			</button>

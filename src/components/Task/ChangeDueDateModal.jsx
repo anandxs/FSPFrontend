@@ -41,7 +41,7 @@ const ChangeDueDateModal = ({ handleToggle }) => {
 
 	return (
 		<div
-			className="bg-blue-300 p-3 w-1/3 min-w-max"
+			className="bg-indigo-300 p-3 w-1/3 min-w-max"
 			onClick={(e) => e.stopPropagation()}
 		>
 			<h1 className="text-2xl font-bold mb-2 py-1">Update Task Due Date</h1>
@@ -55,7 +55,7 @@ const ChangeDueDateModal = ({ handleToggle }) => {
 				</div>
 				<button
 					type="submit"
-					className="bg-blue-600 text-gray-50 text-md font-bold px-3 py-0.5 rounded w-full"
+					className="bg-indigo-950 text-gray-50 text-md font-bold px-3 py-0.5 rounded w-full"
 				>
 					Update
 				</button>

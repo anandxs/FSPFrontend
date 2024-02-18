@@ -39,7 +39,7 @@ const Users = () => {
 				return (
 					<button
 						onClick={() => handleToggleBlock(row.id)}
-						className="bg-orange-600 text-gray-50 px-2 py-1"
+						className="bg-red-600 text-gray-50 px-2 py-1"
 					>
 						Toggle
 					</button>

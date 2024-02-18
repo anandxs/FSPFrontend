@@ -23,7 +23,7 @@ const TaskAssignee = ({ assignee }) => {
 			{role?.name === "ADMIN" && (
 				<button
 					onClick={handleToggle}
-					className="bg-blue-600 text-gray-50 sm:text-sm px-2 py-1 rounded"
+					className="bg-indigo-950 text-gray-50 sm:text-sm px-2 py-1 rounded"
 				>
 					Change
 				</button>

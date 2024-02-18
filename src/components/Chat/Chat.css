@@ -1,5 +1,5 @@
 .sbar::-webkit-scrollbar {
-  width: 3px;
+  width: 5px;
 }
 
 .sbar::-webkit-scrollbar-track {
@@ -7,6 +7,6 @@
 }
 
 .sbar::-webkit-scrollbar-thumb {
-  background-color: rgb(96, 195, 250);
-  outline: 1px solid rgb(59, 130, 246);
+  background-color: rgb(99, 102, 249);
+  outline: 1px solid rgb(99, 102, 249);
 }

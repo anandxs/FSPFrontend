@@ -56,13 +56,13 @@ const EditRoleModal = ({ handleToggle }) => {
 				{/* <div className="flex justify-between">
 					<button
 						type="submit"
-						className="bg-blue-600 text-gray-50 px-3 py-0.5 text-sm rounded-sm w-2/5"
+						className="bg-indigo-950 text-gray-50 px-3 py-0.5 text-sm rounded-sm w-2/5"
 					>
 						Update
 					</button>
 					<button
 						type="submit"
-						className="bg-orange-600 text-gray-50 px-3 py-0.5 text-sm rounded-sm w-2/5"
+						className="bg-red-600 text-gray-50 px-3 py-0.5 text-sm rounded-sm w-2/5"
 						onClick={handleToggle}
 					>
 						Cancel
@@ -74,14 +74,14 @@ const EditRoleModal = ({ handleToggle }) => {
 					) : (
 						<button
 							type="submit"
-							className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-blue-600"
+							className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
 						>
 							Update
 						</button>
 					)}
 					<button
 						type="submit"
-						className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-orange-600"
+						className="block w-1/2 p-3 text-center rounded-sm text-gray-50 bg-red-600"
 						onClick={handleToggle}
 					>
 						Cancel

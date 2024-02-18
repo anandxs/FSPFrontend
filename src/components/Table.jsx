@@ -1,7 +1,7 @@
 const Table = ({ data, columns, deleteAction, editAction }) => {
 	return (
 		<table className="table-fixed w-10/12 mt-3 border border-black">
-			<thead className="table-header-group bg-blue-600 text-gray-50">
+			<thead className="table-header-group bg-indigo-950 text-gray-50">
 				<tr>
 					{columns?.map((column) => (
 						<th
