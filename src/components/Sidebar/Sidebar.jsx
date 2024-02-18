@@ -3,7 +3,7 @@ import "./Sidebar.css";
 
 const Sidebar = ({ sections }) => {
 	return (
-		<div className={`fixed top-20 bg-blue-300 w-screen z-10 sidebar`}>
+		<div className={`fixed top-24 bg-blue-300 w-screen z-10 sidebar`}>
 			<ul className="w-full">
 				{sections?.map(({ header, link }) => (
 					<li key={link} className="hover:bg-blue-400">
