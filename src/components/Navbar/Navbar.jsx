@@ -3,6 +3,7 @@ import { logOut, selectCurrentUser } from "../../features/auth/authSlice";
 import { Link } from "react-router-dom";
 import { useLogOutMutation } from "../../features/auth/authApiSlice";
 import { apiSlice } from "../../app/api/apiSlice";
+import { getColor } from "../../utils/colors";
 import ProfilePicAlternative from "../Profile/ProfilePicAlternative";
 
 const Navbar = () => {
@@ -27,11 +28,11 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-blue-300 border-b-2 border-b-blue-600">
+		<nav className="bg-indigo-950 drop-shadow-2xl">
 			<div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-2">
 				<Link
 					to={auth?.role === "USER" ? "/" : "/admin"}
-					className="flex items-center space-x-3 rtl:space-x-reverse"
+					className="flex items-center space-x-3 rtl:space-x-reverse text-gray-50"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -46,13 +47,15 @@ const Navbar = () => {
 						/>
 						<path d="M12.971 1.816A5.23 5.23 0 0 1 14.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 0 1 3.434 1.279 9.768 9.768 0 0 0-6.963-6.963Z" />
 					</svg>
-					<span className="self-center text-xl font-semibold whitespace-nowrap text-black">
+					<span className="self-center text-xl font-semibold whitespace-nowrap text-gray-50">
 						Sync
 					</span>
 				</Link>
 				<div className="flex items-center space-x-6 rtl:space-x-reverse">
 					<Link to="/profile/details">
-						<div className={`bg-green-600 py-2 px-2 rounded-full`}>
+						<div
+							className={`bg-${getColor()}-600 py-2 px-2 rounded-full transition hover:scale-110 hover:drop-shadow-2xl`}
+						>
 							<div className="text-white font-bold text-xs">
 								<ProfilePicAlternative />
 							</div>
@@ -60,7 +63,7 @@ const Navbar = () => {
 					</Link>
 					<button
 						type="button"
-						className="inline-block rounded bg-blue-600 px-5 py-2 text-xs font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-blue-500 disabled:opacity-50"
+						className="inline-block rounded bg-rose-600 px-5 py-2 text-xs font-medium text-white transition hover:scale-110 hover:drop-shadow-2xl focus:outline-none focus:ring active:bg-blue-500 disabled:opacity-50"
 						onClick={handleLogout}
 						disabled={isLoading}
 					>
