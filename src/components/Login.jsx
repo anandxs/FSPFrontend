@@ -62,77 +62,99 @@ const Login = () => {
 	};
 
 	return (
-		<section className="flex justify-center items-center w-screen h-screen">
-			<div className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800">
-				<h1 className="text-2xl font-bold text-center">Login</h1>
-				{error && <p className="text-red-600 text-xs">{error}</p>}
-				<form
-					className="space-y-6"
-					onSubmit={handleSubmit(onSubmit)}
-					noValidate
-				>
-					<div className="space-y-1 text-sm">
-						<label htmlFor="email" className="block text-gray-600">
-							Email
-						</label>
-						<input
-							type="email"
-							name="email"
-							id="email"
-							placeholder="Email"
-							{...register("email", {
-								required: "Email is a required field",
-								pattern: {
-									value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-									message: "Enter a valid email address",
-								},
-							})}
-							className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
-						/>
-						<p className="text-xs text-red-600">{errors?.email?.message}</p>
-					</div>
-					<div className="space-y-1 text-sm">
-						<label htmlFor="password" className="block text-gray-600">
-							Password
-						</label>
-						<input
-							type="password"
-							name="password"
-							id="password"
-							placeholder="Password"
-							{...register("password", {
-								required: "Password is a required field.",
-							})}
-							className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
-						/>
-						<p className="text-xs text-red-600">{errors?.password?.message}</p>
-					</div>
-					{isSubmitting || loginLoading ? (
-						<LoadingButton />
-					) : (
-						<button
-							type="submit"
-							className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
-						>
-							Login
-						</button>
-					)}
+		<>
+			<DemoCredentials />
+			<section className="flex justify-center items-center w-screen h-screen">
+				<div className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800">
+					<h1 className="text-2xl font-bold text-center">Login</h1>
+					{error && <p className="text-red-600 text-xs">{error}</p>}
+					<form
+						className="space-y-6"
+						onSubmit={handleSubmit(onSubmit)}
+						noValidate
+					>
+						<div className="space-y-1 text-sm">
+							<label htmlFor="email" className="block text-gray-600">
+								Email
+							</label>
+							<input
+								type="email"
+								name="email"
+								id="email"
+								placeholder="Email"
+								{...register("email", {
+									required: "Email is a required field",
+									pattern: {
+										value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+										message: "Enter a valid email address",
+									},
+								})}
+								className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
+							/>
+							<p className="text-xs text-red-600">{errors?.email?.message}</p>
+						</div>
+						<div className="space-y-1 text-sm">
+							<label htmlFor="password" className="block text-gray-600">
+								Password
+							</label>
+							<input
+								type="password"
+								name="password"
+								id="password"
+								placeholder="Password"
+								{...register("password", {
+									required: "Password is a required field.",
+								})}
+								className="w-full px-4 py-3 rounded-md border-gray-300 bg-gray-50 text-gray-800 focus:border-blue-600"
+							/>
+							<p className="text-xs text-red-600">
+								{errors?.password?.message}
+							</p>
+						</div>
+						{isSubmitting || loginLoading ? (
+							<LoadingButton />
+						) : (
+							<button
+								type="submit"
+								className="block w-full p-3 text-center rounded-sm text-gray-50 bg-indigo-950"
+							>
+								Login
+							</button>
+						)}
 
-					<div className="flex flex-col text-xs text-gray-600">
-						<Link
-							to="/forgotpassword"
-							className="block py-1 text-xs hover:underline"
-						>
-							Forgot Password?
-						</Link>
-						<Link to="/register" className="block py-1 text-xs hover:underline">
-							Register New Account
-						</Link>
-					</div>
-				</form>
-			</div>
-		</section>
+						<div className="flex flex-col text-xs text-gray-600">
+							<Link
+								to="/forgotpassword"
+								className="block py-1 text-xs hover:underline"
+							>
+								Forgot Password?
+							</Link>
+							<Link
+								to="/register"
+								className="block py-1 text-xs hover:underline"
+							>
+								Register New Account
+							</Link>
+						</div>
+					</form>
+				</div>
+			</section>
+		</>
 	);
 };
 
 export default Login;
+
+const DemoCredentials = () => {
+	return (
+		<div>
+			<p className="font-semibold">Demo credentials:</p>
+			<p>
+				<span className="font-semibold">email </span>- dejonax993@massefm.com
+			</p>
+			<p>
+				<span className="font-semibold">password </span>- pass123
+			</p>
+		</div>
+	);
+};
