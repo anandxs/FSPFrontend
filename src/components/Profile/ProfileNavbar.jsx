@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import "./ProfileNavbar.css";
 
 const ProfileNavbar = () => {
 	return (

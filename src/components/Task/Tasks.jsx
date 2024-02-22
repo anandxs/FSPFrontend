@@ -105,7 +105,7 @@ const Tasks = () => {
 					{role?.name === "ADMIN" && <CreateTask />}
 					<button
 						onClick={handleToggle}
-						className="bg-primary p-1 text-xs text-white rounded-sm"
+						className="inline-block rounded bg-indigo-950 px-5 py-2 text-xs font-medium text-gray-50 transition hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500 disabled:opacity-50"
 					>
 						Filters
 					</button>
@@ -137,11 +137,11 @@ const FilterModal = () => {
 
 	return (
 		<div
-			className="bg-accent p-3 w-screen sm:w-2/3 sm:max-w-sm"
+			className="pt-4 w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800"
 			onClick={(e) => e.stopPropagation()}
 		>
 			<div className="flex justify-between items-center">
-				<h1 className="text-xl font-semibold mb-2">Filters</h1>
+				<h1 className="text-2xl font-bold text-left">Filter</h1>
 				<button
 					className="bg-primary text-xs p-1 text-white font-semibold"
 					onClick={() => dispatch(resetFilters())}
